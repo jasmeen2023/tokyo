@@ -1,0 +1,17 @@
+[
+  {
+    "path": "/cases",
+    "title": "Cases",
+    "access": ["superadmin", "admin"]
+  },
+  {
+    "path": "/task",
+    "title": "Task",
+    "access": ["superadmin", "admin"]
+  },
+  {
+    "path": "/rewards",
+    "title": "Rewards",
+    "access": ["superadmin", "admin"]
+  }
+]
