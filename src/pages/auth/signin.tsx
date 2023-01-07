@@ -1,212 +1,170 @@
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import LoadingButton from '@mui/lab/LoadingButton';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Grid,
-  IconButton,
-  InputAdornment,
-} from '@mui/material';
-import Box from '@mui/material/Box';
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { FormEvent, useState } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Image from 'next/image';
 
-import { useLogin } from '@/hooks/menu/useMenu';
+function Copyright(props: any) {
+  return (
+    <Typography
+      variant='body2'
+      color='text.secondary'
+      align='center'
+      {...props}
+    >
+      {'Copyright © '}
+      <Link color='inherit' href='https://mui.com/'>
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
-import LogoSignGreenText from '@/components/LogoSign/LogoSignGreenText';
-
-import { cookies } from '@/utils/apiUtils';
+const theme = createTheme();
 
 function Forms() {
-  const loginHook = useLogin();
-  const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
-
-  const authenticateUser = async (authData) => {
-    const res = await loginHook.mutateAsync(authData);
-    return res;
-  };
-
-  const handleSubmit = async (event: FormEvent) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const target = event.target as HTMLFormElement;
-    const formData = new FormData(target);
-    const authData = Object.fromEntries(formData.entries());
-
-    try {
-      const res: any = await authenticateUser({
-        ...authData,
-        type: 'staff',
-      });
-      if (
-        res.status === 'success' &&
-        ['admin', 'superadmin', 'agent'].includes(res.user.role)
-      ) {
-        router.push('/');
-
-        cookies.set(res.accessToken.name, res.accessToken.value, {
-          maxAge: res.accessToken.expiresIn,
-          path: '/',
-        });
-        cookies.set(res.refreshToken.name, res.refreshToken.value, {
-          maxAge: res.refreshToken.expiresIn,
-          path: '/',
-        });
-      }
-    } catch (error: any) {
-      return;
-    }
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
   };
 
   return (
-    <>
-      <Head>
-        <title>Sign in</title>
-      </Head>
+    <ThemeProvider theme={theme}>
+      <Grid container component='main' sx={{ height: '100vh' }}>
+        <CssBaseline />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Grid
+              container
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginY: 5,
+              }}
+            >
+              <Avatar sx={{ m: 1 }} src='/images/logosigin.png'></Avatar>
+              <Typography
+                sx={{
+                  fontWeight: 600,
+                  fontSize: '20px',
+                  lineHeight: '27px',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  textTransform: 'uppercase',
+                  color: '#263238',
+                }}
+              >
+                Freedom Circle
+              </Typography>
+            </Grid>
 
-      <Box
-        height='100%'
-        flexDirection='column'
-        style={{
-          backgroundImage: `url('/static/images/background/pexels-dada-design-12281845 1.png')`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-        }}
-      >
-        <Grid
-          container
-          direction='column'
-          justifyContent='center'
-          alignItems='center'
-          spacing={0.5}
-        >
-          <Grid xs={12}>
-            <Card sx={{ minWidth: 550, p: 2, mt: 5 }}>
-              <CardHeader
-                title={
-                  <Box>
-                    <Box
-                      sx={{
-                        mb: 2,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <LogoSignGreenText />
-                    </Box>
-                    <Typography variant='h3' sx={{ my: 0.5 }}>
-                      Sign in
-                    </Typography>
-                    <Typography
-                      style={{
-                        fontWeight: 400,
-                        fontSize: 16,
-                        // color: alpha(themeColors.black, 0.55),
-                      }}
-                      variant='subtitle2'
-                    >
-                      Fill in the fields below to sign into your account.
-                    </Typography>
-                  </Box>
-                }
+            <Typography component='h1' variant='h5'>
+              Sign in
+            </Typography>
+            <Box
+              component='form'
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
+              <TextField
+                margin='normal'
+                required
+                fullWidth
+                id='email'
+                label='Email Address'
+                name='email'
+                autoComplete='email'
+                autoFocus
               />
-              <CardContent>
-                {loginHook?.isError ? (
-                  <Typography color='error'>
-                    {(loginHook?.error as any)?.response?.data?.error?.message}
-                  </Typography>
-                ) : (
-                  ''
-                )}
-                <Box
-                  component='form'
-                  onSubmit={handleSubmit}
-                  noValidate
-                  autoComplete='off'
-                >
-                  <div>
-                    <TextField
-                      fullWidth
-                      required
-                      name='email'
-                      margin='normal'
-                      label='Email address'
-                    />
-                  </div>
-                  <div>
-                    <TextField
-                      fullWidth
-                      required
-                      name='password'
-                      type={showPassword ? 'text' : 'password'}
-                      margin='normal'
-                      label='Password'
-                      InputProps={{
-                        // <-- This is where the toggle button is added.
-                        endAdornment: (
-                          <InputAdornment position='end'>
-                            <IconButton
-                              aria-label='toggle password visibility'
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                            >
-                              {showPassword ? (
-                                <Visibility />
-                              ) : (
-                                <VisibilityOff />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </div>
-                  {/* 
-                  <Typography
-                    style={{
-                      fontWeight: 700,
-                      fontSize: 14,
-                    }}
-                  >
-                    <Link>Lost password?</Link>
-                  </Typography> */}
-                  <LoadingButton
-                    type='submit'
-                    loading={loginHook?.isLoading}
-                    fullWidth
-                    sx={{ my: 2.6, p: 1.4 }}
-                    variant='contained'
-                    color='primary'
-                  >
-                    Sign in
-                  </LoadingButton>
-                </Box>
-                {/* <Typography
-                  sx={{ my: 1 }}
-                  style={{
-                    fontWeight: 700,
-                    fontSize: 15,
-                  }}
-                >
-                  Don’t have an account, yet?
-                  <NextLink href='/auth/signup' passHref>
-                    <Link> Sign up here </Link>
-                  </NextLink>
-                </Typography> */}
-              </CardContent>
-            </Card>
-          </Grid>
+              <TextField
+                margin='normal'
+                required
+                fullWidth
+                name='password'
+                label='Password'
+                type='password'
+                id='password'
+                autoComplete='current-password'
+              />
+              <FormControlLabel
+                control={<Checkbox value='remember' color='primary' />}
+                label='Remember me'
+              />
+
+              <Grid container>
+                <Grid item xs>
+                  <Link href='#' variant='body2' sx={{ color: '#979797' }}>
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href='#' variant='body2'>
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+              <Button
+                type='submit'
+                fullWidth
+                variant='contained'
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                  background:
+                    'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
+                }}
+              >
+                Sign In
+              </Button>
+              {/* <Copyright sx={{ mt: 5 }} /> */}
+            </Box>
+          </Box>
         </Grid>
-      </Box>
-    </>
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            // backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: `url('/images/signin-img.png')`,
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: (t) =>
+              t.palette.mode === 'light'
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+      </Grid>
+    </ThemeProvider>
   );
 }
 

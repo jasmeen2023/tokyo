@@ -237,12 +237,13 @@ function ActiveCaseAnalytics() {
           </Grid>
         }
       />
-      <Divider sx={{ mx: 2 }} />
+
       <Chart
         options={barChartOptions}
         series={barcChartData}
         type='bar'
         height={270}
+        // sx={{ borderBottom: '1px dashed #4B473E' }}
       />
     </Card>
   );

@@ -5,22 +5,22 @@ import {
   Container,
   styled,
   useTheme,
-} from "@mui/material";
-import { Divider } from "@mui/material";
-import MuiGrid from "@mui/material/Grid";
-import { ApexOptions } from "apexcharts";
-import { ChangeEvent, useState } from "react";
+} from '@mui/material';
+import { Divider } from '@mui/material';
+import MuiGrid from '@mui/material/Grid';
+import { ApexOptions } from 'apexcharts';
+import { ChangeEvent, useState } from 'react';
 
-import ActiveCaseAnalytics from "@/content/TasksOld/ActiveCaseAnalytics";
-import CaseDetails from "@/content/TasksOld/CaseDetails";
-import CaseStatistics from "@/content/TasksOld/CaseStatistics";
-import TaskOverview from "@/content/TasksOld/TaskOverview";
-import SidebarLayout from "@/layouts/SidebarLayout";
-import { NextPageWithLayout } from "@/pages/_app";
+import ActiveCaseAnalytics from '@/content/TasksOld/ActiveCaseAnalytics';
+import CaseDetails from '@/content/TasksOld/CaseDetails';
+import CaseStatistics from '@/content/TasksOld/CaseStatistics';
+import TaskOverview from '@/content/TasksOld/TaskOverview';
+import SidebarLayout from '@/layouts/SidebarLayout';
+import { NextPageWithLayout } from '@/pages/_app';
 
 const Grid = styled(MuiGrid)(({ theme }) => ({
-  backgroundColor: "transparent",
-  boxShadow: "none",
+  backgroundColor: 'transparent',
+  boxShadow: 'none',
 }));
 
 const TabsContainerWrapper = styled(Box)(
@@ -68,7 +68,7 @@ const TabsContainerWrapper = styled(Box)(
               position: relative;
               margin-right: ${theme.spacing(1)};
               font-size: ${theme.typography.pxToRem(14)};
-              color: ${theme.colors.alpha.black["50"]};
+              color: ${theme.colors.alpha.black['50']};
               border-bottom-left-radius: 0;
               border-bottom-right-radius: 0;
 
@@ -111,7 +111,7 @@ const DashboardTasks: NextPageWithLayout = () => {
   const series = [44, 55, 41, 17];
   const options: ApexOptions = {
     chart: {
-      type: "donut",
+      type: 'donut',
     },
     dataLabels: {
       enabled: false,
@@ -119,11 +119,11 @@ const DashboardTasks: NextPageWithLayout = () => {
     plotOptions: {
       pie: {
         donut: {
-          size: "80%",
+          size: '80%',
         },
       },
     },
-    labels: ["New Clients Assigned", "Ongoing", "Completed", "Rejected"],
+    labels: ['New Clients Assigned', 'Ongoing', 'Completed', 'Rejected'],
     responsive: [
       {
         breakpoint: 1280,
@@ -132,18 +132,18 @@ const DashboardTasks: NextPageWithLayout = () => {
             width: 400,
           },
           legend: {
-            position: "right",
+            position: 'right',
           },
         },
       },
     ],
   };
 
-  const [currentTab, setCurrentTab] = useState<string>("analytics");
+  const [currentTab, setCurrentTab] = useState<string>('analytics');
 
   const tabs = [
-    { value: "analytics", label: "Analytics Overview" },
-    { value: "taskSearch", label: "Task Search" },
+    { value: 'analytics', label: 'Analytics Overview' },
+    { value: 'taskSearch', label: 'Task Search' },
   ];
 
   const handleTabsChange = (_event: ChangeEvent<any>, value: string): void => {
@@ -151,19 +151,19 @@ const DashboardTasks: NextPageWithLayout = () => {
   };
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth='xl'>
       <Grid container spacing={2}>
         <Grid item container spacing={2} md={8}>
           <Grid item xs>
             <Card
               sx={{
-                background: "#FFF",
+                background: '#FFF',
                 borderRadius: 1,
-                boxShadow: "0px 2px 5px 0px rgb(58 53 65 / 10%)",
+                boxShadow: '0px 2px 5px 0px rgb(58 53 65 / 10%)',
               }}
             >
-              <CardHeader title="Customer Analytics" />
-              <Divider sx={{ mx: 2 }} />
+              <CardHeader title='Customer Analytics' />
+
               <Container sx={{ py: 4 }}>
                 <TaskOverview />
               </Container>

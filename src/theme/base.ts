@@ -2,9 +2,9 @@ import { Theme } from '@mui/material';
 import React from 'react';
 
 import { DarkSpacesTheme } from './schemes/DarkSpacesTheme';
-import { GreenFieldsTheme } from './schemes/GreenFieldsTheme';
+// import { GreenFieldsTheme } from './schemes/GreenFieldsTheme';
 import { MonkeyAndBanaTheme } from './schemes/MonkeyAndBanaTheme';
-import { NebulaFighterTheme } from './schemes/NebulaFighterTheme';
+// import { NebulaFighterTheme } from './schemes/NebulaFighterTheme';
 
 export function themeCreator(theme: string): Theme {
   return themeMap[theme];
@@ -252,8 +252,8 @@ declare module '@mui/material/styles' {
 }
 
 const themeMap: { [key: string]: Theme } = {
-  NebulaFighterTheme,
+  // NebulaFighterTheme,
   DarkSpacesTheme,
-  GreenFieldsTheme,
+  // GreenFieldsTheme,
   MonkeyAndBanaTheme,
 };

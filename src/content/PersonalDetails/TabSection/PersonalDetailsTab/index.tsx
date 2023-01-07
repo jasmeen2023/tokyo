@@ -8,18 +8,22 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableRow,
   TextField,
+  tableRowClasses,
   styled,
-} from "@mui/material";
-import PropTypes from "prop-types";
-import Typography from "@mui/material/Typography";
-import { Box } from "@mui/system";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
-import { useState } from "react";
+} from '@mui/material';
+import PropTypes from 'prop-types';
+import Typography from '@mui/material/Typography';
+import { Box } from '@mui/system';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import { useState } from 'react';
+import { makeStyles } from '@mui/styles';
 
 // import { useCreateCatalogue } from "@/hooks/catalogue/useCatalogue";
 
@@ -62,1015 +66,265 @@ import { useState } from "react";
 // };
 
 const InputBoxes = styled(TextField)(({ theme }) => ({
-  background: "#FFFFFF",
+  background: '#FFFFFF',
+  borderRadius: '4px',
 }));
 
 const InputSelect = styled(Select)(({ theme }) => ({
-  background: "#FFFFFF",
+  background: '#FFFFFF',
 }));
+
+const CustomTableCell = styled(TableCell)(() => ({
+  background: '#EEF7FE',
+  fontWeight: 400,
+  fontSize: '16px',
+  lineHeight: '24px',
+  color: '#263238',
+}));
+
+const applicants = [
+  {
+    title: 'Mrs',
+    firstName: 'Carole',
+    middleName: '-',
+    surName: 'Demas',
+    email: 'carole.demas@hotmail.com',
+    phoneNumber: '+41 6744589624',
+    dateofBirth: '02-02-1989',
+    nationality: 'British',
+    maritalStatus: 'Married',
+    visaType: 'Tier 1, 2 Work Permit',
+    employmentStatus: 'Employed',
+    salary: '£ 20000',
+    addressHistory: '27 Old Gloucester Street',
+    occupation: 'Occupation name1',
+    outstanding: '£ 4850.00',
+    dependence: '2',
+  },
+  {
+    title: 'Mr',
+    firstName: 'Carole',
+    middleName: '-',
+    surName: 'Demas',
+    email: 'carole.demas@hotmail.com',
+    phoneNumber: '+41 6744589624',
+    dateofBirth: '02-02-1989',
+    nationality: 'British',
+    maritalStatus: 'Married',
+    visaType: 'Tier 1, 2 Work Permit',
+    employmentStatus: 'Employed',
+    salary: '£ 20000',
+    addressHistory: '27 Old Gloucester Street',
+    occupation: 'Occupation name1',
+    outstanding: '£ 4850.00',
+    dependence: '2',
+  },
+];
 
 const rowdata = [
   {
     id: 1,
-    name: "Title",
+    name: 'Title',
   },
   {
     id: 2,
-    name: "First Name *",
+    name: 'First Name *',
   },
   {
     id: 3,
-    name: "Middle Name",
+    name: 'Middle Name',
   },
   {
     id: 4,
-    name: "Surname *",
+    name: 'Surname *',
   },
   {
     id: 5,
-    name: "Email *",
+    name: 'Email *',
   },
   {
     id: 6,
-    name: "Phone Number",
+    name: 'Phone Number',
   },
   {
     id: 7,
-    name: "Date of Birth",
+    name: 'Date of Birth',
   },
   {
     id: 8,
-    name: "Nationality",
+    name: 'Nationality',
   },
   {
     id: 9,
-    name: "Marital Status",
+    name: 'Marital Status',
   },
   {
     id: 10,
-    name: "VISA Type",
+    name: 'VISA Type',
   },
   {
     id: 11,
-    name: "Employment Status",
+    name: 'Employment Status',
   },
   {
     id: 12,
-    name: "Salary",
+    name: 'Salary',
   },
   {
     id: 13,
-    name: "Address History",
+    name: 'Address History',
   },
   {
     id: 14,
-    name: "Occupation",
+    name: 'Occupation',
   },
   {
     id: 15,
-    name: "Outstanding",
+    name: 'Outstanding',
   },
   {
     id: 16,
-    name: "Dependence",
+    name: 'Dependence',
   },
 ];
 
+const tableData = rowdata?.map((row, index) => ({
+  ...row,
+  data: applicants
+    //.filter((applicant, ai) => index === ai)
+    .map((applicant, i) => applicant[Object.keys(applicant)[index]]),
+}));
+
+console.log(tableData);
+
+const useStyles = makeStyles((theme) => ({
+  cell_short_blue_bg: {
+    width: '20%',
+  },
+  cell_short: {
+    width: '25%',
+    borderRight: '2px solid rgba(196, 196, 196, 0.4)',
+    textAlign: 'center',
+  },
+  // row_border: {
+  //   borderBottom: '2px dashed rgba(151, 151, 151, 0.24)',
+  // },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  // border_row: {
+  //   borderBottom: '3px solid blue',
+  // },
+}));
+
 const PersonalDetailsTab = () => {
+  const classes = useStyles();
   return (
-    <Box>
-      <Grid container mb={1}>
-        <Grid
-          item
-          xs={12}
-          sx={{
-            background: "#4B65B2",
-            borderRadius: "4px",
-            textAlign: "center",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 0.5,
-          }}
-        >
-          <Typography
-            sx={{
-              fontStyle: "normal",
-              fontWeight: 400,
-              fontSize: "14px",
-              lineHeight: "19px",
-              color: "#F6F7F8",
-              padding: 2,
-            }}
-          >
-            Applicant 1 Name
-          </Typography>
-          <Box
-            sx={{
-              fontWeight: 600,
-              fontSize: "16px",
-              lineHeight: "140.1%",
-              alignItems: "center",
-              textTransform: "capitalize",
-              color: "#FFFFFF",
-              background: "#4B65B2",
-              border: "1px solid #FFFFFF",
-              borderRadius: "4px",
-              padding: "10px 40px 10px 10px",
-            }}
-          >
-            Carole Demas
-          </Box>
-          <IconButton aria-label="settings">
-            <MoreVertIcon sx={{ color: "#FFF" }} />
-          </IconButton>
-          <Typography
-            sx={{
-              fontStyle: "normal",
-              fontWeight: 400,
-              fontSize: "14px",
-              lineHeight: "19px",
-              color: "#F6F7F8",
-              padding: 2,
-            }}
-          >
-            Applicant 1 Name
-          </Typography>
-          <Box
-            sx={{
-              fontWeight: 600,
-              fontSize: "16px",
-              lineHeight: "140.1%",
-              alignItems: "center",
-              textTransform: "capitalize",
-              color: "#FFFFFF",
-              background: "#4B65B2",
-              border: "1px solid #FFFFFF",
-              borderRadius: "4px",
-              padding: "10px 40px 10px 10px",
-            }}
-          >
-            Carole Demas
-          </Box>
-          <IconButton aria-label="settings">
-            <MoreVertIcon sx={{ color: "#FFF" }} />
-          </IconButton>
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={2}>
-        <Grid item xs={2}>
-          <Table
-            sx={{ background: "#EEF7FE", borderRadius: "4px 0px 0px 4px" }}
-          >
-            <TableBody>
-              {rowdata.map((data) => (
-                <TableRow
-                  key={data.id}
-                  sx={{ background: "transparent", boxShadow: "0" }}
-                >
-                  <TableCell
-                    sx={{
-                      fontWeight: 400,
-                      fontSize: "16px",
-                      paddingTop: "30.2px",
-                      paddingBottom: "30.2px",
-                      // display: "flex",
-                      // alignItems: "baseline",
-                      color: "#263238",
-                    }}
-                  >
-                    {data.name}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Grid>
-
-        <Grid item xs={3}>
-          <Table
-            sx={{
-              background: "#FFF",
-              borderRadius: "4px 0px 0px 4px",
-              borderRight: "2px solid rgba(196, 196, 196, 0.4)",
-            }}
-          >
-            <TableBody>
-              <TableRow
+    <Table
+      sx={{
+        background: '#FFF',
+        borderSpacing: '0',
+      }}
+    >
+      <TableRow sx={{ background: '#4B65B2', borderRadius: '4px' }}>
+        <TableCell sx={{ padding: 0.5 }}></TableCell>
+        <TableCell sx={{ padding: 0.5 }}>
+          <TableRow sx={{ background: 'transparent', color: 'white' }}>
+            <TableCell sx={{ padding: 0.5 }}>Applicant 1 Name</TableCell>
+            <TableCell sx={{ padding: 0.5 }}>
+              <Box
                 sx={{
-                  background: "transparent",
-                  boxShadow: "0",
+                  background: '#4B65B0.5',
+                  border: '1px solid #FFFFFF',
+                  borderRadius: '4px',
+                  padding: '8px 70px 8px 10px',
                 }}
               >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-
-                    // padding: 0.8,
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="Mrs."
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow
+                Carlo
+              </Box>
+            </TableCell>
+            <TableCell sx={{ padding: 0.5 }}>
+              <IconButton size='small'>
+                <MoreVertIcon style={{ color: '#FFF' }}></MoreVertIcon>
+              </IconButton>
+            </TableCell>
+          </TableRow>
+        </TableCell>
+        <TableCell sx={{ padding: 0.5 }}>
+          <TableRow sx={{ background: 'transparent', color: 'white' }}>
+            <TableCell sx={{ padding: 0.5 }}>Applicant 2 Name</TableCell>
+            <TableCell sx={{ padding: 0.5 }}>
+              <Box
                 sx={{
-                  background: "transparent",
-                  boxShadow: "0",
+                  background: '#4B65B0.5',
+                  border: '1px solid #FFFFFF',
+                  borderRadius: '4px',
+                  padding: '8px 70px 8px 10px',
                 }}
               >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="Carole"
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow
+                Carlo
+              </Box>
+            </TableCell>
+            <TableCell sx={{ padding: 0.5 }}>
+              <IconButton size='small'>
+                <MoreVertIcon style={{ color: '#FFF' }}></MoreVertIcon>
+              </IconButton>
+            </TableCell>
+          </TableRow>
+        </TableCell>
+        <TableCell sx={{ padding: 0.5 }}>
+          <TableRow sx={{ background: 'transparent', color: 'white' }}>
+            <TableCell sx={{ padding: 0.5 }}>
+              <Box
                 sx={{
-                  background: "transparent",
-                  boxShadow: "0",
+                  background: '#4B65B0.5',
+                  border: '1px solid #FFFFFF',
+                  borderRadius: '4px',
+                  padding: '5px 20px 5px 10px',
+                  display: 'flex',
+                  alignItems: 'center',
                 }}
               >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="-"
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow
+                <IconButton size='small'>
+                  <AddCircleOutlineIcon
+                    style={{ color: '#FFF' }}
+                  ></AddCircleOutlineIcon>
+                </IconButton>
+                <Typography>Add</Typography>
+              </Box>
+            </TableCell>
+            <TableCell sx={{ padding: 0.5 }}>Applicant 3 Name</TableCell>
+          </TableRow>
+        </TableCell>
+      </TableRow>
+      {tableData.map((row) => (
+        <StyledTableRow key={row.id}>
+          <CustomTableCell className={classes.cell_short_blue_bg}>
+            {row.name}
+          </CustomTableCell>
+          {row.data.map((applicant) => (
+            <TableCell
+              key={applicant}
+              className={classes.cell_short}
+              sx={{
+                borderBottom: '2px dashed rgba(196, 196, 196, 0.4)',
+              }}
+            >
+              <InputBoxes
+                defaultValue={applicant}
+                fullWidth
                 sx={{
-                  background: "transparent",
-                  boxShadow: "0",
+                  borderRadius: '4px',
                 }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="Demas"
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="carole.demas@hotmail.com"
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="+41 6744589624"
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="02-02-1989"
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputSelect
-                    // {...register("discountApplicable")}
-                    fullWidth
-                    labelId="demo-simple-InputSelect-helper-label"
-                    id="demo-simple-InputSelect-helper"
-                    name="category"
-                    //  error={Boolean(errors?.discountApplicable)}
-                    defaultValue="remortgage"
-                  >
-                    <MenuItem value="reremortgage">Remortgage</MenuItem>
-                    <MenuItem value="remortgage">Remortgage</MenuItem>
-                  </InputSelect>
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputSelect
-                    // {...register("discountApplicable")}
-                    fullWidth
-                    labelId="demo-simple-InputSelect-helper-label"
-                    id="demo-simple-InputSelect-helper"
-                    name="category"
-                    //  error={Boolean(errors?.discountApplicable)}
-                    defaultValue="remortgage"
-                  >
-                    <MenuItem value="reremortgage">Remortgage</MenuItem>
-                    <MenuItem value="remortgage">Remortgage</MenuItem>
-                  </InputSelect>
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputSelect
-                    // {...register("discountApplicable")}
-                    fullWidth
-                    labelId="demo-simple-InputSelect-helper-label"
-                    id="demo-simple-InputSelect-helper"
-                    name="category"
-                    //  error={Boolean(errors?.discountApplicable)}
-                    defaultValue="remortgage"
-                  >
-                    <MenuItem value="reremortgage">Remortgage</MenuItem>
-                    <MenuItem value="remortgage">Remortgage</MenuItem>
-                  </InputSelect>
-                </TableCell>
-              </TableRow>
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputSelect
-                    // {...register("discountApplicable")}
-                    fullWidth
-                    labelId="demo-simple-InputSelect-helper-label"
-                    id="demo-simple-InputSelect-helper"
-                    name="category"
-                    //  error={Boolean(errors?.discountApplicable)}
-                    defaultValue="remortgage"
-                  >
-                    <MenuItem value="reremortgage">Remortgage</MenuItem>
-                    <MenuItem value="remortgage">Remortgage</MenuItem>
-                  </InputSelect>
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="£ 20000"
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <Grid
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="space-between"
-                  >
-                    <Typography>27 Old Gloucester Street</Typography>
-                    <Button
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "14px",
-                        lineHeight: "19px",
-
-                        textTransform: "lowercase",
-                        color: "#4B65B2",
-                      }}
-                    >
-                      view more
-                    </Button>
-                  </Grid>
-                </TableCell>
-              </TableRow>
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <Grid
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="space-between"
-                  >
-                    <Typography>Occupation name1</Typography>
-                    <Button
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "14px",
-                        lineHeight: "19px",
-
-                        textTransform: "lowercase",
-                        color: "#4B65B2",
-                      }}
-                    >
-                      view more
-                    </Button>
-                  </Grid>
-                </TableCell>
-              </TableRow>
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <Grid
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="space-between"
-                  >
-                    <Typography> £ 4850.00</Typography>
-                    <Button
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "14px",
-                        lineHeight: "19px",
-
-                        textTransform: "lowercase",
-                        color: "#4B65B2",
-                      }}
-                    >
-                      view more
-                    </Button>
-                  </Grid>
-                </TableCell>
-              </TableRow>
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <Grid
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="space-between"
-                  >
-                    <Typography>2</Typography>
-                    <Button
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "14px",
-                        lineHeight: "19px",
-
-                        textTransform: "lowercase",
-                        color: "#4B65B2",
-                      }}
-                    >
-                      view more
-                    </Button>
-                  </Grid>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </Grid>
-
-        <Grid item xs={3}>
-          <Table
-            sx={{
-              background: "#FFF",
-              borderRadius: "4px 0px 0px 4px",
-              borderRight: "2px solid rgba(196, 196, 196, 0.4)",
-            }}
-          >
-            <TableBody>
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-
-                    // padding: 0.8,
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="Mrs."
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="Carole"
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="-"
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="Demas"
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="carole.demas@hotmail.com"
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="+41 6744589624"
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="02-02-1989"
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputSelect
-                    // {...register("discountApplicable")}
-                    fullWidth
-                    labelId="demo-simple-InputSelect-helper-label"
-                    id="demo-simple-InputSelect-helper"
-                    name="category"
-                    //  error={Boolean(errors?.discountApplicable)}
-                    defaultValue="remortgage"
-                  >
-                    <MenuItem value="reremortgage">Remortgage</MenuItem>
-                    <MenuItem value="remortgage">Remortgage</MenuItem>
-                  </InputSelect>
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputSelect
-                    // {...register("discountApplicable")}
-                    fullWidth
-                    labelId="demo-simple-InputSelect-helper-label"
-                    id="demo-simple-InputSelect-helper"
-                    name="category"
-                    //  error={Boolean(errors?.discountApplicable)}
-                    defaultValue="remortgage"
-                  >
-                    <MenuItem value="reremortgage">Remortgage</MenuItem>
-                    <MenuItem value="remortgage">Remortgage</MenuItem>
-                  </InputSelect>
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputSelect
-                    // {...register("discountApplicable")}
-                    fullWidth
-                    labelId="demo-simple-InputSelect-helper-label"
-                    id="demo-simple-InputSelect-helper"
-                    name="category"
-                    //  error={Boolean(errors?.discountApplicable)}
-                    defaultValue="remortgage"
-                  >
-                    <MenuItem value="reremortgage">Remortgage</MenuItem>
-                    <MenuItem value="remortgage">Remortgage</MenuItem>
-                  </InputSelect>
-                </TableCell>
-              </TableRow>
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputSelect
-                    // {...register("discountApplicable")}
-                    fullWidth
-                    labelId="demo-simple-InputSelect-helper-label"
-                    id="demo-simple-InputSelect-helper"
-                    name="category"
-                    //  error={Boolean(errors?.discountApplicable)}
-                    defaultValue="remortgage"
-                  >
-                    <MenuItem value="reremortgage">Remortgage</MenuItem>
-                    <MenuItem value="remortgage">Remortgage</MenuItem>
-                  </InputSelect>
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <InputBoxes
-                    // {...register("name")}
-                    fullWidth
-                    placeholder="£ 20000"
-
-                    // error={Boolean(errors?.name)}
-                    // helperText={errors.name ? `Name is ${errors.name?.message}` : null}
-                  />
-                </TableCell>
-              </TableRow>{" "}
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <Grid
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="space-between"
-                  >
-                    <Typography>27 Old Gloucester Street</Typography>
-                    <Button
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "14px",
-                        lineHeight: "19px",
-
-                        textTransform: "lowercase",
-                        color: "#4B65B2",
-                      }}
-                    >
-                      view more
-                    </Button>
-                  </Grid>
-                </TableCell>
-              </TableRow>
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <Grid
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="space-between"
-                  >
-                    <Typography>Occupation name1</Typography>
-                    <Button
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "14px",
-                        lineHeight: "19px",
-
-                        textTransform: "lowercase",
-                        color: "#4B65B2",
-                      }}
-                    >
-                      view more
-                    </Button>
-                  </Grid>
-                </TableCell>
-              </TableRow>
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <Grid
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="space-between"
-                  >
-                    <Typography> £ 4850.00</Typography>
-                    <Button
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "14px",
-                        lineHeight: "19px",
-
-                        textTransform: "lowercase",
-                        color: "#4B65B2",
-                      }}
-                    >
-                      view more
-                    </Button>
-                  </Grid>
-                </TableCell>
-              </TableRow>
-              <TableRow
-                sx={{
-                  background: "transparent",
-                  boxShadow: "0",
-                }}
-              >
-                <TableCell
-                  sx={{
-                    borderBottom: "2px dashed rgba(151, 151, 151, 0.24)",
-                  }}
-                >
-                  <Grid
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="space-between"
-                  >
-                    <Typography>2</Typography>
-                    <Button
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: "14px",
-                        lineHeight: "19px",
-
-                        textTransform: "lowercase",
-                        color: "#4B65B2",
-                      }}
-                    >
-                      view more
-                    </Button>
-                  </Grid>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </Grid>
-      </Grid>
-    </Box>
+              ></InputBoxes>
+            </TableCell>
+          ))}
+          <TableCell
+            sx={{ borderBottom: '2px dashed rgba(196, 196, 196, 0.4)' }}
+          ></TableCell>
+        </StyledTableRow>
+      ))}
+    </Table>
   );
 };
 

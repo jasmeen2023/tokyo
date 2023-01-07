@@ -105,8 +105,8 @@ const SidebarLayout: FC<SidebarLayoutProps> = ({ children }) => {
         <Box
           sx={{
             position: 'relative',
-            zIndex: 5,
-            mt: 3,
+            zIndex: 0,
+            my: 1,
             display: 'block',
             flex: 1,
             [theme.breakpoints.up('lg')]: {

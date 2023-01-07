@@ -1,10 +1,10 @@
-import { Box, darken, Divider, Drawer, styled, useTheme } from "@mui/material";
-import { useAtom } from "jotai";
-import { useContext } from "react";
-import Scrollbar from "@/components/Scrollbar";
-import { collapsedAtom } from "@/store/sideBar";
-import { SidebarContext } from "@/contexts/SidebarContext";
-import SidebarMenu2 from "./SidebarMenu";
+import { Box, darken, Divider, Drawer, styled, useTheme } from '@mui/material';
+import { useAtom } from 'jotai';
+import { useContext } from 'react';
+import Scrollbar from '@/components/Scrollbar';
+import { collapsedAtom } from '@/store/sideBar';
+import { SidebarContext } from '@/contexts/SidebarContext';
+import SidebarMenu2 from './SidebarMenu';
 
 function Sidebar2() {
   const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
@@ -14,11 +14,12 @@ function Sidebar2() {
 
   const SidebarWrapper2 = styled(Box)(
     ({ theme }) => `
-        width: ${collapsed ? theme.sidebar.width : "0px"};
-        min-width: ${collapsed ? theme.sidebar.width : "80px"};
+        width: ${collapsed ? theme.sidebar.width : '0px'};
+        min-width: ${'350px'};
         color: ${theme.colors.alpha.trueWhite[70]};
         position: relative;
-        z-index: 4;
+        top: ${theme.header.height};
+        z-index: 0;
         height: 100%;
         padding-bottom: 68px;
 `
@@ -29,18 +30,18 @@ function Sidebar2() {
       <SidebarWrapper2
         sx={{
           display: {
-            xs: "none",
-            lg: "inline-block",
+            xs: 'none',
+            lg: 'inline-block',
           },
-          position: "fixed",
+          position: 'fixed',
           left: 0,
-          top: 0,
-          background:
-            theme.palette.mode === "dark"
-              ? theme.colors.gradients.blue4
-              : darken(theme.colors.alpha.black[100], 0.5),
-          boxShadow:
-            theme.palette.mode === "dark" ? theme.sidebar.boxShadow : "none",
+          top: '50px',
+          // background:
+          //   theme.palette.mode === 'dark'
+          //     ? theme.colors.gradients.blue4
+          //     : darken(theme.colors.alpha.black[100], 0.5),
+          // boxShadow:
+          //   theme.palette.mode === 'dark' ? theme.sidebar.boxShadow : 'none',
         }}
       >
         <Scrollbar>
@@ -69,16 +70,16 @@ function Sidebar2() {
         sx={{
           boxShadow: `${theme.sidebar.boxShadow}`,
         }}
-        anchor={theme.direction === "rtl" ? "right" : "left"}
+        anchor={theme.direction === 'rtl' ? 'right' : 'left'}
         open={sidebarToggle}
         onClose={closeSidebar}
-        variant="temporary"
+        variant='temporary'
         elevation={9}
       >
         <SidebarWrapper2
           sx={{
             background:
-              theme.palette.mode === "dark"
+              theme.palette.mode === 'dark'
                 ? theme.colors.alpha.white[100]
                 : darken(theme.colors.alpha.black[100], 0.5),
           }}

@@ -1,4 +1,4 @@
-import MmsTwoToneIcon from "@mui/icons-material/MmsTwoTone";
+import MmsTwoToneIcon from '@mui/icons-material/MmsTwoTone';
 import {
   alpha,
   Box,
@@ -12,22 +12,30 @@ import {
   CardHeader,
   Grid,
   Typography,
-} from "@mui/material";
-import { useAtom } from "jotai";
-import NextLink from "next/link";
-import { useRouter } from "next/router";
-import { useContext } from "react";
+  IconButton,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+} from '@mui/material';
+import { useAtom } from 'jotai';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import { useContext } from 'react';
 
-import { collapsedAtom } from "@/store/sideBar";
-import { userAtom } from "@/store/user";
+import { collapsedAtom } from '@/store/sideBar';
+import { userAtom } from '@/store/user';
 
-import { SidebarContext } from "@/contexts/SidebarContext";
+import { SidebarContext } from '@/contexts/SidebarContext';
 
-import Diagram from "~/assets/svg/sidebar/diagram.svg";
-import PeopleSvg from "~/assets/svg/sidebar/people.svg";
-import Report from "~/assets/svg/sidebar/report.svg";
-import Task from "~/assets/svg/sidebar/task.svg";
-import Image from "next/image";
+import Diagram from '~/assets/svg/sidebar/diagram.svg';
+import PeopleSvg from '~/assets/svg/sidebar/people.svg';
+import Report from '~/assets/svg/sidebar/report.svg';
+import Task from '~/assets/svg/sidebar/task.svg';
+import Image from 'next/image';
+
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+
+import VerticalSidebarTabs from '../../../../content/VerticalSidebarTabs';
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -75,7 +83,7 @@ const SubMenuWrapper2 = styled(Box)(
 
           .MuiButton-startIcon,
           .MuiButton-endIcon {
-            transition: ${theme.transitions.create(["color"])};
+            transition: ${theme.transitions.create(['color'])};
 
             .MuiSvgIcon-root {
               font-size: inherit;
@@ -131,8 +139,8 @@ const SubMenuWrapper2 = styled(Box)(
                 background: ${theme.colors.alpha.trueWhite[100]};
                 opacity: 0;
                 transition: ${theme.transitions.create([
-                  "transform",
-                  "opacity",
+                  'transform',
+                  'opacity',
                 ])};
 
                 transform: scale(0);
@@ -166,497 +174,478 @@ function SidebarMenu2() {
 
   return (
     <MenuWrapper>
-      {/* <List component='div'>
-        <SubMenuWrapper>
-          <List component='div'>
-            <ListItem component='div'>
-              <NextLink href='/' passHref>
-                <Button
-                  className={currentRoute === '="/' ? 'active' : ''}
-                  disableRipple
-                  component='a'
-                  onClick={closeSidebar}
-                  startIcon={<DesignServicesTwoTone />}
-                >
-                  Overview
-                </Button>
-              </NextLink>
-            </ListItem>
-          </List>
-        </SubMenuWrapper>
-      </List> */}
-      <List
-        component="div"
-        // subheader={
-        //   <ListSubheader component='div' disableSticky>
-        //     Dashboards
-        //   </ListSubheader>
-        // }
-      >
-        <SubMenuWrapper2>
-          {/* <List component="div"> */}
-          {/* <ListItem component='div'>
-              <NextLink href={route.path} passHref>
-                <Button
-                  className={currentRoute === route.path ? 'active' : ''}
-                  disableRipple
-                  component='a'
-                  onClick={closeSidebar}
-                  startIcon={<BrightnessLowTwoToneIcon />}
-                >
-                  {collapsed ? route.title : ''}
-                </Button>
-              </NextLink>
-            </ListItem> */}
-          {/* {menu
-              ?.find((route) => route.path === "/")
-              ?.access.includes(user?.role as string) && (
-              <ListItem component="div">
-                <NextLink href="/" passHref>
-                  <Button
-                    className={currentRoute === "/" ? "active" : ""}
-                    disableRipple
-                    component="a"
-                    onClick={closeSidebar}
-                    startIcon={<Diagram />}
-                  >
-                    {collapsed ? "Dashboard" : ""}
-                  </Button>
-                </NextLink>
-              </ListItem>
-            )}
-            {menu
-              ?.find((route) => route.path === "/cases")
-              ?.access.includes(user?.role as string) && (
-              <ListItem component="div">
-                <NextLink href="/cases" passHref>
-                  <Button
-                    className={currentRoute === "/cases" ? "active" : ""}
-                    disableRipple
-                    component="a"
-                    onClick={closeSidebar}
-                    startIcon={<Report />}
-                  >
-                    {collapsed ? "Cases" : ""}
-                  </Button>
-                </NextLink>
-              </ListItem>
-            )}
-            {menu
-              ?.find((route) => route.path === "/task")
-              ?.access.includes(user?.role as string) && (
-              <ListItem component="div">
-                <NextLink href="/task" passHref>
-                  <Button
-                    className={currentRoute === "/task" ? "active" : ""}
-                    disableRipple
-                    component="a"
-                    onClick={closeSidebar}
-                    startIcon={<Task />}
-                  >
-                    {collapsed ? "Task" : ""}
-                  </Button>
-                </NextLink>
-              </ListItem>
-            )}
-            {menu
-              ?.find((route) => route.path === "/rewards")
-              ?.access.includes(user?.role as string) && (
-              <ListItem component="div">
-                <NextLink href="/rewards" passHref>
-                  <Button
-                    className={currentRoute === "/rewards" ? "active" : ""}
-                    disableRipple
-                    component="a"
-                    onClick={closeSidebar}
-                    startIcon={<PeopleSvg />}
-                  >
-                    {collapsed ? "Rewards" : ""}
-                  </Button>
-                </NextLink>
-              </ListItem>
-            )}
-            {menu
-              ?.find((route) => route.path === "/fieldagents")
-              ?.access.includes(user?.role as string) && (
-              <ListItem component="div">
-                <NextLink href="/fieldagents" passHref>
-                  <Button
-                    className={currentRoute === "/fieldagents" ? "active" : ""}
-                    disableRipple
-                    component="a"
-                    onClick={closeSidebar}
-                    startIcon={<MmsTwoToneIcon />}
-                  >
-                    {collapsed ? "Field Agents" : ""}
-                  </Button>
-                </NextLink>
-              </ListItem>
-            )}
-          </List> */}
-        </SubMenuWrapper2>
-      </List>
-
       <Container>
         <Card
           sx={{
-            background: "#FFFFFF",
-            border: "0.5px solid #999999",
-            borderRadius: "8px",
+            background: '#FFF',
+            borderRadius: 0,
+            boxShadow: '0px 2px 5px 0px rgb(58 53 65 / 10%)',
+            marginY: 2,
           }}
         >
           <CardContent>
-            <CardHeader
-              title="Next Follow update"
-              // action={<Button>view</Button>}
-              sx={{ background: "#EEF7FE" }}
-            />
-
-            <Box>
-              <Typography
-                sx={{
-                  fontStyle: "normal",
-                  fontWeight: 600,
-                  fontSize: "16px",
-                  lineHeight: "24px",
-                  letterSpacing: "0.01em",
-                  color: "#292D32",
-                }}
-              >
-                SEP 19, 2022 12:30 PM
-              </Typography>
-              <Typography>
-                A case note is a summary and analysis of a single case, as
-                opposed to an article,{" "}
-              </Typography>
-            </Box>
+            <VerticalSidebarTabs />
           </CardContent>
         </Card>
+        <Card
+          sx={{
+            background: '#FFF',
+            borderRadius: 0,
+            boxShadow: '0px 2px 5px 0px rgb(58 53 65 / 10%)',
+            marginY: 2,
+          }}
+        >
+          <CardHeader
+            title='Next Follow update'
+            action={
+              <IconButton>
+                <DriveFileRenameOutlineIcon sx={{ color: '#4B65B2' }} />
+              </IconButton>
+            }
+            sx={{
+              background: '#EEF7FE',
+              fontWeight: 600,
+              fontSize: '16px',
+              lineHeight: '21px',
+              display: 'flex',
+              alignItems: 'flex-end',
+              textTransform: 'capitalize',
+              color: '#4B473E',
+            }}
+          />
 
-        <Card>
           <CardContent>
-            <CardHeader
-              title="Application Status"
-              // action={<Button>view</Button>}
-              sx={{ background: "#EEF7FE", borderRadius: "4px" }}
-            />
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: '14px',
+                lineHeight: '19px',
+                display: 'flex',
+                alignItems: 'flex-end',
+                textTransform: 'capitalize',
+                color: '#000000',
+                marginBoottom: 1,
+              }}
+            >
+              SEP 19, 2022 12:30 PM
+            </Typography>
+            <Typography
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 400,
+                fontSize: '12px',
+                lineHeight: '20px',
+                letterSpacing: '0.01em',
 
-            <Box>
-              <Grid container>
-                <Grid
-                  item
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
+                color: '#4B473E',
+              }}
+            >
+              A case note is a summary and analysis of a single case, as opposed
+              to an article,{' '}
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card
+          sx={{
+            background: '#FFF',
+            borderRadius: 0,
+            boxShadow: '0px 2px 5px 0px rgb(58 53 65 / 10%)',
+            marginY: 2,
+          }}
+        >
+          <CardHeader
+            title='Application Status'
+            // action={<Button>view</Button>}
+            sx={{ background: '#EEF7FE' }}
+          />
+
+          <List>
+            <ListItem
+              sx={{ padding: '12px 10px' }}
+              secondaryAction={
+                <Typography
+                  sx={{
+                    fontWeight: 400,
+                    fontSize: '10px',
+                    lineHeight: '24px',
+                    letterSpacing: '0.01em',
+                    color: '#979797',
+                  }}
                 >
-                  <Image
-                    src="/images/green.png"
-                    alt="logo"
-                    width={22.5}
-                    height={22.5}
-                  />
-                  <Typography>New Lead</Typography>
-                  <Typography>Glenn Cannon</Typography>
+                  SEP 10, 2022 12:30 PM
+                </Typography>
+              }
+            >
+              <ListItemAvatar sx={{ minWidth: '38px' }}>
+                <Image
+                  src='/images/green.png'
+                  alt=''
+                  width='25px'
+                  height='25px'
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary={
+                  <Typography
+                    sx={{
+                      fontWeight: 400,
+                      fontSize: '14px',
+                      lineHeight: '19px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      textTransform: 'capitalize',
+                      color: '#000000',
+                    }}
+                  >
+                    New Lead
+                  </Typography>
+                }
+                secondary={
+                  <Typography
+                    sx={{
+                      fontStyle: 'normal',
+                      fontWeight: 400,
+                      fontSize: '12px',
+                      lineHeight: '16px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      textTransform: 'capitalize',
+                      color: '#8C8C8C',
+                    }}
+                  >
+                    Glenn Cannon
+                  </Typography>
+                }
+              />
+            </ListItem>
+            <ListItem
+              sx={{ padding: '12px 10px' }}
+              secondaryAction={
+                <Typography
+                  sx={{
+                    fontWeight: 400,
+                    fontSize: '10px',
+                    lineHeight: '24px',
+                    letterSpacing: '0.01em',
+                    color: '#979797',
+                  }}
+                >
+                  SEP 10, 2022 12:30 PM
+                </Typography>
+              }
+            >
+              <ListItemAvatar sx={{ minWidth: '38px' }}>
+                <Image
+                  src='/images/green.png'
+                  alt=''
+                  width='25px'
+                  height='25px'
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary={
+                  <Typography
+                    sx={{
+                      fontWeight: 400,
+                      fontSize: '14px',
+                      lineHeight: '19px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      textTransform: 'capitalize',
+                      color: '#000000',
+                    }}
+                  >
+                    New Lead
+                  </Typography>
+                }
+                secondary={
+                  <Typography
+                    sx={{
+                      fontStyle: 'normal',
+                      fontWeight: 400,
+                      fontSize: '12px',
+                      lineHeight: '16px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      textTransform: 'capitalize',
+                      color: '#8C8C8C',
+                    }}
+                  >
+                    Glenn Cannon
+                  </Typography>
+                }
+              />
+            </ListItem>
+            <ListItem
+              sx={{ padding: '12px 10px' }}
+              secondaryAction={
+                <Typography
+                  sx={{
+                    fontWeight: 400,
+                    fontSize: '10px',
+                    lineHeight: '24px',
+                    letterSpacing: '0.01em',
+                    color: '#979797',
+                  }}
+                >
+                  SEP 10, 2022 12:30 PM
+                </Typography>
+              }
+            >
+              <ListItemAvatar sx={{ minWidth: '38px' }}>
+                <Image
+                  src='/images/green.png'
+                  alt=''
+                  width='25px'
+                  height='25px'
+                />
+              </ListItemAvatar>
+              <ListItemText
+                primary={
+                  <Typography
+                    sx={{
+                      fontWeight: 400,
+                      fontSize: '14px',
+                      lineHeight: '19px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      textTransform: 'capitalize',
+                      color: '#000000',
+                    }}
+                  >
+                    New Lead
+                  </Typography>
+                }
+                secondary={
+                  <Typography
+                    sx={{
+                      fontStyle: 'normal',
+                      fontWeight: 400,
+                      fontSize: '12px',
+                      lineHeight: '16px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      textTransform: 'capitalize',
+                      color: '#8C8C8C',
+                    }}
+                  >
+                    Glenn Cannon
+                  </Typography>
+                }
+              />
+            </ListItem>
+          </List>
+        </Card>
 
-                  <Typography>SEP 10, 2022 12:30 PM</Typography>
-                </Grid>
-              </Grid>
-            </Box>
+        <Card
+          sx={{
+            background:
+              'linear-gradient(90.07deg, #4B65B2 17.96%, #13BBE6 90.09%)',
+            borderRadius: '8px',
+            marginY: 2,
+          }}
+        >
+          <CardContent>
+            <List>
+              <ListItem sx={{ padding: '20px 0px' }}>
+                <ListItemAvatar>
+                  <Image
+                    src='/images/color.png'
+                    alt=''
+                    width='50px'
+                    height='50px'
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <Typography
+                      sx={{
+                        fontStyle: 'normal',
+                        fontWeight: 500,
+                        fontSize: '12px',
+                        lineHeight: '16px',
+                        textTransform: 'capitalize',
+                        color: '#FFFFFF',
+                      }}
+                    >
+                      Relationship Manager
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography
+                      sx={{
+                        fontWeight: 600,
+                        fontSize: '17px',
+                        lineHeight: '27px',
+                        textTransform: 'capitalize',
+                        color: '#FFFFFF',
+                      }}
+                    >
+                      Glenn Cannon
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem sx={{ padding: '20px 0px' }}>
+                <ListItemAvatar>
+                  <Image
+                    src='/images/color.png'
+                    alt=''
+                    width='50px'
+                    height='50px'
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <Typography
+                      sx={{
+                        fontStyle: 'normal',
+                        fontWeight: 500,
+                        fontSize: '12px',
+                        lineHeight: '16px',
+                        textTransform: 'capitalize',
+                        color: '#FFFFFF',
+                      }}
+                    >
+                      Relationship Manager
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography
+                      sx={{
+                        fontWeight: 600,
+                        fontSize: '17px',
+                        lineHeight: '27px',
+                        textTransform: 'capitalize',
+                        color: '#FFFFFF',
+                      }}
+                    >
+                      Glenn Cannon
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem sx={{ padding: '20px 0px' }}>
+                <ListItemAvatar>
+                  <Image
+                    src='/images/color.png'
+                    alt=''
+                    width='50px'
+                    height='50px'
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <Typography
+                      sx={{
+                        fontStyle: 'normal',
+                        fontWeight: 500,
+                        fontSize: '12px',
+                        lineHeight: '16px',
+                        textTransform: 'capitalize',
+                        color: '#FFFFFF',
+                      }}
+                    >
+                      Relationship Manager
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography
+                      sx={{
+                        fontWeight: 600,
+                        fontSize: '17px',
+                        lineHeight: '27px',
+                        textTransform: 'capitalize',
+                        color: '#FFFFFF',
+                      }}
+                    >
+                      Glenn Cannon
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem sx={{ padding: '20px 0px' }}>
+                <ListItemAvatar>
+                  <Image
+                    src='/images/color.png'
+                    alt=''
+                    width='50px'
+                    height='50px'
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <Typography
+                      sx={{
+                        fontStyle: 'normal',
+                        fontWeight: 500,
+                        fontSize: '12px',
+                        lineHeight: '16px',
+                        textTransform: 'capitalize',
+                        color: '#FFFFFF',
+                      }}
+                    >
+                      Relationship Manager
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography
+                      sx={{
+                        fontWeight: 600,
+                        fontSize: '17px',
+                        lineHeight: '27px',
+                        textTransform: 'capitalize',
+                        color: '#FFFFFF',
+                      }}
+                    >
+                      Glenn Cannon
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem sx={{ padding: '20px 0px' }}>
+                <ListItemAvatar>
+                  <Image
+                    src='/images/color.png'
+                    alt=''
+                    width='50px'
+                    height='50px'
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <Typography
+                      sx={{
+                        fontStyle: 'normal',
+                        fontWeight: 500,
+                        fontSize: '12px',
+                        lineHeight: '16px',
+                        textTransform: 'capitalize',
+                        color: '#FFFFFF',
+                      }}
+                    >
+                      Relationship Manager
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography
+                      sx={{
+                        fontWeight: 600,
+                        fontSize: '17px',
+                        lineHeight: '27px',
+                        textTransform: 'capitalize',
+                        color: '#FFFFFF',
+                      }}
+                    >
+                      Glenn Cannon
+                    </Typography>
+                  }
+                />
+              </ListItem>
+            </List>
           </CardContent>
         </Card>
       </Container>
-      {/* <List
-          component='div'
-          // subheader={
-          //   <ListSubheader component='div' disableSticky>
-          //     Management
-          //   </ListSubheader>
-          // }
-        >
-          <SubMenuWrapper2>
-            <List component='div'>
-              <ListItem component='div'>
-                <NextLink href='/management/transactions' passHref>
-                  <Button
-                    className={
-                      currentRoute === '/management/transactions'
-                        ? 'active'
-                        : ''
-                    }
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<TableChartTwoToneIcon />}
-                  >
-                    {collapsed ? 'Transactions List' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-            </List>
-          </SubMenuWrapper2>
-        </List> */}
-      <List
-        component="div"
-        // subheader={
-        //   <ListSubheader component='div' disableSticky>
-        //     Accounts
-        //   </ListSubheader>
-        // }
-      >
-        {/* <SubMenuWrapper2>
-            <List component='div'>
-              <ListItem component='div'>
-                <NextLink href='/management/profile' passHref>
-                  <Button
-                    className={
-                      currentRoute === '/management/profile' ? 'active' : ''
-                    }
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<AccountCircleTwoToneIcon />}
-                  >
-                    {collapsed ? 'User Profile' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-              <ListItem component='div'>
-                <NextLink href='/management/profile/settings' passHref>
-                  <Button
-                    className={
-                      currentRoute === '/management/profile/settings'
-                        ? 'active'
-                        : ''
-                    }
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<DisplaySettingsTwoToneIcon />}
-                  >
-                    {collapsed ? 'Account Settings' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-            </List>
-          </SubMenuWrapper2> */}
-      </List>
-      <List
-        component="div"
-        // subheader={
-        //   <ListSubheader component='div' disableSticky>
-        //     Components
-        //   </ListSubheader>
-        // }
-      >
-        {/* <SubMenuWrapper2>
-            <List component='div'>
-              <ListItem component='div'>
-                <NextLink href='/components/buttons' passHref>
-                  <Button
-                    className={
-                      currentRoute === '/components/buttons' ? 'active' : ''
-                    }
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<BallotTwoToneIcon />}
-                  >
-                    {collapsed ? 'Buttons' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-              <ListItem component='div'>
-                <NextLink href='/components/modals' passHref>
-                  <Button
-                    className={
-                      currentRoute === '/components/modals' ? 'active' : ''
-                    }
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<BeachAccessTwoToneIcon />}
-                  >
-                    {collapsed ? 'Modals' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-              <ListItem component='div'>
-                <NextLink href='/components/accordions' passHref>
-                  <Button
-                    className={
-                      currentRoute === '/components/accordions' ? 'active' : ''
-                    }
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<EmojiEventsTwoToneIcon />}
-                  >
-                    {collapsed ? 'Accordions' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-              <ListItem component='div'>
-                <NextLink href='/components/tabs' passHref>
-                  <Button
-                    className={
-                      currentRoute === '/components/tabs' ? 'active' : ''
-                    }
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<FilterVintageTwoToneIcon />}
-                  >
-                    {collapsed ? 'Tabs' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-              <ListItem component='div'>
-                <NextLink href='/components/badges' passHref>
-                  <Button
-                    className={
-                      currentRoute === '/components/badges' ? 'active' : ''
-                    }
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<HowToVoteTwoToneIcon />}
-                  >
-                    {collapsed ? 'Badges' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-              <ListItem component='div'>
-                <NextLink href='/components/tooltips' passHref>
-                  <Button
-                    className={
-                      currentRoute === '/components/tooltips' ? 'active' : ''
-                    }
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<LocalPharmacyTwoToneIcon />}
-                  >
-                    {collapsed ? 'Tooltips' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-              <ListItem component='div'>
-                <NextLink href='/components/avatars' passHref>
-                  <Button
-                    className={
-                      currentRoute === '/components/avatars' ? 'active' : ''
-                    }
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<RedeemTwoToneIcon />}
-                  >
-                    {collapsed ? 'Avatars' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-              <ListItem component='div'>
-                <NextLink href='/components/cards' passHref>
-                  <Button
-                    className={
-                      currentRoute === '/components/cards' ? 'active' : ''
-                    }
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<SettingsTwoToneIcon />}
-                  >
-                    {collapsed ? 'Cards' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-              <ListItem component='div'>
-                <NextLink href='/components/forms' passHref>
-                  <Button
-                    className={
-                      currentRoute === '/components/forms' ? 'active' : ''
-                    }
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<TrafficTwoToneIcon />}
-                  >
-                    {collapsed ? 'Forms' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-            </List>
-          </SubMenuWrapper2> */}
-      </List>
-      <List
-        component="div"
-        // subheader={
-        //   <ListSubheader component='div' disableSticky>
-        //     Extra Pages
-        //   </ListSubheader>
-        // }
-      >
-        {/* <SubMenuWrapper2>
-            <List component='div'>
-              <ListItem component='div'>
-                <NextLink href='/status/404' passHref>
-                  <Button
-                    className={currentRoute === '/status/404' ? 'active' : ''}
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<CheckBoxTwoToneIcon />}
-                  >
-                    {collapsed ? 'Error 404' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-              <ListItem component='div'>
-                <NextLink href='/status/500' passHref>
-                  <Button
-                    className={currentRoute === '/status/500' ? 'active' : ''}
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<CameraFrontTwoToneIcon />}
-                  >
-                    {collapsed ? 'Error 500' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-              <ListItem component='div'>
-                <NextLink href='/status/coming-soon' passHref>
-                  <Button
-                    className={
-                      currentRoute === '/status/coming-soon' ? 'active' : ''
-                    }
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<ChromeReaderModeTwoToneIcon />}
-                  >
-                    {collapsed ? 'Coming Soon' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-              <ListItem component='div'>
-                <NextLink href='/status/maintenance' passHref>
-                  <Button
-                    className={
-                      currentRoute === '/status/maintenance' ? 'active' : ''
-                    }
-                    disableRipple
-                    component='a'
-                    onClick={closeSidebar}
-                    startIcon={<WorkspacePremiumTwoToneIcon />}
-                  >
-                    {collapsed ? 'Maintenance' : ''}
-                  </Button>
-                </NextLink>
-              </ListItem>
-            </List>
-          </SubMenuWrapper2> */}
-      </List>
     </MenuWrapper>
   );
 }

@@ -5,17 +5,17 @@ import {
   lighten,
   Typography,
   useTheme,
-} from "@mui/material";
-import { useAtom } from "jotai";
-import PropTypes from "prop-types";
-import { FC, ReactNode } from "react";
+} from '@mui/material';
+import { useAtom } from 'jotai';
+import PropTypes from 'prop-types';
+import { FC, ReactNode } from 'react';
 
-import Link from "@/components/Link";
+import Link from '@/components/Link';
 
-import { collapsedAtom } from "@/store/sideBar";
+import { collapsedAtom } from '@/store/sideBar';
 
-import Header from "./Header";
-import Sidebar2 from "./Sidebar";
+import Header from './Header';
+import Sidebar2 from './Sidebar';
 
 interface SidebarLayoutProps {
   children?: ReactNode;
@@ -27,24 +27,24 @@ const SidebarLayout2: FC<SidebarLayoutProps> = ({ children }) => {
 
   const breadcrumbs = [
     <Link
-      underline="hover"
-      key="1"
-      color="inherit"
-      href="/"
+      underline='hover'
+      key='1'
+      color='inherit'
+      href='/'
       onClick={undefined}
     >
       MUI
     </Link>,
     <Link
-      underline="hover"
-      key="2"
-      color="inherit"
-      href="/material-ui/getting-started/installation/"
+      underline='hover'
+      key='2'
+      color='inherit'
+      href='/material-ui/getting-started/installation/'
       onClick={undefined}
     >
       Core
     </Link>,
-    <Typography key="3" color="text.primary">
+    <Typography key='3' color='text.primary'>
       Breadcrumb
     </Typography>,
   ];
@@ -54,16 +54,16 @@ const SidebarLayout2: FC<SidebarLayoutProps> = ({ children }) => {
       <Box
         sx={{
           flex: 1,
-          height: "100%",
+          height: '100%',
 
-          ".MuiPageTitle-wrapper": {
+          '.MuiPageTitle-wrapper': {
             background:
-              theme.palette.mode === "dark"
+              theme.palette.mode === 'dark'
                 ? theme.colors.secondary
                 : theme.colors.secondary,
             marginBottom: `${theme.spacing(4)}`,
             boxShadow:
-              theme.palette.mode === "dark"
+              theme.palette.mode === 'dark'
                 ? `0 1px 0 ${alpha(
                     lighten(theme.colors.primary.main, 0.7),
                     0.15
@@ -82,39 +82,30 @@ const SidebarLayout2: FC<SidebarLayoutProps> = ({ children }) => {
         <Sidebar2 />
         <Box
           sx={{
-            position: "relative",
+            position: 'relative',
             zIndex: 5,
-            mt: 3,
-            display: "block",
+            my: 1,
+            display: 'block',
             pt: `${theme.header.height}`,
-            [theme.breakpoints.up("lg")]: {
-              ml: `${collapsed ? theme.sidebar.width : "80px"}`,
+            [theme.breakpoints.up('lg')]: {
+              ml: `${'320px'}`,
             },
           }}
-        >
-          <Container maxWidth="lg">
-            {/* <Breadcrumbs
-              separator={<NavigateNext fontSize='small' />}
-              aria-label='breadcrumb'
-            >
-              {breadcrumbs}
-            </Breadcrumbs> */}
-          </Container>
-        </Box>
+        ></Box>
 
         <Box
           sx={{
-            position: "relative",
-            zIndex: 5,
-            mt: 3,
-            display: "block",
+            position: 'relative',
+            zIndex: 0,
+            my: 1,
+            display: 'block',
             flex: 1,
-            [theme.breakpoints.up("lg")]: {
-              ml: `${collapsed ? theme.sidebar.width : "80px"}`,
+            [theme.breakpoints.up('lg')]: {
+              ml: `${'320px'}`,
             },
           }}
         >
-          <Box display="block">{children}</Box>
+          <Box display='block'>{children}</Box>
         </Box>
       </Box>
     </>

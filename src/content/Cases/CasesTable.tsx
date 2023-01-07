@@ -2,7 +2,10 @@ import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
 import {
   Box,
   Card,
+  FormControl,
   IconButton,
+  Input,
+  InputAdornment,
   SelectChangeEvent,
   styled,
   Table,
@@ -26,6 +29,7 @@ import { ChangeEvent, FC, useState } from 'react';
 
 import Label from '@/components/Label';
 import OutLinedLabel from '@/components/OutLinedLabel';
+import SearchIcon from '@mui/icons-material/Search';
 
 import { Case } from '@/models/case';
 import { CaseStatus } from '@/models/case';
@@ -156,58 +160,210 @@ const CasesTable: FC<RecentOrdersTableProps> = ({ cases }) => {
         boxShadow: 'none',
       }}
     >
-      <Grid container>
-        <Grid item container xs={9}>
-          <Grid item container xs>
-            <Grid item xs={12}>
-              <Typography>Case Filters</Typography>
-            </Grid>
-            <Grid item>
-              <OutLinedLabel color='#4B65B2'>Introducers</OutLinedLabel>
-              <OutLinedLabel color='#4B65B2'>Lenders</OutLinedLabel>
-              <OutLinedLabel color='#4B65B2'>
-                Relationship Manager
-              </OutLinedLabel>
-              <OutLinedLabel color='#4B65B2'>Process Officers</OutLinedLabel>
-              <OutLinedLabel color='#4B65B2'>Lead Type</OutLinedLabel>
-            </Grid>
-          </Grid>
-          <Grid item container xs={2}>
-            <Grid item xs={12}>
-              <Typography>Case Filters</Typography>
-            </Grid>
-            <Grid item>
-              <OutLinedLabel color='#4B65B2'>Status</OutLinedLabel>
-              <OutLinedLabel color='#4B65B2'>Status Date</OutLinedLabel>
-            </Grid>
-          </Grid>
-          <Grid item container xs={3}>
-            <Grid item xs={12}>
-              <Typography>Case Filters</Typography>
-            </Grid>
-            <Grid item>
-              <OutLinedLabel color='#4B65B2'>Created Date</OutLinedLabel>
-              <OutLinedLabel color='#4B65B2'>Follow-up Date</OutLinedLabel>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs></Grid>
-        <Grid item xs={2}>
-          <Grid item container xs>
-            <Grid item xs={12}>
-              <TextField size='small' />
-            </Grid>
-            <Grid item>
-              <OutLinedLabel color='#4B65B2'>Active</OutLinedLabel>
-              <OutLinedLabel color='#4B65B2'>Unassigned</OutLinedLabel>
-              <OutLinedLabel color='#4B65B2'>Completed</OutLinedLabel>
-              <Button variant='contained' size='small'>
-                Add Case
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
+      <Grid
+        spacing={2}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Typography
+          sx={{
+            fontStyle: 'normal',
+            fontWeight: 600,
+            fontSize: '14px',
+            lineHeight: '175%',
+            color: '#263238',
+          }}
+        >
+          Case Filters
+        </Typography>
+
+        <Typography
+          sx={{
+            fontStyle: 'normal',
+            fontWeight: 600,
+            fontSize: '14px',
+            lineHeight: '175%',
+            color: '#263238',
+          }}
+        >
+          Application
+        </Typography>
+
+        <Typography
+          sx={{
+            fontStyle: 'normal',
+            fontWeight: 600,
+            fontSize: '14px',
+            lineHeight: '175%',
+            color: '#263238',
+          }}
+        >
+          Data Range
+        </Typography>
+
+        <TextField
+          id='standard-basic'
+          variant='standard'
+          placeholder='Search postcode, Name'
+          sx={{ borderBottom: '0.5px solid #979797' }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
       </Grid>
+
+      {/* <Grid
+        xs={12}
+        spacing={2}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          marginTop: 0.5,
+          direction: 'row',
+        }}
+      >
+        <Grid xs={6}>
+          <Typography
+            sx={{
+              background: '#FFFFFF',
+              border: '1px solid #4B65B2',
+              borderRadius: '20px',
+              padding: '4px 10px',
+              marginLeft: 0.3,
+              fontSize: '12.3px',
+              fontWeight: 600,
+            }}
+          >
+            Introducers
+          </Typography>
+          <Typography
+            sx={{
+              background: '#FFFFFF',
+              border: '1px solid #4B65B2',
+              borderRadius: '20px',
+              padding: '4px 10px',
+              marginLeft: 0.3,
+              fontSize: '12.3px',
+              fontWeight: 600,
+            }}
+          >
+            Introducers
+          </Typography>
+          <Typography
+            sx={{
+              background: '#FFFFFF',
+              border: '1px solid #4B65B2',
+              borderRadius: '20px',
+              padding: '4px 10px',
+              marginLeft: 0.3,
+              fontSize: '12.3px',
+              fontWeight: 600,
+            }}
+          >
+            Introducers
+          </Typography>
+          <Typography
+            sx={{
+              background: '#FFFFFF',
+              border: '1px solid #4B65B2',
+              borderRadius: '20px',
+              padding: '4px 10px',
+              marginLeft: 0.3,
+              fontSize: '12.3px',
+              fontWeight: 600,
+            }}
+          >
+            Introducers
+          </Typography>
+          <Typography
+            sx={{
+              background: '#FFFFFF',
+              border: '1px solid #4B65B2',
+              borderRadius: '20px',
+              padding: '4px 10px',
+              marginLeft: 0.3,
+              fontSize: '12.3px',
+              fontWeight: 600,
+            }}
+          >
+            Introducers
+          </Typography>
+        </Grid>
+        <Grid xs={6}>
+          <Typography
+            sx={{
+              background: '#FFFFFF',
+              border: '1px solid #4B65B2',
+              borderRadius: '20px',
+              padding: '4px 10px',
+              marginLeft: 0.3,
+              fontSize: '12.3px',
+              fontWeight: 600,
+            }}
+          >
+            Introducers
+          </Typography>
+          <Typography
+            sx={{
+              background: '#FFFFFF',
+              border: '1px solid #4B65B2',
+              borderRadius: '20px',
+              padding: '4px 10px',
+              marginLeft: 0.3,
+              fontSize: '12.3px',
+              fontWeight: 600,
+            }}
+          >
+            Introducers
+          </Typography>
+          <Typography
+            sx={{
+              background: '#FFFFFF',
+              border: '1px solid #4B65B2',
+              borderRadius: '20px',
+              padding: '4px 10px',
+              marginLeft: 0.3,
+              fontSize: '12.3px',
+              fontWeight: 600,
+            }}
+          >
+            Introducers
+          </Typography>
+          <Typography
+            sx={{
+              background: '#FFFFFF',
+              border: '1px solid #4B65B2',
+              borderRadius: '20px',
+              padding: '4px 10px',
+              marginLeft: 0.3,
+              fontSize: '12.3px',
+              fontWeight: 600,
+            }}
+          >
+            Introducers
+          </Typography>
+          <Typography
+            sx={{
+              background: '#FFFFFF',
+              border: '1px solid #4B65B2',
+              borderRadius: '20px',
+              padding: '4px 10px',
+              marginLeft: 0.3,
+              fontSize: '12.3px',
+              fontWeight: 600,
+            }}
+          >
+            Introducers
+          </Typography>
+        </Grid>
+      </Grid> */}
 
       <TableContainer
         sx={{

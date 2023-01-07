@@ -3,28 +3,20 @@ import MortgageDetail from '@/content/PersonalDetails/MortgageDetails';
 import CaseNotes from '@/content/PersonalDetails/CaseNotes';
 import SidebarLayout2 from '@/layouts/SidebarLayout2';
 import TabSection from '@/content/PersonalDetails/TabSection';
+import PortfolioTabData from '@/content/Portfolio';
 
-function ApplicantDetails() {
+function Portfolio() {
   return (
     <Container maxWidth='xl'>
       <Grid container spacing={2}>
         <Grid item md={12} mb={2}>
-          <TabSection />
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={1}>
-        <Grid item md={9}>
-          <MortgageDetail />
-        </Grid>
-        <Grid item md={3}>
-          <CaseNotes />
+          <PortfolioTabData />
         </Grid>
       </Grid>
     </Container>
   );
 }
 
-ApplicantDetails.getLayout = (page) => <SidebarLayout2>{page}</SidebarLayout2>;
+Portfolio.getLayout = (page) => <SidebarLayout2>{page}</SidebarLayout2>;
 
-export default ApplicantDetails;
+export default Portfolio;

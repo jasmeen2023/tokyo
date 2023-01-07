@@ -123,26 +123,42 @@ function CaseDetails() {
       }}
     >
       <CardHeader title='Case Details'></CardHeader>
-      <Divider sx={{ mx: 2, mb: 2 }} />
+
       <Container>
         <Grid container>
           <Grid item xs>
             <AreaFilterItem active={false} sx={{ px: 1, py: 1 }}>
-              <Typography sx={{ fontSize: 10 }}>
+              <Typography
+                sx={{
+                  fontSize: 12,
+                  fontWeight: 600,
+                  lineHeight: 18,
+                  letterSpacing: '0.01em',
+                }}
+              >
                 Relationship Manager
               </Typography>
             </AreaFilterItem>
           </Grid>
           <Grid item xs>
             <AreaFilterItem active={true} sx={{ px: 1 }}>
-              <Typography sx={{ fontSize: 10 }}>Processing Officer</Typography>
+              <Typography
+                sx={{
+                  fontSize: 12,
+                  fontWeight: 600,
+                  lineHeight: 18,
+                  letterSpacing: '0.01em',
+                }}
+              >
+                Processing Officer
+              </Typography>
             </AreaFilterItem>
           </Grid>
-          <Grid item xs>
+          {/* <Grid item xs>
             <AreaFilterItem active={false} sx={{ px: 1 }}>
               <Typography sx={{ fontSize: 10 }}>Reviewer</Typography>
             </AreaFilterItem>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
 

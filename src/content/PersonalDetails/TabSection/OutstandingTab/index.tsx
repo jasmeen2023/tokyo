@@ -17,13 +17,13 @@ import PageTitle from '@/components/PageTitle';
 import PageTitleWrapper from '@/components/PageTitleWrapper';
 
 import SidebarLayout from '@/layouts/SidebarLayout';
-import PersonalDetailsTab from './PersonalDetailsTab';
-import MortgageDetailTab from './AddressHistoryTab';
-import OccupationTab from './OccupationTab';
-import OutstandingTab from './OutstandingTab';
-import DependentTab from './DependentTab';
-import AddressHistoryTab from './AddressHistoryTab';
+
 import { makeStyles, styled } from '@mui/styles';
+
+import CreditCardTab from './CreditCardTab';
+import PersonalLoanTab from './PersonalLoanTab';
+import CarLoanTab from './CarLoanTab';
+import StoreCardTab from './StoreCardTab';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -32,15 +32,17 @@ interface TabPanelProps {
 }
 
 const TabsSelect = styled(Tabs)(({ theme }) => ({
-  '&.Mui-selected, &.Mui-selected': {
+  '& .MuiTab-root': {
     color: '#4B65B2',
+    background: '#000',
+    borderRadius: 0,
+    borderBottom: '#4B65B2',
   },
-  '&.Mui-selected, &.Mui-selected:hover': {
+  '& .Mui-selected': {
     color: '#4B65B2',
-    zIndex: 5,
-  },
-  '&:hover': {
-    // color: colors.alpha.trueWhite[70],
+    background: '#f9f9f9',
+    borderRadius: 0,
+    borderBottom: '#4B65B2',
   },
 }));
 
@@ -74,8 +76,7 @@ function a11yProps(index: number) {
   };
 }
 
-function TabSection() {
-  const classes = useStyles();
+function OutstandingTab() {
   const [value, setValue] = useState(0);
 
   const handleChange = (_event: SyntheticEvent, newValue: number) => {
@@ -98,35 +99,30 @@ function TabSection() {
           aria-label='basic tabs example'
         >
           <Tab
-            label='Personal Details'
-            // className={classes.tab_design}
-            {...a11yProps(0)}
+            sx={{ background: '#4B65B2', borderRadius: 2 }}
+            label='Credit Card'
+            {...a11yProps(1)}
           />
-          <Tab label='Address History' {...a11yProps(1)} />
-          <Tab label='Occupation' {...a11yProps(2)} />
-          <Tab label='Outstanding' {...a11yProps(3)} />
-          <Tab label='Dependents' {...a11yProps(4)} />
+          <Tab label='Personal Loan' {...a11yProps(2)} />
+          <Tab label='Car Loan' {...a11yProps(3)} />
+          <Tab label='Store Card' {...a11yProps(4)} />
         </TabsSelect>
-        <Divider sx={{ mb: 2 }} />
 
         <TabPanel value={value} index={0}>
-          <PersonalDetailsTab />
+          <CreditCardTab />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <AddressHistoryTab />
+          <PersonalLoanTab />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <OccupationTab />
+          <CarLoanTab />
         </TabPanel>
         <TabPanel value={value} index={3}>
-          <OutstandingTab />
-        </TabPanel>
-        <TabPanel value={value} index={4}>
-          <DependentTab />
+          <StoreCardTab />
         </TabPanel>
       </Grid>
     </Grid>
   );
 }
 
-export default TabSection;
+export default OutstandingTab;

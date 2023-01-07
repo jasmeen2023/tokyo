@@ -19,6 +19,7 @@ const AreaFilterItem = styled(Box)<DivProps>(({ theme, active }) => ({
   backgroundColor: active ? '#13BBE6' : '#F4F7F9',
   color: active ? 'white' : '',
   fontSize: 10,
+  lineHeight: 18,
   fontWeight: 600,
   height: 30,
   display: 'flex',
@@ -77,28 +78,28 @@ function CaseStatistics() {
           <Grid container spacing={0.5}>
             <Grid item xs>
               <AreaFilterItem active={false} sx={{ px: 1 }}>
-                <Typography sx={{ fontSize: 10, width: 70 }}>
+                <Typography sx={{ fontSize: 10, lineHeight: 18, width: 70 }}>
                   New Lead
                 </Typography>
               </AreaFilterItem>
             </Grid>
             <Grid item xs>
               <AreaFilterItem active={true} sx={{ px: 1 }}>
-                <Typography sx={{ fontSize: 10, width: 150 }}>
+                <Typography sx={{ fontSize: 10, lineHeight: 18, width: 150 }}>
                   Awaiting Further Information
                 </Typography>
               </AreaFilterItem>
             </Grid>
             <Grid item xs>
               <AreaFilterItem active={false} sx={{ px: 1 }}>
-                <Typography sx={{ fontSize: 10, width: 110 }}>
+                <Typography sx={{ fontSize: 10, lineHeight: 18, width: 110 }}>
                   Decision in Principle
                 </Typography>
               </AreaFilterItem>
             </Grid>
             <Grid item xs>
               <AreaFilterItem active={false} sx={{ px: 1 }}>
-                <Typography sx={{ fontSize: 10, width: 110 }}>
+                <Typography sx={{ fontSize: 10, lineHeight: 18, width: 110 }}>
                   Pre Offer Processing
                 </Typography>
               </AreaFilterItem>
@@ -122,7 +123,6 @@ function CaseStatistics() {
           </Grid>
         }
       />
-      <Divider sx={{ mx: 2 }} />
 
       <Chart
         options={areaChartOptions}
