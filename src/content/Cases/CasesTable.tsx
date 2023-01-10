@@ -33,6 +33,8 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import { Case } from '@/models/case';
 import { CaseStatus } from '@/models/case';
+import Image from 'next/image';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 interface RecentOrdersTableProps {
   className?: string;
@@ -40,8 +42,12 @@ interface RecentOrdersTableProps {
 }
 
 const CustomTableCell = styled(TableCell)(() => ({
+  fontStyle: 'normal',
   fontWeight: 400,
-  fontSize: 11,
+  fontSize: '14px',
+  lineHeight: '175%',
+  color: '#263238',
+  textTransform: 'none',
 }));
 
 interface Filters {
@@ -160,210 +166,338 @@ const CasesTable: FC<RecentOrdersTableProps> = ({ cases }) => {
         boxShadow: 'none',
       }}
     >
-      <Grid
-        spacing={2}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Typography
-          sx={{
-            fontStyle: 'normal',
-            fontWeight: 600,
-            fontSize: '14px',
-            lineHeight: '175%',
-            color: '#263238',
-          }}
-        >
-          Case Filters
-        </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={8}>
+          <Grid
+            container
+            spacing={2}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              margin: 1,
+            }}
+          >
+            <Typography
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 600,
+                fontSize: '14px',
+                lineHeight: '175%',
+                color: '#263238',
+                marginX: 1,
+              }}
+            >
+              Case Filters
+            </Typography>
 
-        <Typography
-          sx={{
-            fontStyle: 'normal',
-            fontWeight: 600,
-            fontSize: '14px',
-            lineHeight: '175%',
-            color: '#263238',
-          }}
-        >
-          Application
-        </Typography>
+            <Typography
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 600,
+                fontSize: '14px',
+                lineHeight: '175%',
+                color: '#263238',
+                marginLeft: 44,
+              }}
+            >
+              Application
+            </Typography>
 
-        <Typography
-          sx={{
-            fontStyle: 'normal',
-            fontWeight: 600,
-            fontSize: '14px',
-            lineHeight: '175%',
-            color: '#263238',
-          }}
-        >
-          Data Range
-        </Typography>
+            <Typography
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 600,
+                fontSize: '14px',
+                lineHeight: '175%',
+                color: '#263238',
+                marginLeft: 8,
+              }}
+            >
+              Data Range
+            </Typography>
+          </Grid>
+          <Grid sx={{ display: 'flex', alignItems: 'center', marginY: 1 }}>
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: '12px',
+                lineHeight: '19px',
+                textTransform: 'capitalize',
+                color: '#2C2937',
+                background: '#FFFFFF',
+                border: '1px solid #4B65B2',
+                borderRadius: '20px',
+                padding: '4px 4px',
+                margin: 0.5,
+              }}
+            >
+              Introducers
+            </Typography>
 
-        <TextField
-          id='standard-basic'
-          variant='standard'
-          placeholder='Search postcode, Name'
-          sx={{ borderBottom: '0.5px solid #979797' }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position='start'>
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: '12px',
+                lineHeight: '19px',
+                textTransform: 'capitalize',
+                color: '#2C2937',
+                background: '#FFFFFF',
+                border: '1px solid #4B65B2',
+                borderRadius: '20px',
+                padding: '4px 4px',
+                margin: 0.5,
+              }}
+            >
+              Lenders
+            </Typography>
+
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: '12px',
+                lineHeight: '19px',
+                textTransform: 'capitalize',
+                color: '#2C2937',
+                background: '#FFFFFF',
+                border: '1px solid #4B65B2',
+                borderRadius: '20px',
+                padding: '4px 4px',
+                margin: 0.5,
+              }}
+            >
+              Relationship Manager
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: '12px',
+                lineHeight: '19px',
+                textTransform: 'capitalize',
+                color: '#2C2937',
+                background: '#FFFFFF',
+                border: '1px solid #4B65B2',
+                borderRadius: '20px',
+                padding: '4px 4px',
+                margin: 0.5,
+              }}
+            >
+              Process Officer
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: '12px',
+                lineHeight: '19px',
+                textTransform: 'capitalize',
+                color: '#2C2937',
+                background: '#FFFFFF',
+                border: '1px solid #4B65B2',
+                borderRadius: '20px',
+                padding: '2px 5px',
+                margin: 0.5,
+              }}
+            >
+              Lead Type
+            </Typography>
+            <Image src='/images/line.png' alt='' width='2px' height='28px' />
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: '12px',
+                lineHeight: '19px',
+                textTransform: 'capitalize',
+                color: '#2C2937',
+                background: '#FFFFFF',
+                border: '1px solid #4B65B2',
+                borderRadius: '20px',
+                padding: '2px 5px',
+                margin: 0.5,
+              }}
+            >
+              Status
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: '12px',
+                lineHeight: '19px',
+                textTransform: 'capitalize',
+                color: '#2C2937',
+                background: '#FFFFFF',
+                border: '1px solid #4B65B2',
+                borderRadius: '20px',
+                padding: '2px 5px',
+                margin: 0.5,
+              }}
+            >
+              Status Date
+            </Typography>
+            <Image src='/images/line.png' alt='' width='2px' height='28px' />
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: '12px',
+                lineHeight: '19px',
+                textTransform: 'capitalize',
+                color: '#2C2937',
+                background: '#FFFFFF',
+                border: '1px solid #4B65B2',
+                borderRadius: '20px',
+                padding: '2px 5px',
+                margin: 0.5,
+              }}
+            >
+              Created Date
+            </Typography>
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: '12px',
+                lineHeight: '19px',
+                textTransform: 'capitalize',
+                color: '#2C2937',
+                background: '#FFFFFF',
+                border: '1px solid #4B65B2',
+                borderRadius: '20px',
+                padding: '2px 5px',
+                margin: 0.5,
+              }}
+            >
+              Follow up date
+            </Typography>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={4}>
+          <Button
+            size='small'
+            sx={{
+              background:
+                'linear-gradient(275.52deg, #13BBE6 17.29%, #4B65B2 82.37%)',
+              borderRadius: '4px',
+              marginX: 2,
+              fontWeight: 500,
+              fontSize: '14px',
+              lineHeight: '20px',
+              color: '#FFFFFF',
+            }}
+          >
+            Download Report
+          </Button>
+          <TextField
+            id='standard-basic'
+            variant='standard'
+            placeholder='Search postcode, Name'
+            sx={{ borderBottom: '0.5px solid #979797' }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+
+          <Grid
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              // justifyContent: 'space-between',
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: '14px',
+                lineHeight: '14px',
+                color: '#292D32',
+              }}
+            >
+              Case Status
+            </Typography>
+            <Grid
+              sx={{
+                background: '#FFF',
+                borderRadius: 1,
+                boxShadow: '0px 2px 5px 0px rgb(58 53 65 / 10%)',
+                border: '0.2px solid #979797',
+                display: 'flex',
+                alignItems: 'center',
+                padding: '5px 10px',
+                margin: 1,
+              }}
+            >
+              <Typography
+                sx={{
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  fontSize: '14px',
+                  lineHeight: '24px',
+                  color: '#000000',
+                  borderRight: '0.2px solid #979797',
+                  padding: '3px 5px ',
+                }}
+              >
+                Active
+              </Typography>
+              <Typography
+                sx={{
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  fontSize: '14px',
+                  lineHeight: '24px',
+                  color: '#000000',
+                  borderRight: '0.2px solid #979797',
+                  padding: '3px 5px ',
+                }}
+              >
+                Unsigned
+              </Typography>
+              <Typography
+                sx={{
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  fontSize: '14px',
+                  lineHeight: '24px',
+                  color: '#000000',
+                  padding: '3px 5px ',
+                }}
+              >
+                Completed
+              </Typography>
+            </Grid>
+            <Button
+              size='small'
+              sx={{
+                background:
+                  'linear-gradient(275.52deg, #13BBE6 17.29%, #4B65B2 82.37%)',
+                borderRadius: '4px',
+
+                color: '#FFF',
+              }}
+            >
+              <IconButton size='small' sx={{ color: '#FFF', padding: 0 }}>
+                <AddCircleOutlineIcon />
+              </IconButton>
+              Add Case
+            </Button>
+            <Button
+              size='small'
+              sx={{
+                background: '#EBEBEB',
+                borderRadius: '4px',
+                marginX: 0.5,
+                color: '#999999',
+              }}
+            >
+              <IconButton size='small' sx={{ color: '#999999', padding: 0 }}>
+                <AddCircleOutlineIcon />
+              </IconButton>
+              Add Case
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
-
-      {/* <Grid
-        xs={12}
-        spacing={2}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          marginTop: 0.5,
-          direction: 'row',
-        }}
-      >
-        <Grid xs={6}>
-          <Typography
-            sx={{
-              background: '#FFFFFF',
-              border: '1px solid #4B65B2',
-              borderRadius: '20px',
-              padding: '4px 10px',
-              marginLeft: 0.3,
-              fontSize: '12.3px',
-              fontWeight: 600,
-            }}
-          >
-            Introducers
-          </Typography>
-          <Typography
-            sx={{
-              background: '#FFFFFF',
-              border: '1px solid #4B65B2',
-              borderRadius: '20px',
-              padding: '4px 10px',
-              marginLeft: 0.3,
-              fontSize: '12.3px',
-              fontWeight: 600,
-            }}
-          >
-            Introducers
-          </Typography>
-          <Typography
-            sx={{
-              background: '#FFFFFF',
-              border: '1px solid #4B65B2',
-              borderRadius: '20px',
-              padding: '4px 10px',
-              marginLeft: 0.3,
-              fontSize: '12.3px',
-              fontWeight: 600,
-            }}
-          >
-            Introducers
-          </Typography>
-          <Typography
-            sx={{
-              background: '#FFFFFF',
-              border: '1px solid #4B65B2',
-              borderRadius: '20px',
-              padding: '4px 10px',
-              marginLeft: 0.3,
-              fontSize: '12.3px',
-              fontWeight: 600,
-            }}
-          >
-            Introducers
-          </Typography>
-          <Typography
-            sx={{
-              background: '#FFFFFF',
-              border: '1px solid #4B65B2',
-              borderRadius: '20px',
-              padding: '4px 10px',
-              marginLeft: 0.3,
-              fontSize: '12.3px',
-              fontWeight: 600,
-            }}
-          >
-            Introducers
-          </Typography>
-        </Grid>
-        <Grid xs={6}>
-          <Typography
-            sx={{
-              background: '#FFFFFF',
-              border: '1px solid #4B65B2',
-              borderRadius: '20px',
-              padding: '4px 10px',
-              marginLeft: 0.3,
-              fontSize: '12.3px',
-              fontWeight: 600,
-            }}
-          >
-            Introducers
-          </Typography>
-          <Typography
-            sx={{
-              background: '#FFFFFF',
-              border: '1px solid #4B65B2',
-              borderRadius: '20px',
-              padding: '4px 10px',
-              marginLeft: 0.3,
-              fontSize: '12.3px',
-              fontWeight: 600,
-            }}
-          >
-            Introducers
-          </Typography>
-          <Typography
-            sx={{
-              background: '#FFFFFF',
-              border: '1px solid #4B65B2',
-              borderRadius: '20px',
-              padding: '4px 10px',
-              marginLeft: 0.3,
-              fontSize: '12.3px',
-              fontWeight: 600,
-            }}
-          >
-            Introducers
-          </Typography>
-          <Typography
-            sx={{
-              background: '#FFFFFF',
-              border: '1px solid #4B65B2',
-              borderRadius: '20px',
-              padding: '4px 10px',
-              marginLeft: 0.3,
-              fontSize: '12.3px',
-              fontWeight: 600,
-            }}
-          >
-            Introducers
-          </Typography>
-          <Typography
-            sx={{
-              background: '#FFFFFF',
-              border: '1px solid #4B65B2',
-              borderRadius: '20px',
-              padding: '4px 10px',
-              marginLeft: 0.3,
-              fontSize: '12.3px',
-              fontWeight: 600,
-            }}
-          >
-            Introducers
-          </Typography>
-        </Grid>
-      </Grid> */}
 
       <TableContainer
         sx={{

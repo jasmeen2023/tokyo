@@ -351,6 +351,8 @@ export const MonkeyAndBanaTheme = createTheme({
       styleOverrides: {
         paper: {
           backgroundColor: themeColors.bgcolor,
+          borderRadius: 4,
+          // maxWidth: '800px',
         },
       },
     },

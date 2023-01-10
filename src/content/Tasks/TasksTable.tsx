@@ -2,7 +2,11 @@ import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
 import {
   Box,
   Card,
+  DialogActions,
+  DialogContent,
+  FormLabel,
   IconButton,
+  InputAdornment,
   SelectChangeEvent,
   styled,
   Table,
@@ -12,6 +16,7 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  TextareaAutosize,
   Typography,
   useTheme,
 } from '@mui/material';
@@ -21,7 +26,6 @@ import TextField from '@mui/material/TextField';
 import { format } from 'date-fns';
 import { Dayjs } from 'dayjs';
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
 import { ChangeEvent, FC, useState } from 'react';
 
 import Label from '@/components/Label';
@@ -29,15 +33,27 @@ import OutLinedLabel from '@/components/OutLinedLabel';
 
 import { Task } from '@/models/task';
 import { TaskStatus } from '@/models/task';
+import SearchIcon from '@mui/icons-material/Search';
+import Image from 'next/image';
 
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@mui/styles';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { PersonSearch } from '@mui/icons-material';
 interface RecentOrdersTableProps {
   className?: string;
   tasks: Task[];
 }
 
 const CustomTableCell = styled(TableCell)(() => ({
+  fontStyle: 'normal',
   fontWeight: 400,
-  fontSize: 11,
+  fontSize: '14px',
+  lineHeight: '175%',
+  color: '#263238',
+  textTransform: 'none',
 }));
 
 interface Filters {
@@ -83,6 +99,256 @@ const applyPagination = (
   return Tasks.slice(page * limit, page * limit + limit);
 };
 
+const Input = styled('input')({
+  display: 'none',
+});
+
+const InputBoxes = styled(TextareaAutosize)(({ theme }) => ({
+  background: '#FFFFFF',
+  borderRadius: '4px',
+}));
+
+export function SimpleDialog(props) {
+  const { onClose, open } = props;
+
+  const handleClose = () => {
+    onClose();
+  };
+
+  return (
+    <Dialog fullWidth onClose={handleClose} open={open}>
+      <DialogTitle
+        sx={{
+          fontWeight: 600,
+          fontSize: '16px',
+          lineHeight: '24px',
+          textAlign: 'left',
+          background: '#FFF',
+        }}
+      >
+        Next Follow Up
+      </DialogTitle>
+      <DialogContent sx={{ background: '#FFF' }}>
+        <Grid
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            marginY: 1,
+          }}
+        >
+          <Grid item>
+            <FormLabel
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 600,
+                fontSize: '16px',
+                lineHeight: '21px',
+                textTransform: 'capitalize',
+                color: '#4B473E',
+              }}
+            >
+              Select Follow-up
+            </FormLabel>
+            <TextField
+              size='small'
+              sx={{ marginY: 1 }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <IconButton>
+                      <CalendarMonthIcon sx={{ color: '#4B65B2' }} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              placeholder='SEP 10, 2022'
+            ></TextField>
+          </Grid>
+          <Grid item>
+            <FormLabel
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 600,
+                fontSize: '16px',
+                lineHeight: '21px',
+                textTransform: 'capitalize',
+                color: '#4B473E',
+              }}
+            >
+              Assign
+            </FormLabel>
+            <TextField
+              size='small'
+              sx={{ marginY: 1 }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <IconButton>
+                      <PersonSearch sx={{ color: '#4B65B2' }} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              placeholder='Assign BRM/PO'
+            ></TextField>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <Grid item>
+            <Typography
+              sx={{
+                fontWeight: 600,
+                fontSize: '16px',
+                lineHeight: '21px',
+                textTransform: 'capitalize',
+                color: '#4B473E',
+              }}
+            >
+              Note
+            </Typography>
+          </Grid>
+          <Grid item>
+            <InputBoxes
+              minRows={10}
+              style={{ width: 450 }}
+              sx={{
+                borderRadius: '4px',
+              }}
+            ></InputBoxes>
+          </Grid>
+        </Grid>
+        <DialogActions sx={{ background: '#FFF' }}>
+          <Button
+            sx={{
+              background:
+                'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
+              borderRadius: '5px',
+
+              color: '#FFF',
+            }}
+          >
+            Submit
+          </Button>
+        </DialogActions>
+
+        <Table sx={{ background: '#FFF' }}>
+          <TableBody sx={{ background: '#FFF' }}>
+            <TableRow sx={{ background: '#FFF' }}>
+              <TableCell
+                sx={{
+                  fontStyle: 'normal',
+                  fontWeight: 700,
+                  fontSize: '13px',
+                  lineHeight: '17px',
+                  color: '#4B473E',
+                  borderBottom: '1px dashed #C4C4C4',
+                }}
+              >
+                Date & time
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontStyle: 'normal',
+                  fontWeight: 700,
+                  fontSize: '13px',
+                  lineHeight: '17px',
+                  color: '#4B473E',
+                  borderBottom: '1px dashed #C4C4C4',
+                }}
+              >
+                Followup Summary
+              </TableCell>
+            </TableRow>
+            <TableRow sx={{ background: '#FFF' }}>
+              <TableCell
+                sx={{
+                  fontStyle: 'normal',
+                  fontWeight: 700,
+                  fontSize: '13px',
+                  lineHeight: '17px',
+                  color: '#4B473E',
+                  borderBottom: '1px dashed #C4C4C4',
+                }}
+              >
+                2 Sep’22 12:39 PM
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  fontSize: '13px',
+                  lineHeight: '17px',
+                  color: '#4B473E',
+                  borderBottom: '1px dashed #C4C4C4',
+                }}
+              >
+                Duis proin eu sagittis fermentum eget pharetra libero augue dui.
+                Suscipit volutpat fames tincidunt.
+              </TableCell>
+            </TableRow>
+            <TableRow sx={{ background: '#FFF' }}>
+              <TableCell
+                sx={{
+                  fontStyle: 'normal',
+                  fontWeight: 700,
+                  fontSize: '13px',
+                  lineHeight: '17px',
+                  color: '#4B473E',
+                  borderBottom: '1px dashed #C4C4C4',
+                }}
+              >
+                12 Sep’22 12:39 PM
+              </TableCell>
+              <TableCell
+                sx={{
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  fontSize: '13px',
+                  lineHeight: '17px',
+                  color: '#4B473E',
+                  borderBottom: '1px dashed #C4C4C4',
+                }}
+              >
+                Duis proin eu sagittis fermentum eget pharetra libero augue dui.
+                Suscipit volutpat fames tincidunt.
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </DialogContent>
+
+      <DialogActions sx={{ background: '#FFF' }}>
+        <Button
+          onClick={handleClose}
+          sx={{
+            background:
+              'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
+            borderRadius: '5px',
+
+            color: '#FFF',
+          }}
+        >
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
+SimpleDialog.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  //   selectedValue: PropTypes.string.isRequired,
+};
 const TasksTable: FC<RecentOrdersTableProps> = ({ tasks }) => {
   const [value, setValue] = useState<Dayjs | null>(null);
   const handleChange = (newValue: Dayjs | null) => {
@@ -144,6 +410,18 @@ const TasksTable: FC<RecentOrdersTableProps> = ({ tasks }) => {
   const theme = useTheme();
   const router = useRouter();
 
+  const [open, setOpen] = useState(false);
+
+  const [selectedValue, setSelectedValue] = useState();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+  };
+
   return (
     <Card
       sx={{
@@ -153,31 +431,91 @@ const TasksTable: FC<RecentOrdersTableProps> = ({ tasks }) => {
       }}
     >
       <Grid container>
-        <Grid item container xs={9}>
-          <Grid item container xs>
-            <Grid item xs={12}>
-              <Typography>Date Filter</Typography>
-            </Grid>
-            <Grid item>
-              <OutLinedLabel color='#4B65B2'>Created Date</OutLinedLabel>
-            </Grid>
+        <Grid item xs={9}>
+          <Grid
+            spacing={2}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <Typography
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 600,
+                fontSize: '14px',
+                lineHeight: '175%',
+                color: '#263238',
+                marginX: 1,
+              }}
+            >
+              Date Range
+            </Typography>
+          </Grid>
+          <Grid sx={{ display: 'flex', alignItems: 'center', marginY: 1 }}>
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: '12px',
+                lineHeight: '19px',
+                textTransform: 'capitalize',
+                color: '#2C2937',
+                background: '#FFFFFF',
+                border: '1px solid #4B65B2',
+                borderRadius: '20px',
+                padding: '5px 15px',
+                margin: 0.5,
+              }}
+            >
+              Created One
+            </Typography>
           </Grid>
         </Grid>
-        <Grid item xs></Grid>
-        <Grid item xs={2}>
-          <Grid item container xs>
-            <Grid item xs>
-              <TextField size='small' />
-            </Grid>
-            <Grid item xs>
-              <Button variant='contained' size='small'>
-                Add Task
-              </Button>
-            </Grid>
+
+        <Grid item xs={3}>
+          <Grid
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-evenly',
+            }}
+          >
+            <TextField
+              id='standard-basic'
+              variant='standard'
+              placeholder='Search postcode, Name'
+              sx={{ borderBottom: '0.5px solid #979797' }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            <Button
+              size='medium'
+              onClick={handleClickOpen}
+              sx={{
+                background:
+                  'linear-gradient(275.52deg, #13BBE6 17.29%, #4B65B2 82.37%)',
+                borderRadius: '4px',
+                marginTop: 1,
+                color: '#FFF',
+                paddingX: 4,
+              }}
+            >
+              Assign Task
+            </Button>
+            <SimpleDialog
+              //   selectedValue={selectedValue}
+              open={open}
+              onClose={handleClose}
+            />
           </Grid>
         </Grid>
       </Grid>
-
       <TableContainer
         sx={{
           marginY: 2,

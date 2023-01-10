@@ -2,7 +2,13 @@ import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
 import {
   Box,
   Card,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormLabel,
   IconButton,
+  InputAdornment,
   SelectChangeEvent,
   styled,
   Table,
@@ -29,6 +35,9 @@ import OutLinedLabel from '@/components/OutLinedLabel';
 
 import { Reward } from '@/models/reward';
 import { RewardStatus } from '@/models/reward';
+import SearchIcon from '@mui/icons-material/Search';
+import { ModeEditOutlineOutlined } from '@mui/icons-material';
+import { makeStyles } from '@mui/styles';
 
 interface RecentOrdersTableProps {
   className?: string;
@@ -36,8 +45,12 @@ interface RecentOrdersTableProps {
 }
 
 const CustomTableCell = styled(TableCell)(() => ({
+  fontStyle: 'normal',
   fontWeight: 400,
-  fontSize: 11,
+  fontSize: '14px',
+  lineHeight: '175%',
+  color: '#263238',
+  textTransform: 'none',
 }));
 
 interface Filters {
@@ -81,6 +94,99 @@ const applyPagination = (
   limit: number
 ): Reward[] => {
   return Rewards.slice(page * limit, page * limit + limit);
+};
+
+const useStyles = makeStyles((theme) => ({
+  cell_short: {
+    // width: '100%',
+    borderRight: '2px solid rgba(196, 196, 196, 0.4)',
+  },
+  // row_border: {
+  //   borderBottom: '2px dashed rgba(151, 151, 151, 0.24)',
+  // },
+}));
+const Input = styled('input')({
+  display: 'none',
+});
+
+const InputBoxes = styled(TextField)(({ theme }) => ({
+  background: '#FFFFFF',
+  borderRadius: '4px',
+}));
+
+export function SimpleDialog(props) {
+  const { onClose, open } = props;
+
+  const handleClose = () => {
+    onClose();
+  };
+
+  return (
+    <Dialog fullWidth onClose={handleClose} open={open}>
+      <DialogTitle
+        sx={{
+          fontWeight: 600,
+          fontSize: '18px',
+          lineHeight: '24px',
+          textAlign: 'left',
+          background: '#FFF',
+        }}
+      >
+        Invite
+      </DialogTitle>
+      <DialogContent sx={{ background: '#FFF' }}>
+        <Box
+          component='form'
+          sx={{
+            '& > :not(style)': { m: 1, width: '25ch' },
+          }}
+          noValidate
+          autoComplete='off'
+        >
+          <TextField id='email' label='Email' defaultValue='Email' />
+          <TextField id='name' label='Name' defaultValue='Name' />
+          <TextField
+            id='manager'
+            label='Relationship Manager'
+            defaultValue='Relationship Manager'
+          />
+          <TextField id='mobile' label='Mobile No.' defaultValue='Mobile No.' />
+        </Box>
+      </DialogContent>
+
+      <DialogActions sx={{ background: '#FFF' }}>
+        <Button
+          sx={{
+            background:
+              'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
+            borderRadius: '5px',
+
+            color: '#FFF',
+          }}
+        >
+          Invite
+        </Button>
+        <Button
+          onClick={handleClose}
+          sx={{
+            background:
+              'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
+            borderRadius: '5px',
+
+            color: '#FFF',
+          }}
+        >
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
+SimpleDialog.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  //   selectedValue: PropTypes.string.isRequired,
 };
 
 const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
@@ -148,6 +254,18 @@ const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
   const theme = useTheme();
   const router = useRouter();
 
+  const [open, setOpen] = useState(false);
+
+  const [selectedValue, setSelectedValue] = useState();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+  };
+
   return (
     <Card
       sx={{
@@ -157,27 +275,88 @@ const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
       }}
     >
       <Grid container>
-        <Grid item container xs={9}>
-          <Grid item container xs>
-            <Grid item xs={12}>
-              <Typography>Date Filter</Typography>
-            </Grid>
-            <Grid item>
-              <OutLinedLabel color='#4B65B2'>Created Date</OutLinedLabel>
-            </Grid>
+        <Grid item xs={9}>
+          <Grid
+            spacing={2}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <Typography
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 600,
+                fontSize: '14px',
+                lineHeight: '175%',
+                color: '#263238',
+                marginX: 1,
+              }}
+            >
+              Date Range
+            </Typography>
+          </Grid>
+          <Grid sx={{ display: 'flex', alignItems: 'center', marginY: 1 }}>
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: '12px',
+                lineHeight: '19px',
+                textTransform: 'capitalize',
+                color: '#2C2937',
+                background: '#FFFFFF',
+                border: '1px solid #4B65B2',
+                borderRadius: '20px',
+                padding: '5px 15px',
+                margin: 0.5,
+              }}
+            >
+              Created One
+            </Typography>
           </Grid>
         </Grid>
-        <Grid item xs></Grid>
-        <Grid item xs={2}>
-          <Grid item container xs>
-            <Grid item xs>
-              <TextField size='small' />
-            </Grid>
-            <Grid item xs>
-              <Button variant='contained' size='small'>
-                Invite
-              </Button>
-            </Grid>
+
+        <Grid item xs={3}>
+          <Grid
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-evenly',
+            }}
+          >
+            <TextField
+              id='standard-basic'
+              variant='standard'
+              placeholder='Search postcode, Name'
+              sx={{ borderBottom: '0.5px solid #979797' }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            <Button
+              size='medium'
+              onClick={handleClickOpen}
+              sx={{
+                background:
+                  'linear-gradient(275.52deg, #13BBE6 17.29%, #4B65B2 82.37%)',
+                borderRadius: '4px',
+                marginTop: 1,
+                color: '#FFF',
+                paddingX: 4,
+              }}
+            >
+              Invite
+            </Button>
+            <SimpleDialog
+              //   selectedValue={selectedValue}
+              open={open}
+              onClose={handleClose}
+            />
           </Grid>
         </Grid>
       </Grid>

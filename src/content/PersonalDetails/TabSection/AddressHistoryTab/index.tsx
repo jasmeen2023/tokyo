@@ -13,6 +13,7 @@ import {
   TextField,
   tableRowClasses,
   styled,
+  Menu,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
@@ -24,6 +25,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
+import Modals from './DeleteCurrentAddress';
+import DeleteCurrentAddress from './DeleteCurrentAddress';
 
 // import { useCreateCatalogue } from "@/hooks/catalogue/useCatalogue";
 
@@ -169,8 +172,54 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   // },
 }));
 
+const dummyMenuItems = [
+  {
+    title: 'Remove Applicant',
+  },
+];
+
+const deleteAddressMenu = [
+  {
+    title: 'Delete Current Address',
+  },
+];
+
 const AddressHistoryTab = () => {
   const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [deleteAddress, setdeleteAddress] = useState(null);
+
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+    setdeleteAddress(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+    setdeleteAddress(null);
+  };
+
+  // const nativeOnChange = (e) => {
+  //   const detail = {
+  //     selectedIndex: e.target.selectedIndex,
+  //   };
+  //   e.target.selectedIndex = 0;
+
+  //   e.target.dispatchEvent(new CustomEvent('itemClick', { detail }));
+  // };
+
+  // const nativeOnChanges = (e) => {
+  //   const detail = {
+  //     selectedIndex: e.target.selectedIndex,
+  //   };
+  //   e.target.selectedIndex = 0;
+
+  //   e.target.dispatchEvent(new CustomEvent('itemClick', { detail }));
+  // };
+
+  // const itemClick = (e) => {
+  //   console.log('Item Clicked ' + e.detail);
+  // };
+
   return (
     <>
       <Table
@@ -183,8 +232,28 @@ const AddressHistoryTab = () => {
           <TableCell sx={{ padding: 0.5 }}>
             {' '}
             <IconButton size='small'>
-              <MoreVertIcon style={{ color: '#FFF' }}></MoreVertIcon>
+              <MoreVertIcon
+                style={{ color: '#FFF' }}
+                //onClick={Modals}
+              ></MoreVertIcon>
             </IconButton>
+            {/* <Menu
+              id='simple-menu-address'
+              deleteAddress={deleteAddress}
+              keepMounted
+              open={Boolean(deleteAddress)}
+              onClose={handleClose}
+            >
+              {deleteAddressMenu.map((item) => (
+                <MenuItem
+                  onClick={handleClose}
+                  key={item.title}
+                  value={item.title}
+                >
+                  {item.title}
+                </MenuItem>
+              ))}
+            </Menu> */}
           </TableCell>
           <TableCell sx={{ padding: 0.5 }}>
             <TableRow sx={{ background: 'transparent', color: 'white' }}>
@@ -203,8 +272,28 @@ const AddressHistoryTab = () => {
               </TableCell>
               <TableCell sx={{ padding: 0.5 }}>
                 <IconButton size='small'>
-                  <MoreVertIcon style={{ color: '#FFF' }}></MoreVertIcon>
+                  <MoreVertIcon
+                    style={{ color: '#FFF' }}
+                    onClick={handleClick}
+                  ></MoreVertIcon>
                 </IconButton>
+                <Menu
+                  id='simple-menu'
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  {dummyMenuItems.map((item) => (
+                    <MenuItem
+                      onClick={handleClose}
+                      key={item.title}
+                      value={item.title}
+                    >
+                      {item.title}
+                    </MenuItem>
+                  ))}
+                </Menu>
               </TableCell>
             </TableRow>
           </TableCell>
@@ -225,12 +314,35 @@ const AddressHistoryTab = () => {
               </TableCell>
               <TableCell sx={{ padding: 0.5 }}>
                 <IconButton size='small'>
-                  <MoreVertIcon style={{ color: '#FFF' }}></MoreVertIcon>
+                  <MoreVertIcon
+                    style={{ color: '#FFF' }}
+                    onClick={handleClick}
+                  ></MoreVertIcon>
                 </IconButton>
+                <Menu
+                  id='simple-menu'
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  {dummyMenuItems.map((item) => (
+                    <MenuItem
+                      onClick={handleClose}
+                      key={item.title}
+                      value={item.title}
+                    >
+                      {item.title}
+                    </MenuItem>
+                  ))}
+                </Menu>
               </TableCell>
             </TableRow>
           </TableCell>
-          <TableCell sx={{ padding: 0.5 }}></TableCell>
+          <TableCell sx={{ padding: 0.5 }}>
+            {' '}
+            <DeleteCurrentAddress />
+          </TableCell>
         </TableRow>
         {tableData.map((row) => (
           <StyledTableRow key={row.id}>

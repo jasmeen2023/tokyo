@@ -82,72 +82,32 @@ const CustomTableCell = styled(TableCell)(() => ({
   color: '#263238',
 }));
 
-const applicants = [
-  {
-    creditCard: 'Current',
-    currentBalance: '12J - 4th Level',
-    month: 'Winchester Villas',
-    repaid: ' 27 Old Gloucester Street',
-  },
-  {
-    creditCard: 'Current',
-    currentBalance: '12J - 4th Level',
-    month: 'Winchester Villas',
-    repaid: ' 27 Old Gloucester Street',
-  },
-  {
-    creditCard: 'Current',
-    currentBalance: '12J - 4th Level',
-    month: 'Winchester Villas',
-    repaid: ' 27 Old Gloucester Street',
-  },
-  {
-    creditCard: 'Current',
-    currentBalance: '12J - 4th Level',
-    month: 'Winchester Villas',
-    repaid: ' 27 Old Gloucester Street',
-  },
-];
-
 const rowdata = [
   {
     id: 1,
-
-    name: 'Credit card provider',
+    sno: 1,
+    relationship: 'Father',
+    age: '64',
+    name: 'Morise',
+    action: 'close',
   },
   {
     id: 2,
-
-    name: 'What’s your current balance of this card?',
-  },
-  {
-    id: 3,
-
-    name: 'Repaid in full every month',
-  },
-  {
-    id: 4,
-
-    name: 'Will this be repaid before the start of the mortgage?',
+    sno: 2,
+    relationship: 'Mother',
+    age: '63',
+    name: 'Morise',
+    action: 'close',
   },
 ];
 
-const tableData = rowdata?.map((row, index) => ({
-  ...row,
-  data: applicants
-    //.filter((applicant, ai) => index === ai)
-    .map((applicant, i) => applicant[Object.keys(applicant)[index]]),
-}));
-
-console.log(tableData);
-
 const useStyles = makeStyles((theme) => ({
   cell_short_blue_bg: {
-    width: '20%',
+    width: '5%',
   },
   cell_short: {
     width: '25%',
-    borderRight: '2px solid rgba(196, 196, 196, 0.4)',
+
     textAlign: 'center',
   },
   // row_border: {
@@ -169,92 +129,125 @@ const DependentsTab = () => {
         sx={{
           background: '#FFF',
           borderSpacing: '0',
-          border: '2px dashed rgba(196, 196, 196, 0.4)',
+          border: '2px solid rgba(196, 196, 196, 0.4)',
         }}
       >
-        <TableRow
-          sx={{
-            background: '#EEF7FE',
-          }}
-        >
-          <TableCell
+        <TableBody>
+          <TableRow
             sx={{
-              fontStyle: 'normal',
-              fontWeight: 800,
-              fontSize: '14px',
-              lineHeight: '140.1%',
-              color: '#263238',
-              textAlign: 'left',
+              background: '#EEF7FE',
             }}
           >
-            S.No.
-          </TableCell>
-          <TableCell
-            sx={{
-              fontStyle: 'normal',
-              fontWeight: 800,
-              fontSize: '14px',
-              lineHeight: '140.1%',
-              color: '#263238',
-              textAlign: 'left',
-            }}
-          >
-            Relationship
-          </TableCell>
-          <TableCell
-            sx={{
-              fontStyle: 'normal',
-              fontWeight: 800,
-              fontSize: '14px',
-              lineHeight: '140.1%',
-              color: '#263238',
-              textAlign: 'left',
-            }}
-          >
-            Age
-          </TableCell>
-          <TableCell
-            sx={{
-              fontStyle: 'normal',
-              fontWeight: 800,
-              fontSize: '14px',
-              lineHeight: '140.1%',
-              color: '#263238',
-              textAlign: 'left',
-            }}
-          >
-            Name
-          </TableCell>
-          <TableCell
-            sx={{
-              fontStyle: 'normal',
-              fontWeight: 800,
-              fontSize: '14px',
-              lineHeight: '140.1%',
-              color: '#263238',
-              textAlign: 'left',
-            }}
-          >
-            action
-          </TableCell>
-        </TableRow>
-        {tableData.map((row) => (
-          <StyledTableRow key={row.id}>
-            {row.data.map((applicant) => (
+            <TableCell
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 800,
+                fontSize: '14px',
+                lineHeight: '140.1%',
+                color: '#263238',
+                textAlign: 'center',
+              }}
+            >
+              S.No.
+            </TableCell>
+            <TableCell
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 800,
+                fontSize: '14px',
+                lineHeight: '140.1%',
+                color: '#263238',
+                textAlign: 'center',
+              }}
+            >
+              Relationship
+            </TableCell>
+            <TableCell
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 800,
+                fontSize: '14px',
+                lineHeight: '140.1%',
+                color: '#263238',
+                textAlign: 'center',
+              }}
+            >
+              Age
+            </TableCell>
+            <TableCell
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 800,
+                fontSize: '14px',
+                lineHeight: '140.1%',
+                color: '#263238',
+                textAlign: 'center',
+              }}
+            >
+              Name
+            </TableCell>
+            <TableCell
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 800,
+                fontSize: '14px',
+                lineHeight: '140.1%',
+                color: '#263238',
+                textAlign: 'center',
+              }}
+            >
+              action
+            </TableCell>
+          </TableRow>
+          {rowdata.map((row) => (
+            <StyledTableRow key={row.id}>
               <>
-                <TableCell key={applicant} className={classes.cell_short}>
+                <TableCell className={classes.cell_short_blue_bg}>
+                  {row.sno}
+                </TableCell>
+                <TableCell className={classes.cell_short}>
                   <InputBoxes
-                    defaultValue={applicant}
                     fullWidth
+                    defaultValue={row.relationship}
+                    placeholder={row.relationship}
                     sx={{
                       borderRadius: '4px',
                     }}
-                  ></InputBoxes>
+                  >
+                    {row.relationship}
+                  </InputBoxes>
+                </TableCell>
+                <TableCell className={classes.cell_short}>
+                  <InputBoxes
+                    fullWidth
+                    defaultValue={row.age}
+                    placeholder={row.age}
+                    sx={{
+                      borderRadius: '4px',
+                    }}
+                  >
+                    {row.age}
+                  </InputBoxes>
+                </TableCell>
+                <TableCell className={classes.cell_short}>
+                  <InputBoxes
+                    fullWidth
+                    defaultValue={row.name}
+                    placeholder={row.name}
+                    sx={{
+                      borderRadius: '4px',
+                    }}
+                  >
+                    {row.name}
+                  </InputBoxes>
+                </TableCell>
+                <TableCell className={classes.cell_short_blue_bg}>
+                  {row.action}
                 </TableCell>
               </>
-            ))}
-          </StyledTableRow>
-        ))}
+            </StyledTableRow>
+          ))}
+        </TableBody>
       </Table>
     </>
   );

@@ -13,6 +13,7 @@ import {
   TextField,
   tableRowClasses,
   styled,
+  Menu,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
@@ -246,8 +247,24 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   // },
 }));
 
+const dummyMenuItems = [
+  {
+    title: 'Remove Applicant',
+  },
+];
+
 const OccupationTab = () => {
   const classes = useStyles();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
       <Table
@@ -275,8 +292,28 @@ const OccupationTab = () => {
               </TableCell>
               <TableCell sx={{ padding: 0.5 }}>
                 <IconButton size='small'>
-                  <MoreVertIcon style={{ color: '#FFF' }}></MoreVertIcon>
+                  <MoreVertIcon
+                    style={{ color: '#FFF' }}
+                    onClick={handleClick}
+                  ></MoreVertIcon>
                 </IconButton>
+                <Menu
+                  id='simple-menu'
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  {dummyMenuItems.map((item) => (
+                    <MenuItem
+                      onClick={handleClose}
+                      key={item.title}
+                      value={item.title}
+                    >
+                      {item.title}
+                    </MenuItem>
+                  ))}
+                </Menu>
               </TableCell>
             </TableRow>
           </TableCell>
@@ -297,8 +334,28 @@ const OccupationTab = () => {
               </TableCell>
               <TableCell sx={{ padding: 0.5 }}>
                 <IconButton size='small'>
-                  <MoreVertIcon style={{ color: '#FFF' }}></MoreVertIcon>
+                  <MoreVertIcon
+                    style={{ color: '#FFF' }}
+                    onClick={handleClick}
+                  ></MoreVertIcon>
                 </IconButton>
+                <Menu
+                  id='simple-menu'
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  {dummyMenuItems.map((item) => (
+                    <MenuItem
+                      onClick={handleClose}
+                      key={item.title}
+                      value={item.title}
+                    >
+                      {item.title}
+                    </MenuItem>
+                  ))}
+                </Menu>
               </TableCell>
             </TableRow>
           </TableCell>

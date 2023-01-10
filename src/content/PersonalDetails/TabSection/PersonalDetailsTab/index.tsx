@@ -13,6 +13,7 @@ import {
   TextField,
   tableRowClasses,
   styled,
+  Menu,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
@@ -219,6 +220,33 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const PersonalDetailsTab = () => {
   const classes = useStyles();
+
+  const dummyMenuItems = [
+    {
+      title: 'Remove Applicant',
+    },
+  ];
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const nativeOnChange = (e) => {
+    const detail = {
+      selectedIndex: e.target.selectedIndex,
+    };
+    e.target.selectedIndex = 0;
+
+    e.target.dispatchEvent(new CustomEvent('itemClick', { detail }));
+  };
+
+  const itemClick = (e) => {
+    console.log('Item Clicked ' + e.detail);
+  };
+
   return (
     <Table
       sx={{
@@ -245,8 +273,28 @@ const PersonalDetailsTab = () => {
             </TableCell>
             <TableCell sx={{ padding: 0.5 }}>
               <IconButton size='small'>
-                <MoreVertIcon style={{ color: '#FFF' }}></MoreVertIcon>
+                <MoreVertIcon
+                  style={{ color: '#FFF' }}
+                  onClick={handleClick}
+                ></MoreVertIcon>
               </IconButton>
+              <Menu
+                id='simple-menu'
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                {dummyMenuItems.map((item) => (
+                  <MenuItem
+                    onClick={handleClose}
+                    key={item.title}
+                    value={item.title}
+                  >
+                    {item.title}
+                  </MenuItem>
+                ))}
+              </Menu>
             </TableCell>
           </TableRow>
         </TableCell>
@@ -267,8 +315,28 @@ const PersonalDetailsTab = () => {
             </TableCell>
             <TableCell sx={{ padding: 0.5 }}>
               <IconButton size='small'>
-                <MoreVertIcon style={{ color: '#FFF' }}></MoreVertIcon>
+                <MoreVertIcon
+                  style={{ color: '#FFF' }}
+                  onClick={handleClick}
+                ></MoreVertIcon>
               </IconButton>
+              <Menu
+                id='simple-menu'
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                {dummyMenuItems.map((item) => (
+                  <MenuItem
+                    onClick={handleClose}
+                    key={item.title}
+                    value={item.title}
+                  >
+                    {item.title}
+                  </MenuItem>
+                ))}
+              </Menu>
             </TableCell>
           </TableRow>
         </TableCell>

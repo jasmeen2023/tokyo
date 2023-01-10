@@ -225,7 +225,7 @@ function ChatContent() {
           justifyContent='flex-start'
           ml={2}
         >
-          <CardWrapperSecondary>Hey there!</CardWrapperSecondary>
+          <CardWrapperSecondary>Hey there!!!!!!</CardWrapperSecondary>
           <CardWrapperSecondary
             sx={{
               mt: 1,

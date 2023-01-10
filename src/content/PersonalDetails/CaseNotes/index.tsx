@@ -67,6 +67,7 @@ const CaseNotes = () => {
           <CardContent>
             <Box sx={{ background: '#EEF7FE', padding: 2 }}>
               <Grid
+                container
                 spacing={1}
                 sx={{
                   display: 'flex',

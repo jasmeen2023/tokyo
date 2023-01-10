@@ -99,10 +99,10 @@ function Hero() {
   return (
     <Container maxWidth='lg' sx={{ textAlign: 'center' }}>
       <Grid
+        container
         spacing={{ xs: 6, md: 10 }}
         justifyContent='center'
         alignItems='center'
-        container
       >
         <Grid item md={10} lg={8} mx='auto'>
           <LabelWrapper color='success'>Version 1.0.0</LabelWrapper>
