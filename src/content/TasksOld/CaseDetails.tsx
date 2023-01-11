@@ -14,6 +14,7 @@ import Grid from '@mui/material/Grid';
 import Image from 'next/image';
 
 import { DivProps } from './CaseStatistics';
+import Button from '@mui/material/Button';
 
 const DotLegend = styled('span')(
   ({ theme }) => `
@@ -200,15 +201,17 @@ function CaseDetails() {
                       </Typography>
                     </Grid>
                     <Grid item>
-                      <Typography
+                      <Button
+                        variant='text'
                         style={{
                           fontSize: 16,
                           fontWeight: 500,
                           color: '#4B65B2',
+                          padding: 0,
                         }}
                       >
                         View
-                      </Typography>
+                      </Button>
                     </Grid>
                   </Grid>
                   <Grid xs={12} item>

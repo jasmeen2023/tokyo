@@ -27,6 +27,8 @@ import { makeStyles } from '@mui/styles';
 
 // import { useCreateCatalogue } from "@/hooks/catalogue/useCatalogue";
 
+import { Cancel, Close } from '@mui/icons-material';
+
 // const addCatalogue = Yup.object().shape({
 //   name: Yup.string().required("Required"),
 //   category: Yup.string().required("Required"),
@@ -89,7 +91,11 @@ const rowdata = [
     relationship: 'Father',
     age: '64',
     name: 'Morise',
-    action: 'close',
+    action: (
+      <IconButton>
+        <Cancel sx={{ color: '#FF4C61' }} />
+      </IconButton>
+    ),
   },
   {
     id: 2,
@@ -97,7 +103,11 @@ const rowdata = [
     relationship: 'Mother',
     age: '63',
     name: 'Morise',
-    action: 'close',
+    action: (
+      <IconButton>
+        <Cancel sx={{ color: '#FF4C61' }} />
+      </IconButton>
+    ),
   },
 ];
 
@@ -129,19 +139,21 @@ const DependentsTab = () => {
         sx={{
           background: '#FFF',
           borderSpacing: '0',
-          border: '2px solid rgba(196, 196, 196, 0.4)',
+          border: '1px dashed rgba(151, 151, 151, 0.24)',
         }}
       >
         <TableBody>
           <TableRow
             sx={{
               background: '#EEF7FE',
+              border: '2px dashed rgba(151, 151, 151, 0.24)',
             }}
           >
             <TableCell
               sx={{
                 fontStyle: 'normal',
                 fontWeight: 800,
+                border: '1px dashed rgba(151, 151, 151, 0.24)',
                 fontSize: '14px',
                 lineHeight: '140.1%',
                 color: '#263238',
@@ -154,6 +166,7 @@ const DependentsTab = () => {
               sx={{
                 fontStyle: 'normal',
                 fontWeight: 800,
+                border: '1px dashed rgba(151, 151, 151, 0.24)',
                 fontSize: '14px',
                 lineHeight: '140.1%',
                 color: '#263238',
@@ -166,6 +179,7 @@ const DependentsTab = () => {
               sx={{
                 fontStyle: 'normal',
                 fontWeight: 800,
+                border: '1px dashed rgba(151, 151, 151, 0.24)',
                 fontSize: '14px',
                 lineHeight: '140.1%',
                 color: '#263238',
@@ -178,6 +192,7 @@ const DependentsTab = () => {
               sx={{
                 fontStyle: 'normal',
                 fontWeight: 800,
+                border: '1px dashed rgba(151, 151, 151, 0.24)',
                 fontSize: '14px',
                 lineHeight: '140.1%',
                 color: '#263238',
@@ -190,6 +205,7 @@ const DependentsTab = () => {
               sx={{
                 fontStyle: 'normal',
                 fontWeight: 800,
+                border: '1px dashed rgba(151, 151, 151, 0.24)',
                 fontSize: '14px',
                 lineHeight: '140.1%',
                 color: '#263238',
@@ -200,12 +216,21 @@ const DependentsTab = () => {
             </TableCell>
           </TableRow>
           {rowdata.map((row) => (
-            <StyledTableRow key={row.id}>
+            <StyledTableRow
+              key={row.id}
+              sx={{ border: '2px dashed rgba(151, 151, 151, 0.24)' }}
+            >
               <>
-                <TableCell className={classes.cell_short_blue_bg}>
+                <TableCell
+                  sx={{ border: '1px dashed rgba(151, 151, 151, 0.24)' }}
+                  className={classes.cell_short_blue_bg}
+                >
                   {row.sno}
                 </TableCell>
-                <TableCell className={classes.cell_short}>
+                <TableCell
+                  sx={{ border: '1px dashed rgba(151, 151, 151, 0.24)' }}
+                  className={classes.cell_short}
+                >
                   <InputBoxes
                     fullWidth
                     defaultValue={row.relationship}
@@ -217,7 +242,10 @@ const DependentsTab = () => {
                     {row.relationship}
                   </InputBoxes>
                 </TableCell>
-                <TableCell className={classes.cell_short}>
+                <TableCell
+                  sx={{ border: '1px dashed rgba(151, 151, 151, 0.24)' }}
+                  className={classes.cell_short}
+                >
                   <InputBoxes
                     fullWidth
                     defaultValue={row.age}
@@ -229,7 +257,10 @@ const DependentsTab = () => {
                     {row.age}
                   </InputBoxes>
                 </TableCell>
-                <TableCell className={classes.cell_short}>
+                <TableCell
+                  sx={{ border: '1px dashed rgba(151, 151, 151, 0.24)' }}
+                  className={classes.cell_short}
+                >
                   <InputBoxes
                     fullWidth
                     defaultValue={row.name}
@@ -241,7 +272,10 @@ const DependentsTab = () => {
                     {row.name}
                   </InputBoxes>
                 </TableCell>
-                <TableCell className={classes.cell_short_blue_bg}>
+                <TableCell
+                  sx={{ border: '1px dashed rgba(151, 151, 151, 0.24)' }}
+                  className={classes.cell_short_blue_bg}
+                >
                   {row.action}
                 </TableCell>
               </>

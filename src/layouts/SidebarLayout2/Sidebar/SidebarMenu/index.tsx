@@ -1,8 +1,6 @@
-import MmsTwoToneIcon from '@mui/icons-material/MmsTwoTone';
 import {
   alpha,
   Box,
-  Button,
   Card,
   Container,
   List,
@@ -10,32 +8,17 @@ import {
   styled,
   CardContent,
   CardHeader,
-  Grid,
   Typography,
   IconButton,
   ListItemAvatar,
-  Avatar,
   ListItemText,
 } from '@mui/material';
-import { useAtom } from 'jotai';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-import { useContext } from 'react';
-
-import { collapsedAtom } from '@/store/sideBar';
-import { userAtom } from '@/store/user';
-
-import { SidebarContext } from '@/contexts/SidebarContext';
-
-import Diagram from '~/assets/svg/sidebar/diagram.svg';
-import PeopleSvg from '~/assets/svg/sidebar/people.svg';
-import Report from '~/assets/svg/sidebar/report.svg';
-import Task from '~/assets/svg/sidebar/task.svg';
+import { useState } from 'react';
 import Image from 'next/image';
-
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-
 import VerticalSidebarTabs from '../../../../content/VerticalSidebarTabs';
+import NextFollowDialog from './NextFollowDialog';
+import ApplicationStatusDialog from './ApplicationStatusDialog';
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -165,12 +148,23 @@ const SubMenuWrapper2 = styled(Box)(
 );
 
 function SidebarMenu2() {
-  const { closeSidebar, getMenu } = useContext(SidebarContext);
-  const [collapsed, setCollapsed] = useAtom(collapsedAtom);
-  const [user, setUser] = useAtom(userAtom);
-  const router = useRouter();
-  const currentRoute = router.pathname;
-  const menu = getMenu();
+  const [open, setOpen] = useState(false);
+  const [openAppDialog, setOpenAppDialog] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleClickOpenApp = () => {
+    setOpenAppDialog(true);
+  };
+
+  const handleCloseApp = () => {
+    setOpenAppDialog(false);
+  };
 
   return (
     <MenuWrapper>
@@ -187,64 +181,7 @@ function SidebarMenu2() {
             <VerticalSidebarTabs />
           </CardContent>
         </Card>
-        <Card
-          sx={{
-            background: '#FFF',
-            borderRadius: 0,
-            boxShadow: '0px 2px 5px 0px rgb(58 53 65 / 10%)',
-            marginY: 2,
-          }}
-        >
-          <CardHeader
-            title='Next Follow update'
-            action={
-              <IconButton>
-                <DriveFileRenameOutlineIcon sx={{ color: '#4B65B2' }} />
-              </IconButton>
-            }
-            sx={{
-              background: '#EEF7FE',
-              fontWeight: 600,
-              fontSize: '16px',
-              lineHeight: '21px',
-              display: 'flex',
-              alignItems: 'flex-end',
-              textTransform: 'capitalize',
-              color: '#4B473E',
-            }}
-          />
 
-          <CardContent>
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '14px',
-                lineHeight: '19px',
-                display: 'flex',
-                alignItems: 'flex-end',
-                textTransform: 'capitalize',
-                color: '#000000',
-                marginBoottom: 1,
-              }}
-            >
-              SEP 19, 2022 12:30 PM
-            </Typography>
-            <Typography
-              sx={{
-                fontStyle: 'normal',
-                fontWeight: 400,
-                fontSize: '12px',
-                lineHeight: '20px',
-                letterSpacing: '0.01em',
-
-                color: '#4B473E',
-              }}
-            >
-              A case note is a summary and analysis of a single case, as opposed
-              to an article,{' '}
-            </Typography>
-          </CardContent>
-        </Card>
         <Card
           sx={{
             background: '#FFF',
@@ -255,7 +192,17 @@ function SidebarMenu2() {
         >
           <CardHeader
             title='Application Status'
-            // action={<Button>view</Button>}
+            action={
+              <>
+                <IconButton onClick={handleClickOpenApp}>
+                  <DriveFileRenameOutlineIcon sx={{ color: '#4B65B2' }} />
+                </IconButton>
+                <ApplicationStatusDialog
+                  open={openAppDialog}
+                  onClose={handleCloseApp}
+                />
+              </>
+            }
             sx={{ background: '#EEF7FE' }}
           />
 
@@ -435,6 +382,68 @@ function SidebarMenu2() {
               />
             </ListItem>
           </List>
+        </Card>
+
+        <Card
+          sx={{
+            background: '#FFF',
+            borderRadius: 0,
+            boxShadow: '0px 2px 5px 0px rgb(58 53 65 / 10%)',
+            marginY: 2,
+          }}
+        >
+          <CardHeader
+            title='Next Follow update'
+            action={
+              <>
+                <IconButton onClick={handleClickOpen}>
+                  <DriveFileRenameOutlineIcon sx={{ color: '#4B65B2' }} />
+                </IconButton>
+                <NextFollowDialog open={open} onClose={handleClose} />
+              </>
+            }
+            sx={{
+              background: '#EEF7FE',
+              fontWeight: 600,
+              fontSize: '16px',
+              lineHeight: '21px',
+              display: 'flex',
+              alignItems: 'flex-end',
+              textTransform: 'capitalize',
+              color: '#4B473E',
+            }}
+          />
+
+          <CardContent>
+            <Typography
+              sx={{
+                fontWeight: 400,
+                fontSize: '14px',
+                lineHeight: '19px',
+                display: 'flex',
+                alignItems: 'flex-end',
+                textTransform: 'capitalize',
+                color: '#000000',
+                marginBoottom: 1,
+              }}
+            >
+              SEP 19, 2022 12:30 PM
+            </Typography>
+            <Typography
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 400,
+                fontSize: '12px',
+                lineHeight: '20px',
+                letterSpacing: '0.01em',
+
+                color: '#4B473E',
+              }}
+            >
+              A case note is a summary and analysis of a single case, as opposed
+              to an article,{' '}
+            </Typography>
+          </CardContent>
         </Card>
 
         <Card

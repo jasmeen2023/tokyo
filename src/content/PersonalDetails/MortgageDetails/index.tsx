@@ -25,6 +25,11 @@ import { AgentFieldStatus, AgentStatus } from '@/models/agentStatus';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import {
+  CurrencyPoundOutlined,
+  CurrencyPoundRounded,
+} from '@mui/icons-material';
 
 interface Filters {
   status?: AgentFieldStatus;
@@ -50,15 +55,11 @@ const useStyles = makeStyles((theme) => ({
     width: '60%',
   },
   cell_short_box: {
-    background: '#FFF',
-    alignItems: 'center',
     fontWeight: 600,
     fontSize: '16px',
     lineHeight: '140.1%',
     color: '#263238',
-    padding: '8px 20px',
-    border: '0.5px solid #A6ACBE',
-    borderRadius: 4,
+    padding: '2px 3px',
   },
 }));
 
@@ -140,7 +141,7 @@ const MortgageDetail = () => {
             background: '#EEF7FE',
             borderRadius: 0,
             boxshadow: '0px 2px 5px 0px rgb(58 53 65 / 10%)',
-            padding: '0px 10px',
+            padding: '5px 10px',
           }}
         >
           <Grid container spacing={1}>
@@ -246,7 +247,13 @@ const MortgageDetail = () => {
                 LTV
               </Typography>
 
-              <Box className={classes.cell_short_box}>12%</Box>
+              <TextField
+                size='small'
+                placeholder='12%'
+                sx={{ background: '#FFF', width: '80px', textAlign: 'center' }}
+              >
+                12%
+              </TextField>
             </Grid>
           </Grid>
         </Card>
@@ -255,7 +262,6 @@ const MortgageDetail = () => {
           sx={{
             fontWeight: 600,
             fontSize: '16px',
-
             letterSpacing: '0.01em',
             color: '#292D32',
           }}
@@ -269,9 +275,14 @@ const MortgageDetail = () => {
             marginBottom: 2,
           }}
         >
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={7}>
-              <InputBoxes
+          <Grid container spacing={1}>
+            <Grid item xs={7}>
+              <TextField
+                sx={{
+                  width: '393px',
+                  height: '50px',
+                  background: '#FFFFFF',
+                }}
                 {...register('category')}
                 placeholder='Enter postcode'
                 error={Boolean(errors?.category)}
@@ -280,69 +291,67 @@ const MortgageDetail = () => {
                     ? `Category is ${errors.category?.message}`
                     : null
                 }
-                sx={{ background: '#FFF' }}
                 InputProps={{
                   startAdornment: (
-                    <InputAdornment position='start'>
-                      <SearchTwoToneIcon
-                        sx={{
-                          background: '#EBEBEB',
-                          borderRadius: '10px 10px 20px 10px',
-                        }}
-                      />
+                    <InputAdornment
+                      position='start'
+                      sx={{
+                        padding: '26px 8px',
+                        background: '#EBEBEB',
+                        color: '#4B65B2',
+                        marginLeft: '-15px',
+                      }}
+                    >
+                      <SearchTwoToneIcon />
                     </InputAdornment>
                   ),
                 }}
-              />
+              ></TextField>
             </Grid>
 
-            <Grid item container spacing={2} xs={12} md={5}>
-              <Grid item xs={12} md={6}>
-                <Button
-                  type='submit'
-                  variant='contained'
-                  sx={{
-                    background:
-                      'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
-                    color: '#FFF',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    padding: '15px 20px 14px',
-                    fontStyle: 'normal',
-                    fontWeight: 600,
-                    fontSize: '16px',
-                    lineHeight: '21px',
-                    textAlign: 'center',
-                    borderRadius: 40,
-                  }}
-                  onClick={handleSubmit(onSubmit)}
-                >
-                  Search Podcast
-                </Button>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Button
-                  type='submit'
-                  variant='contained'
-                  sx={{
-                    background:
-                      'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
-                    color: '#FFF',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    padding: '15px 25px 14px',
-                    fontStyle: 'normal',
-                    fontWeight: 600,
-                    fontSize: '16px',
-                    lineHeight: '21px',
-                    textAlign: 'center',
-                    borderRadius: 40,
-                  }}
-                  onClick={handleSubmit(onSubmit)}
-                >
-                  Enter Manually
-                </Button>
-              </Grid>
+            <Grid item xs={5} spacing={2}>
+              <Button
+                type='submit'
+                variant='contained'
+                sx={{
+                  background:
+                    'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
+                  color: '#FFF',
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  fontSize: '15.5px',
+                  lineHeight: '21px',
+                  textAlign: 'center',
+                  borderRadius: 40,
+                  width: '157px',
+                  height: '50px',
+                  marginX: 1,
+                }}
+                onClick={handleSubmit(onSubmit)}
+              >
+                Search Podcast
+              </Button>
+
+              <Button
+                type='submit'
+                variant='contained'
+                sx={{
+                  background:
+                    'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
+                  color: '#FFF',
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  fontSize: '15.5px',
+                  lineHeight: '21px',
+                  textAlign: 'center',
+                  borderRadius: 40,
+                  width: '157px',
+                  height: '50px',
+                }}
+                onClick={handleSubmit(onSubmit)}
+              >
+                Enter Manually
+              </Button>
             </Grid>
           </Grid>
         </Card>
@@ -358,6 +367,7 @@ const MortgageDetail = () => {
               helperText={
                 errors.name ? `Name is ${errors.name?.message}` : null
               }
+              sx={{ background: '#F6F7F8' }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -372,6 +382,7 @@ const MortgageDetail = () => {
                   ? `Category is ${errors.category?.message}`
                   : null
               }
+              sx={{ background: '#F6F7F8' }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -386,6 +397,7 @@ const MortgageDetail = () => {
                   ? `Category is ${errors.category?.message}`
                   : null
               }
+              sx={{ background: '#F6F7F8' }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -400,6 +412,7 @@ const MortgageDetail = () => {
                   ? `Category is ${errors.category?.message}`
                   : null
               }
+              sx={{ background: '#F6F7F8' }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -414,6 +427,26 @@ const MortgageDetail = () => {
                   ? `Category is ${errors.category?.message}`
                   : null
               }
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment
+                    position='start'
+                    sx={{
+                      padding: '26px 8px',
+                      background: '#EEF7FE',
+                      marginLeft: '-15px',
+                    }}
+                  >
+                    <CurrencyPoundRounded
+                      sx={{
+                        color: '#4B65B2',
+                        borderColor: ' #4B65B2',
+                        borderRadius: '50%',
+                      }}
+                    />
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -485,6 +518,26 @@ const MortgageDetail = () => {
                   ? `Category is ${errors.category?.message}`
                   : null
               }
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment
+                    position='start'
+                    sx={{
+                      padding: '26px 8px',
+                      background: '#EEF7FE',
+                      marginLeft: '-15px',
+                    }}
+                  >
+                    <CurrencyPoundRounded
+                      sx={{
+                        color: '#4B65B2',
+                        borderColor: ' #4B65B2',
+                        borderRadius: '50%',
+                      }}
+                    />
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -508,7 +561,7 @@ const MortgageDetail = () => {
             </FormControl>
           </Grid>
           <Grid item xs={12} md={4}>
-            <InputHeading>Rate</InputHeading>
+            <InputHeading>Rate Expiry Date</InputHeading>
             <InputBoxes
               {...register('category')}
               fullWidth
@@ -519,6 +572,26 @@ const MortgageDetail = () => {
                   ? `Category is ${errors.category?.message}`
                   : null
               }
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment
+                    position='start'
+                    sx={{
+                      padding: '26px 8px',
+                      background: '#EEF7FE',
+                      marginLeft: '-15px',
+                    }}
+                  >
+                    <CalendarMonthIcon
+                      sx={{
+                        color: '#4B65B2',
+                        borderColor: ' #4B65B2',
+                        borderRadius: '50%',
+                      }}
+                    />
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
 
@@ -532,6 +605,26 @@ const MortgageDetail = () => {
               helperText={
                 errors.color ? `Color is ${errors.color?.message}` : null
               }
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment
+                    position='start'
+                    sx={{
+                      padding: '26px 8px',
+                      background: '#EEF7FE',
+                      marginLeft: '-15px',
+                    }}
+                  >
+                    <CalendarMonthIcon
+                      sx={{
+                        color: '#4B65B2',
+                        borderColor: ' #4B65B2',
+                        borderRadius: '50%',
+                      }}
+                    />
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
           <Grid item xs={12} md={4}></Grid>

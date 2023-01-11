@@ -7,6 +7,8 @@ import {
   FormLabel,
   IconButton,
   InputAdornment,
+  Menu,
+  MenuItem,
   SelectChangeEvent,
   styled,
   Table,
@@ -362,6 +364,32 @@ const TasksTable: FC<RecentOrdersTableProps> = ({ tasks }) => {
     status: undefined,
   });
 
+  const dummyMenuItems = [
+    {
+      title: 'View Task',
+    },
+  ];
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const nativeOnChange = (e) => {
+    const detail = {
+      selectedIndex: e.target.selectedIndex,
+    };
+    e.target.selectedIndex = 0;
+
+    e.target.dispatchEvent(new CustomEvent('itemClick', { detail }));
+  };
+
+  const itemClick = (e) => {
+    console.log('Item Clicked ' + e.detail);
+  };
+
   const handleStatusChange = (e: SelectChangeEvent<string>): void => {
     let value: TaskStatus = 'pending';
 
@@ -410,18 +438,6 @@ const TasksTable: FC<RecentOrdersTableProps> = ({ tasks }) => {
   const theme = useTheme();
   const router = useRouter();
 
-  const [open, setOpen] = useState(false);
-
-  const [selectedValue, setSelectedValue] = useState();
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (value) => {
-    setOpen(false);
-  };
-
   return (
     <Card
       sx={{
@@ -430,15 +446,9 @@ const TasksTable: FC<RecentOrdersTableProps> = ({ tasks }) => {
         boxShadow: 'none',
       }}
     >
-      <Grid container>
-        <Grid item xs={9}>
-          <Grid
-            spacing={2}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
+      <Grid container xs={12}>
+        <Grid container item xs={8} alignItems='end'>
+          <Grid item>
             <Typography
               sx={{
                 fontStyle: 'normal',
@@ -446,40 +456,41 @@ const TasksTable: FC<RecentOrdersTableProps> = ({ tasks }) => {
                 fontSize: '14px',
                 lineHeight: '175%',
                 color: '#263238',
-                marginX: 1,
               }}
             >
               Date Range
             </Typography>
-          </Grid>
-          <Grid sx={{ display: 'flex', alignItems: 'center', marginY: 1 }}>
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '12px',
-                lineHeight: '19px',
-                textTransform: 'capitalize',
-                color: '#2C2937',
-                background: '#FFFFFF',
-                border: '1px solid #4B65B2',
-                borderRadius: '20px',
-                padding: '5px 15px',
-                margin: 0.5,
-              }}
-            >
-              Created One
-            </Typography>
+            <Grid sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '12px',
+                  lineHeight: '19px',
+                  textTransform: 'capitalize',
+                  color: '#2C2937',
+                  background: '#FFFFFF',
+                  border: '1px solid #4B65B2',
+                  borderRadius: '20px',
+                  padding: '7px 16px',
+                  margin: 0.5,
+                }}
+              >
+                Created Date
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
 
-        <Grid item xs={3}>
-          <Grid
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-evenly',
-            }}
-          >
+        <Grid
+          container
+          item
+          xs={4}
+          display='flex'
+          justifyContent='end'
+          alignItems='end'
+          spacing={1}
+        >
+          <Grid item>
             <TextField
               id='standard-basic'
               variant='standard'
@@ -493,61 +504,64 @@ const TasksTable: FC<RecentOrdersTableProps> = ({ tasks }) => {
                 ),
               }}
             />
-
             <Button
-              size='medium'
-              onClick={handleClickOpen}
               sx={{
                 background:
                   'linear-gradient(275.52deg, #13BBE6 17.29%, #4B65B2 82.37%)',
                 borderRadius: '4px',
-                marginTop: 1,
-                color: '#FFF',
-                paddingX: 4,
+                marginX: 2,
+                fontWeight: 500,
+                fontSize: '14px',
+                lineHeight: '20px',
+                color: '#FFFFFF',
+                width: '143px',
+                height: '36px',
               }}
             >
               Assign Task
             </Button>
-            <SimpleDialog
-              //   selectedValue={selectedValue}
-              open={open}
-              onClose={handleClose}
-            />
           </Grid>
         </Grid>
       </Grid>
+
       <TableContainer
         sx={{
           marginY: 2,
-          background: '#FFF',
-          borderRadius: 1,
         }}
       >
         <Table>
-          <TableHead>
+          <TableHead sx={{ border: '1px solid #D7D7D7' }}>
             <TableRow>
-              <TableCell padding='checkbox'>
+              {/* <TableCell padding='checkbox'>
                 <Checkbox
                   color='primary'
                   checked={selectedAllTasks}
                   indeterminate={selectedSomeTasks}
                   onChange={handleSelectAllTasks}
                 />
-              </TableCell>
+              </TableCell> */}
               <CustomTableCell>Due Date</CustomTableCell>
               <CustomTableCell>Case ID</CustomTableCell>
               <CustomTableCell>Assigned By</CustomTableCell>
               <CustomTableCell>ANote</CustomTableCell>
               <CustomTableCell>Status</CustomTableCell>
-              <CustomTableCell align='right'>Actions</CustomTableCell>
+              <CustomTableCell>Actions</CustomTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {paginatedTasks.map((singleTask) => {
               const isTaskSelected = selectedTasks.includes(singleTask.id);
               return (
-                <TableRow hover key={singleTask.id} selected={isTaskSelected}>
-                  <TableCell padding='checkbox'>
+                <TableRow
+                  hover
+                  key={singleTask.id}
+                  selected={isTaskSelected}
+                  sx={{
+                    background: '#FFFFFF',
+                    border: '1px solid #D7D7D7',
+                  }}
+                >
+                  {/* <TableCell padding='checkbox'>
                     <Checkbox
                       color='primary'
                       checked={isTaskSelected}
@@ -556,7 +570,7 @@ const TasksTable: FC<RecentOrdersTableProps> = ({ tasks }) => {
                       }
                       value={isTaskSelected}
                     />
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     onClick={() => {
                       router?.push(`/quotations/${singleTask?.id}`);
@@ -626,49 +640,28 @@ const TasksTable: FC<RecentOrdersTableProps> = ({ tasks }) => {
                   >
                     {getStatusLabel(singleTask.status)}
                   </TableCell>
-                  <TableCell
-                    align='right'
-                    sx={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      display: 'flex',
-                    }}
-                  >
+                  <TableCell>
                     <IconButton color='primary' sx={{ p: 0.5 }}>
-                      <MoreHorizTwoToneIcon />
+                      <MoreHorizTwoToneIcon onClick={handleClick} />
                     </IconButton>
-                    <IconButton color='primary' sx={{ p: 1 }}>
-                      <AvatarWrapper
-                        src='/assets/svg/eye.svg'
-                        variant='square'
-                      />
-                    </IconButton>
-                    {/* <Tooltip title='Edit Order' arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': {
-                            background: theme.colors.primary,
-                          },
-                          color: theme.palette.primary.main,
-                        }}
-                        color='inherit'
-                        size='small'
-                      >
-                        <EditTwoTone fontSize='small' />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title='Delete Order' arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': { background: theme.colors.error.lighter },
-                          color: theme.palette.error.main,
-                        }}
-                        color='inherit'
-                        size='small'
-                      >
-                        <DeleteTwoTone fontSize='small' />
-                      </IconButton>
-                    </Tooltip> */}
+                    <Menu
+                      id='simple-menu'
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                      sx={{ borderRadius: 1 }}
+                    >
+                      {dummyMenuItems.map((item) => (
+                        <MenuItem
+                          onClick={handleClose}
+                          key={item.title}
+                          value={item.title}
+                        >
+                          {item.title}
+                        </MenuItem>
+                      ))}
+                    </Menu>
                   </TableCell>
                 </TableRow>
               );

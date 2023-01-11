@@ -245,7 +245,7 @@ const CarLoanTab = () => {
         ))}
 
         <TableRow>
-          <TableCell
+          <Button
             sx={{
               border: '1.5px solid #4B65B2',
               borderRadius: '2px',
@@ -270,7 +270,7 @@ const CarLoanTab = () => {
             >
               Add section
             </Typography>
-          </TableCell>
+          </Button>
           <TableCell></TableCell>
           <TableCell></TableCell>
           <TableCell></TableCell>

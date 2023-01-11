@@ -2,10 +2,10 @@ import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
 import {
   Box,
   Card,
-  FormControl,
   IconButton,
-  Input,
   InputAdornment,
+  Menu,
+  MenuItem,
   SelectChangeEvent,
   styled,
   Table,
@@ -28,13 +28,13 @@ import PropTypes from 'prop-types';
 import { ChangeEvent, FC, useState } from 'react';
 
 import Label from '@/components/Label';
-import OutLinedLabel from '@/components/OutLinedLabel';
 import SearchIcon from '@mui/icons-material/Search';
 
 import { Case } from '@/models/case';
 import { CaseStatus } from '@/models/case';
 import Image from 'next/image';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { RemoveRedEyeOutlined } from '@mui/icons-material';
 
 interface RecentOrdersTableProps {
   className?: string;
@@ -42,7 +42,6 @@ interface RecentOrdersTableProps {
 }
 
 const CustomTableCell = styled(TableCell)(() => ({
-  fontStyle: 'normal',
   fontWeight: 400,
   fontSize: '14px',
   lineHeight: '175%',
@@ -54,12 +53,12 @@ interface Filters {
   status?: CaseStatus;
 }
 
-const AvatarWrapper = styled(Avatar)(
-  ({ theme }) => `
-    width: ${theme.spacing(2.345)};
-    height: ${theme.spacing(2)};
-`
-);
+// const AvatarWrapper = styled(Avatar)(
+//   ({ theme }) => `
+//     width: ${theme.spacing(2.345)};
+//     height: ${theme.spacing(2)};
+// `
+// );
 
 const getStatusLabel = (CaseStatus: CaseStatus): JSX.Element => {
   const map = {
@@ -109,6 +108,32 @@ const CasesTable: FC<RecentOrdersTableProps> = ({ cases }) => {
   const [filters, setFilters] = useState<Filters>({
     status: undefined,
   });
+
+  const dummyMenuItems = [
+    {
+      title: 'View Case',
+    },
+  ];
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const nativeOnChange = (e) => {
+    const detail = {
+      selectedIndex: e.target.selectedIndex,
+    };
+    e.target.selectedIndex = 0;
+
+    e.target.dispatchEvent(new CustomEvent('itemClick', { detail }));
+  };
+
+  const itemClick = (e) => {
+    console.log('Item Clicked ' + e.detail);
+  };
 
   const handleStatusChange = (e: SelectChangeEvent<string>): void => {
     let value: CaseStatus = 'offered';
@@ -166,17 +191,9 @@ const CasesTable: FC<RecentOrdersTableProps> = ({ cases }) => {
         boxShadow: 'none',
       }}
     >
-      <Grid container spacing={2}>
-        <Grid item xs={8}>
-          <Grid
-            container
-            spacing={2}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              margin: 1,
-            }}
-          >
+      <Grid container xs={12}>
+        <Grid container item xs={8} alignItems='end'>
+          <Grid item>
             <Typography
               sx={{
                 fontStyle: 'normal',
@@ -184,12 +201,97 @@ const CasesTable: FC<RecentOrdersTableProps> = ({ cases }) => {
                 fontSize: '14px',
                 lineHeight: '175%',
                 color: '#263238',
-                marginX: 1,
               }}
             >
               Case Filters
             </Typography>
+            <Grid sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '12px',
+                  lineHeight: '19px',
+                  textTransform: 'capitalize',
+                  color: '#2C2937',
+                  background: '#FFFFFF',
+                  border: '1px solid #4B65B2',
+                  borderRadius: '20px',
+                  padding: '7px 16px',
+                  margin: 0.5,
+                }}
+              >
+                Introducers
+              </Typography>
 
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '12px',
+                  lineHeight: '19px',
+                  textTransform: 'capitalize',
+                  color: '#2C2937',
+                  background: '#FFFFFF',
+                  border: '1px solid #4B65B2',
+                  borderRadius: '20px',
+                  padding: '7px 16px',
+                  margin: 0.5,
+                }}
+              >
+                Lenders
+              </Typography>
+
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '12px',
+                  lineHeight: '19px',
+                  textTransform: 'capitalize',
+                  color: '#2C2937',
+                  background: '#FFFFFF',
+                  border: '1px solid #4B65B2',
+                  borderRadius: '20px',
+                  padding: '7px 16px',
+                  margin: 0.5,
+                }}
+              >
+                Relationship Manager
+              </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '12px',
+                  lineHeight: '19px',
+                  textTransform: 'capitalize',
+                  color: '#2C2937',
+                  background: '#FFFFFF',
+                  border: '1px solid #4B65B2',
+                  borderRadius: '20px',
+                  padding: '7px 16px',
+                  margin: 0.5,
+                }}
+              >
+                Process Officer
+              </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '12px',
+                  lineHeight: '19px',
+                  textTransform: 'capitalize',
+                  color: '#2C2937',
+                  background: '#FFFFFF',
+                  border: '1px solid #4B65B2',
+                  borderRadius: '20px',
+                  padding: '7px 16px',
+                  margin: 0.5,
+                }}
+              >
+                Lead Type
+              </Typography>
+              <Image src='/images/line.png' alt='' width='2px' height='28px' />
+            </Grid>
+          </Grid>
+          <Grid item>
             <Typography
               sx={{
                 fontStyle: 'normal',
@@ -197,12 +299,47 @@ const CasesTable: FC<RecentOrdersTableProps> = ({ cases }) => {
                 fontSize: '14px',
                 lineHeight: '175%',
                 color: '#263238',
-                marginLeft: 44,
               }}
             >
               Application
             </Typography>
-
+            <Grid sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '12px',
+                  lineHeight: '19px',
+                  textTransform: 'capitalize',
+                  color: '#2C2937',
+                  background: '#FFFFFF',
+                  border: '1px solid #4B65B2',
+                  borderRadius: '20px',
+                  padding: '7px 16px',
+                  margin: 0.5,
+                }}
+              >
+                Status
+              </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '12px',
+                  lineHeight: '19px',
+                  textTransform: 'capitalize',
+                  color: '#2C2937',
+                  background: '#FFFFFF',
+                  border: '1px solid #4B65B2',
+                  borderRadius: '20px',
+                  padding: '7px 16px',
+                  margin: 0.5,
+                }}
+              >
+                Status Date
+              </Typography>
+              <Image src='/images/line.png' alt='' width='2px' height='28px' />
+            </Grid>
+          </Grid>
+          <Grid item>
             <Typography
               sx={{
                 fontStyle: 'normal',
@@ -210,199 +347,95 @@ const CasesTable: FC<RecentOrdersTableProps> = ({ cases }) => {
                 fontSize: '14px',
                 lineHeight: '175%',
                 color: '#263238',
-                marginLeft: 8,
               }}
             >
-              Data Range
+              Date Range
             </Typography>
-          </Grid>
-          <Grid sx={{ display: 'flex', alignItems: 'center', marginY: 1 }}>
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '12px',
-                lineHeight: '19px',
-                textTransform: 'capitalize',
-                color: '#2C2937',
-                background: '#FFFFFF',
-                border: '1px solid #4B65B2',
-                borderRadius: '20px',
-                padding: '4px 4px',
-                margin: 0.5,
-              }}
-            >
-              Introducers
-            </Typography>
-
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '12px',
-                lineHeight: '19px',
-                textTransform: 'capitalize',
-                color: '#2C2937',
-                background: '#FFFFFF',
-                border: '1px solid #4B65B2',
-                borderRadius: '20px',
-                padding: '4px 4px',
-                margin: 0.5,
-              }}
-            >
-              Lenders
-            </Typography>
-
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '12px',
-                lineHeight: '19px',
-                textTransform: 'capitalize',
-                color: '#2C2937',
-                background: '#FFFFFF',
-                border: '1px solid #4B65B2',
-                borderRadius: '20px',
-                padding: '4px 4px',
-                margin: 0.5,
-              }}
-            >
-              Relationship Manager
-            </Typography>
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '12px',
-                lineHeight: '19px',
-                textTransform: 'capitalize',
-                color: '#2C2937',
-                background: '#FFFFFF',
-                border: '1px solid #4B65B2',
-                borderRadius: '20px',
-                padding: '4px 4px',
-                margin: 0.5,
-              }}
-            >
-              Process Officer
-            </Typography>
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '12px',
-                lineHeight: '19px',
-                textTransform: 'capitalize',
-                color: '#2C2937',
-                background: '#FFFFFF',
-                border: '1px solid #4B65B2',
-                borderRadius: '20px',
-                padding: '2px 5px',
-                margin: 0.5,
-              }}
-            >
-              Lead Type
-            </Typography>
-            <Image src='/images/line.png' alt='' width='2px' height='28px' />
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '12px',
-                lineHeight: '19px',
-                textTransform: 'capitalize',
-                color: '#2C2937',
-                background: '#FFFFFF',
-                border: '1px solid #4B65B2',
-                borderRadius: '20px',
-                padding: '2px 5px',
-                margin: 0.5,
-              }}
-            >
-              Status
-            </Typography>
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '12px',
-                lineHeight: '19px',
-                textTransform: 'capitalize',
-                color: '#2C2937',
-                background: '#FFFFFF',
-                border: '1px solid #4B65B2',
-                borderRadius: '20px',
-                padding: '2px 5px',
-                margin: 0.5,
-              }}
-            >
-              Status Date
-            </Typography>
-            <Image src='/images/line.png' alt='' width='2px' height='28px' />
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '12px',
-                lineHeight: '19px',
-                textTransform: 'capitalize',
-                color: '#2C2937',
-                background: '#FFFFFF',
-                border: '1px solid #4B65B2',
-                borderRadius: '20px',
-                padding: '2px 5px',
-                margin: 0.5,
-              }}
-            >
-              Created Date
-            </Typography>
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '12px',
-                lineHeight: '19px',
-                textTransform: 'capitalize',
-                color: '#2C2937',
-                background: '#FFFFFF',
-                border: '1px solid #4B65B2',
-                borderRadius: '20px',
-                padding: '2px 5px',
-                margin: 0.5,
-              }}
-            >
-              Follow up date
-            </Typography>
+            <Grid sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '12px',
+                  lineHeight: '19px',
+                  textTransform: 'capitalize',
+                  color: '#2C2937',
+                  background: '#FFFFFF',
+                  border: '1px solid #4B65B2',
+                  borderRadius: '20px',
+                  padding: '7px 16px',
+                  margin: 0.5,
+                }}
+              >
+                Created Date
+              </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '12px',
+                  lineHeight: '19px',
+                  textTransform: 'capitalize',
+                  color: '#2C2937',
+                  background: '#FFFFFF',
+                  border: '1px solid #4B65B2',
+                  borderRadius: '20px',
+                  padding: '7px 16px',
+                  margin: 0.5,
+                }}
+              >
+                Follow up date
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
 
-        <Grid item xs={4}>
-          <Button
-            size='small'
-            sx={{
-              background:
-                'linear-gradient(275.52deg, #13BBE6 17.29%, #4B65B2 82.37%)',
-              borderRadius: '4px',
-              marginX: 2,
-              fontWeight: 500,
-              fontSize: '14px',
-              lineHeight: '20px',
-              color: '#FFFFFF',
-            }}
-          >
-            Download Report
-          </Button>
-          <TextField
-            id='standard-basic'
-            variant='standard'
-            placeholder='Search postcode, Name'
-            sx={{ borderBottom: '0.5px solid #979797' }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position='start'>
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
+        <Grid
+          container
+          item
+          xs={4}
+          display='flex'
+          justifyContent='end'
+          alignItems='end'
+          spacing={1}
+        >
+          <Grid item>
+            <Button
+              size='small'
+              sx={{
+                background:
+                  'linear-gradient(275.52deg, #13BBE6 17.29%, #4B65B2 82.37%)',
+                borderRadius: '4px',
+                marginX: 2,
+                fontWeight: 500,
+                fontSize: '14px',
+                lineHeight: '20px',
+                color: '#FFFFFF',
+              }}
+            >
+              Download Report
+            </Button>
+
+            <TextField
+              id='standard-basic'
+              variant='standard'
+              placeholder='Search postcode, Name'
+              sx={{ borderBottom: '0.5px solid #979797' }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position='start'>
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Grid>
 
           <Grid
+            xs={12}
+            item
             sx={{
               display: 'flex',
               alignItems: 'center',
-              // justifyContent: 'space-between',
+              justifyContent: 'end',
             }}
           >
             <Typography
@@ -422,9 +455,9 @@ const CasesTable: FC<RecentOrdersTableProps> = ({ cases }) => {
                 boxShadow: '0px 2px 5px 0px rgb(58 53 65 / 10%)',
                 border: '0.2px solid #979797',
                 display: 'flex',
-                alignItems: 'center',
+                alignItems: 'end',
                 padding: '5px 10px',
-                margin: 1,
+                marginX: 1,
               }}
             >
               <Typography
@@ -467,12 +500,13 @@ const CasesTable: FC<RecentOrdersTableProps> = ({ cases }) => {
               </Typography>
             </Grid>
             <Button
-              size='small'
+              size='medium'
               sx={{
                 background:
                   'linear-gradient(275.52deg, #13BBE6 17.29%, #4B65B2 82.37%)',
                 borderRadius: '4px',
-
+                width: '143px',
+                height: '36px',
                 color: '#FFF',
               }}
             >
@@ -481,7 +515,7 @@ const CasesTable: FC<RecentOrdersTableProps> = ({ cases }) => {
               </IconButton>
               Add Case
             </Button>
-            <Button
+            {/* <Button
               size='small'
               sx={{
                 background: '#EBEBEB',
@@ -494,24 +528,17 @@ const CasesTable: FC<RecentOrdersTableProps> = ({ cases }) => {
                 <AddCircleOutlineIcon />
               </IconButton>
               Add Case
-            </Button>
+            </Button> */}
           </Grid>
         </Grid>
       </Grid>
 
-      <TableContainer
-        sx={{
-          marginY: 2,
-          background: '#FFF',
-          borderRadius: 1,
-        }}
-      >
+      <TableContainer sx={{ my: 2 }}>
         <Table>
-          <TableHead>
+          <TableHead sx={{ border: '2px solid rgba(196, 196, 196, 0.4)' }}>
             <TableRow>
               <TableCell padding='checkbox'>
                 <Checkbox
-                  color='primary'
                   checked={selectedAllCases}
                   indeterminate={selectedSomeCases}
                   onChange={handleSelectAllCases}
@@ -530,14 +557,22 @@ const CasesTable: FC<RecentOrdersTableProps> = ({ cases }) => {
               <CustomTableCell align='right'>Actions</CustomTableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
             {paginatedCases.map((singleCase) => {
               const isCaseSelected = selectedCases.includes(singleCase.id);
               return (
-                <TableRow hover key={singleCase.id} selected={isCaseSelected}>
+                <TableRow
+                  sx={{
+                    background: '#FFFFFF',
+                    border: '2px solid rgba(196, 196, 196, 0.4)',
+                  }}
+                  hover
+                  key={singleCase.id}
+                  selected={isCaseSelected}
+                >
                   <TableCell padding='checkbox'>
                     <Checkbox
-                      color='primary'
                       checked={isCaseSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
                         handleSelectOneCase(event, singleCase.id)
@@ -680,49 +715,31 @@ const CasesTable: FC<RecentOrdersTableProps> = ({ cases }) => {
                   >
                     {getStatusLabel(singleCase.status)}
                   </TableCell>
-                  <TableCell
-                    align='right'
-                    sx={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      display: 'flex',
-                    }}
-                  >
-                    <IconButton color='primary' sx={{ p: 0.5 }}>
-                      <MoreHorizTwoToneIcon />
+                  <TableCell align='right'>
+                    <IconButton sx={{ p: 0.5, color: '#979797' }}>
+                      <RemoveRedEyeOutlined />
                     </IconButton>
-                    <IconButton color='primary' sx={{ p: 1 }}>
-                      <AvatarWrapper
-                        src='/assets/svg/eye.svg'
-                        variant='square'
-                      />
+                    <IconButton sx={{ p: 0.5, color: '#979797' }}>
+                      <MoreHorizTwoToneIcon onClick={handleClick} />
                     </IconButton>
-                    {/* <Tooltip title='Edit Order' arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': {
-                            background: theme.colors.primary,
-                          },
-                          color: theme.palette.primary.main,
-                        }}
-                        color='inherit'
-                        size='small'
-                      >
-                        <EditTwoTone fontSize='small' />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title='Delete Order' arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': { background: theme.colors.error.lighter },
-                          color: theme.palette.error.main,
-                        }}
-                        color='inherit'
-                        size='small'
-                      >
-                        <DeleteTwoTone fontSize='small' />
-                      </IconButton>
-                    </Tooltip> */}
+                    <Menu
+                      id='simple-menu'
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                      sx={{ borderRadius: 1 }}
+                    >
+                      {dummyMenuItems.map((item) => (
+                        <MenuItem
+                          onClick={handleClose}
+                          key={item.title}
+                          value={item.title}
+                        >
+                          {item.title}
+                        </MenuItem>
+                      ))}
+                    </Menu>
                   </TableCell>
                 </TableRow>
               );

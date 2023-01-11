@@ -4,21 +4,16 @@ import {
   Avatar,
   Box,
   Button,
-  DialogActions,
-  DialogContent,
   IconButton,
   InputBase,
   styled,
   TextareaAutosize,
-  TextArea,
   Tooltip,
   useTheme,
 } from '@mui/material';
 import { useState } from 'react';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@mui/styles';
+import SaveButtonDialog from './SaveButtonDialog';
 
 const MessageInputWrapper = styled(InputBase)(
   ({ theme }) => `
@@ -46,79 +41,10 @@ const InputBoxes = styled(TextareaAutosize)(({ theme }) => ({
   borderRadius: '4px',
 }));
 
-export function SimpleDialog(props) {
-  const { onClose, open } = props;
-
-  const handleClose = () => {
-    onClose();
-  };
-
-  //   const handleListItemClick = (value) => {
-  //     onClose(value);
-  //   };
-
-  return (
-    <Dialog fullWidth onClose={handleClose} open={open}>
-      <DialogTitle
-        sx={{
-          fontWeight: 600,
-          fontSize: '18px',
-          lineHeight: '24px',
-          textAlign: 'left',
-        }}
-      >
-        Explain the purpose of this message
-      </DialogTitle>
-      <DialogContent>
-        <InputBoxes
-          minRows={10}
-          style={{ width: 550 }}
-          sx={{
-            borderRadius: '4px',
-          }}
-        ></InputBoxes>
-      </DialogContent>
-
-      <DialogActions>
-        <Button
-          sx={{
-            background:
-              'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
-            borderRadius: '5px',
-
-            color: '#FFF',
-          }}
-        >
-          Yes, Send
-        </Button>
-        <Button
-          onClick={handleClose}
-          sx={{
-            background:
-              'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
-            borderRadius: '5px',
-
-            color: '#FFF',
-          }}
-        >
-          Close
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-}
-
-SimpleDialog.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  //   selectedValue: PropTypes.string.isRequired,
-};
-
 function BottomBarContent() {
   const theme = useTheme();
 
   const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -126,7 +52,6 @@ function BottomBarContent() {
 
   const handleClose = (value) => {
     setOpen(false);
-    setSelectedValue(value);
   };
 
   const user = {
@@ -187,11 +112,7 @@ function BottomBarContent() {
         >
           Send
         </Button>
-        <SimpleDialog
-          //   selectedValue={selectedValue}
-          open={open}
-          onClose={handleClose}
-        />
+        <SaveButtonDialog open={open} onClose={handleClose} />
       </Box>
     </Box>
   );

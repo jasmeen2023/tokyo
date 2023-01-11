@@ -1,71 +1,17 @@
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import ShareIcon from '@mui/icons-material/Share';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Container,
-  DialogActions,
-  DialogContent,
-  Divider,
-  Grid,
-  List,
-  ListItemAvatar,
-  ListItemText,
-  TextareaAutosize,
-} from '@mui/material';
+import { Card, CardContent, CardHeader, Grid } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import CardActions from '@mui/material/CardActions';
-import CardMedia from '@mui/material/CardMedia';
-import Collapse from '@mui/material/Collapse';
-import { red } from '@mui/material/colors';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import { styled } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import { styled, useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import Head from 'next/head';
 import { useState } from 'react';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
-import PageTitle from '@/components/PageTitle';
-import PageTitleWrapper from '@/components/PageTitleWrapper';
-import { useTheme } from '@mui/material/styles';
 import SidebarLayout from '@/layouts/SidebarLayout';
-import { ErrorOutline } from '@mui/icons-material';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import Image from 'next/image';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@mui/styles';
-import ListItem from '@mui/material/ListItem';
-
-interface ExpandMoreProps extends IconButtonProps {
-  expand: boolean;
-}
-
-const ExpandMore = styled((props: ExpandMoreProps) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
-
-const bull = (
-  <Box
-    component='span'
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
+import CaseNotesDialog from './CaseNotesDialog';
 
 const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -77,147 +23,15 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
   },
 }));
 
-const useStyles = makeStyles((theme) => ({
-  cell_short: {
-    // width: '100%',
-    borderRight: '2px solid rgba(196, 196, 196, 0.4)',
-  },
-  // row_border: {
-  //   borderBottom: '2px dashed rgba(151, 151, 151, 0.24)',
-  // },
-}));
-const Input = styled('input')({
-  display: 'none',
-});
-
-const InputBoxes = styled(TextareaAutosize)(({ theme }) => ({
-  background: '#FFFFFF',
-  borderRadius: '4px',
-}));
-
-export function SimpleDialog(props) {
-  const { onClose, open } = props;
-
-  const handleClose = () => {
-    onClose();
-  };
-
-  return (
-    <Dialog fullWidth onClose={handleClose} open={open}>
-      <DialogTitle
-        sx={{
-          fontWeight: 600,
-          fontSize: '18px',
-          lineHeight: '24px',
-          textAlign: 'left',
-          background: '#FFF',
-        }}
-      >
-        Explain the purpose of this message
-      </DialogTitle>
-      <DialogContent sx={{ background: '#FFF' }}>
-        <InputBoxes
-          minRows={10}
-          style={{ width: 550 }}
-          sx={{
-            borderRadius: '4px',
-          }}
-        ></InputBoxes>
-      </DialogContent>
-
-      <Grid
-        container
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Grid item>
-          <List sx={{ width: '100%', maxWidth: 360 }}>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <Image
-                    src='/images/Color.png'
-                    alt='icon'
-                    width='50px'
-                    height='50px'
-                  />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary='Elva Cross' secondary='Update by' />
-            </ListItem>
-          </List>
-        </Grid>
-        <Grid item>
-          <Typography
-            sx={{
-              fontWeight: 400,
-              fontSize: '14px',
-              lineHeight: '24px',
-              display: 'flex',
-              alignItems: 'center',
-              letterSpacing: '0.01em',
-              color: '#292D32',
-            }}
-          >
-            SEP 10, 2022 12:30 PM
-          </Typography>
-        </Grid>
-        <Grid item>
-          <DialogActions sx={{ background: '#FFF' }}>
-            <Button
-              sx={{
-                background:
-                  'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
-                borderRadius: '5px',
-
-                color: '#FFF',
-              }}
-            >
-              Yes, Send
-            </Button>
-            <Button
-              onClick={handleClose}
-              sx={{
-                background:
-                  'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
-                borderRadius: '5px',
-
-                color: '#FFF',
-              }}
-            >
-              Close
-            </Button>
-          </DialogActions>
-        </Grid>
-      </Grid>
-    </Dialog>
-  );
-}
-
-SimpleDialog.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  //   selectedValue: PropTypes.string.isRequired,
-};
 function CaseNotesPage() {
   const theme = useTheme();
-  const [expanded, setExpanded] = useState(false);
   const [open, setOpen] = useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
-  const [selectedValue, setSelectedValue] = useState();
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = (value) => {
+  const handleClose = () => {
     setOpen(false);
   };
 
@@ -227,8 +41,8 @@ function CaseNotesPage() {
         container
         direction='row'
         justifyContent='center'
-        alignItems='stretch'
-        spacing={3}
+        alignItems='center'
+        spacing={2}
       >
         <Grid item xs={12}>
           <CardHeader
@@ -247,6 +61,7 @@ function CaseNotesPage() {
               background: '#FFF',
               borderRadius: 1,
               boxShadow: '0px 2px 5px 0px rgb(58 53 65 / 10%)',
+              minHeight: '120px',
             }}
           >
             <CardContent>
@@ -267,19 +82,21 @@ function CaseNotesPage() {
               </Typography>
             </CardContent>
           </Card>
-          <CardActions>
-            <Button
-              size='small'
-              sx={{
-                background: '#4B65B2',
-                border: '1.5px solid #4B65B2',
-                borderRadius: '4px',
-                color: '#FFF',
-              }}
-            >
-              Add New
-            </Button>
-          </CardActions>
+
+          <Button
+            size='medium'
+            onClick={handleClickOpen}
+            sx={{
+              background: '#4B65B2',
+              border: '1.5px solid #4B65B2',
+              borderRadius: '4px',
+              color: '#FFF',
+              my: 1,
+            }}
+          >
+            Add New
+          </Button>
+          <CaseNotesDialog open={open} onClose={handleClose} />
         </Grid>
         <Grid item xs={12}>
           <Card
@@ -290,7 +107,7 @@ function CaseNotesPage() {
             }}
           >
             <CardContent>
-              <Grid sx={{ display: 'flex', alignItems: 'center' }}>
+              <Grid sx={{ display: 'flex', alignItems: 'center', my: 1 }}>
                 <Typography
                   sx={{
                     fontStyle: 'normal',
@@ -340,7 +157,7 @@ function CaseNotesPage() {
                   <Grid
                     container
                     spacing={2}
-                    sx={{ display: 'flex', margin: 0.5 }}
+                    sx={{ display: 'flex', margin: 1 }}
                   >
                     <IconButton
                       sx={{
@@ -384,7 +201,7 @@ function CaseNotesPage() {
                   <Grid
                     container
                     spacing={2}
-                    sx={{ display: 'flex', margin: 0.5 }}
+                    sx={{ display: 'flex', margin: 1 }}
                   >
                     <Image
                       src='/images/Color.png'
@@ -453,26 +270,6 @@ function CaseNotesPage() {
               </Grid>
             </CardContent>
           </Card>
-        </Grid>
-
-        <Grid item xs={12}>
-          <Button
-            onClick={handleClickOpen}
-            sx={{
-              background:
-                'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
-              borderRadius: '5px',
-              padding: '10px 50px',
-              color: '#FFF',
-            }}
-          >
-            Save
-          </Button>
-          <SimpleDialog
-            //   selectedValue={selectedValue}
-            open={open}
-            onClose={handleClose}
-          />
         </Grid>
       </Grid>
     </>

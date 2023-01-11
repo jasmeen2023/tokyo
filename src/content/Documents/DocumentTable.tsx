@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
 import { ChangeEvent, FC, useState } from 'react';
 import Label from '@/components/Label';
 import { DocumentStatus, Document } from '@/models/document';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 interface RecentDocumentsTableProps {
   className?: string;
@@ -37,6 +38,7 @@ const CustomTableCell = styled(TableCell)(() => ({
   lineHeight: '150%',
   color: '#FFFFFF',
   textTransform: 'none',
+  border: '2px solid rgba(196, 196, 196, 0.4)',
 }));
 
 interface Filters {
@@ -160,8 +162,6 @@ const DocumentTable: FC<RecentDocumentsTableProps> = ({ documents }) => {
       <TableContainer
         sx={{
           marginY: 2,
-          background: '#FFF',
-          borderRadius: 1,
         }}
       >
         <Table>
@@ -178,12 +178,47 @@ const DocumentTable: FC<RecentDocumentsTableProps> = ({ documents }) => {
               <CustomTableCell>Uploaded Date</CustomTableCell>
               <CustomTableCell>Document Type</CustomTableCell>
 
-              <CustomTableCell>Applicant Name(1st)</CustomTableCell>
-              <CustomTableCell>Application Status</CustomTableCell>
-              <CustomTableCell>Applicant Name(2nd)</CustomTableCell>
-
-              <CustomTableCell>Application Status</CustomTableCell>
-              <CustomTableCell align='right'>Actions</CustomTableCell>
+              <CustomTableCell sx={{ display: 'flex', alignItems: 'center' }}>
+                Applicant 1 Name{' '}
+                <Box
+                  sx={{
+                    background: '#4B65B2',
+                    border: '1px solid #FFFFFF',
+                    borderRadius: '4px',
+                    width: '120px',
+                    height: ' 40px',
+                    padding: 1,
+                    marginX: 1,
+                  }}
+                >
+                  Carole Demas
+                </Box>
+                <IconButton sx={{ padding: 0, color: '#FFF' }}>
+                  <MoreVertIcon />
+                </IconButton>
+              </CustomTableCell>
+              <CustomTableCell>Status</CustomTableCell>
+              <CustomTableCell sx={{ display: 'flex', alignItems: 'center' }}>
+                Applicant 2 Name{' '}
+                <Box
+                  sx={{
+                    background: '#4B65B2',
+                    border: '1px solid #FFFFFF',
+                    borderRadius: '4px',
+                    width: '120px',
+                    height: ' 40px',
+                    padding: 1,
+                    marginX: 1,
+                  }}
+                >
+                  Carole Demas
+                </Box>
+                <IconButton sx={{ padding: 0, color: '#FFF' }}>
+                  <MoreVertIcon />
+                </IconButton>
+              </CustomTableCell>
+              <CustomTableCell>Status</CustomTableCell>
+              <CustomTableCell>Actions</CustomTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -196,6 +231,7 @@ const DocumentTable: FC<RecentDocumentsTableProps> = ({ documents }) => {
                   hover
                   key={singleDocument.id}
                   selected={isDocumentselected}
+                  sx={{ background: '#FFF' }}
                 >
                   {/* <TableCell padding='checkbox'>
                     <Checkbox
@@ -208,9 +244,10 @@ const DocumentTable: FC<RecentDocumentsTableProps> = ({ documents }) => {
                     />
                   </TableCell> */}
                   <TableCell
-                  // onClick={() => {
-                  //   router?.push(`/quotations/${singleDocument?.id}`);
-                  // }}
+                    // onClick={() => {
+                    //   router?.push(`/quotations/${singleDocument?.id}`);
+                    // }}
+                    sx={{ border: '2px solid rgba(196, 196, 196, 0.4)' }}
                   >
                     <Typography
                       variant='body2'
@@ -229,6 +266,7 @@ const DocumentTable: FC<RecentDocumentsTableProps> = ({ documents }) => {
                     onClick={() => {
                       router?.push(`/quotations/${singleDocument?.id}`);
                     }}
+                    sx={{ border: '2px solid rgba(196, 196, 196, 0.4)' }}
                   >
                     <Typography
                       variant='body1'
@@ -246,6 +284,7 @@ const DocumentTable: FC<RecentDocumentsTableProps> = ({ documents }) => {
                     onClick={() => {
                       router?.push(`/quotations/${singleDocument?.id}`);
                     }}
+                    sx={{ border: '2px solid rgba(196, 196, 196, 0.4)' }}
                   >
                     <Typography
                       variant='body1'
@@ -267,6 +306,7 @@ const DocumentTable: FC<RecentDocumentsTableProps> = ({ documents }) => {
                     onClick={() => {
                       router?.push(`/quotations/${singleDocument?.id}`);
                     }}
+                    sx={{ border: '2px solid rgba(196, 196, 196, 0.4)' }}
                   >
                     {getStatusLabel(singleDocument.status)}
                   </TableCell>
@@ -275,6 +315,7 @@ const DocumentTable: FC<RecentDocumentsTableProps> = ({ documents }) => {
                     onClick={() => {
                       router?.push(`/quotations/${singleDocument?.id}`);
                     }}
+                    sx={{ border: '2px solid rgba(196, 196, 196, 0.4)' }}
                   >
                     <Typography
                       variant='body1'
@@ -356,26 +397,28 @@ const DocumentTable: FC<RecentDocumentsTableProps> = ({ documents }) => {
                     onClick={() => {
                       router?.push(`/quotations/${singleDocument?.id}`);
                     }}
+                    sx={{ border: '2px solid rgba(196, 196, 196, 0.4)' }}
                   >
                     {getStatusLabel(singleDocument.status)}
                   </TableCell>
                   <TableCell
-                    align='right'
-                    sx={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      display: 'flex',
-                    }}
+                    sx={{ border: '2px solid rgba(196, 196, 196, 0.4)' }}
+                    // align='right'
+                    // sx={{
+                    //   justifyContent: 'center',
+                    //   alignItems: 'center',
+                    //   display: 'flex',
+                    // }}
                   >
                     <IconButton color='primary' sx={{ p: 0.5 }}>
                       <MoreHorizTwoToneIcon />
                     </IconButton>
-                    <IconButton color='primary' sx={{ p: 1 }}>
+                    {/* <IconButton color='primary' sx={{ p: 1 }}>
                       <AvatarWrapper
                         src='/assets/svg/eye.svg'
                         variant='square'
                       />
-                    </IconButton>
+                    </IconButton> */}
                     {/* <Tooltip title='Edit Order' arrow>
                       <IconButton
                         sx={{

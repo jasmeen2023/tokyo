@@ -135,7 +135,7 @@ function Header() {
         >
           <ListItem alignItems='flex-start' sx={{ color: '#FFF' }}>
             <ListItemAvatar>
-              <Avatar alt='Remy Sharp' src='/static/images/avatar/1.jpg' />
+              <Avatar alt='Remy Sharp' src='/images/Color.png' />
             </ListItemAvatar>
             <ListItemText
               primary='Applicant Name'

@@ -2,13 +2,10 @@ import MoreHorizTwoToneIcon from '@mui/icons-material/MoreHorizTwoTone';
 import {
   Box,
   Card,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormLabel,
   IconButton,
   InputAdornment,
+  Menu,
+  MenuItem,
   SelectChangeEvent,
   styled,
   Table,
@@ -21,24 +18,20 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { Avatar, Button, Grid } from '@mui/material';
-import Checkbox from '@mui/material/Checkbox';
+import { Button, Grid } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { format } from 'date-fns';
 import { Dayjs } from 'dayjs';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { ChangeEvent, FC, useState } from 'react';
-
 import Label from '@/components/Label';
-import OutLinedLabel from '@/components/OutLinedLabel';
-
 import { Reward } from '@/models/reward';
 import { RewardStatus } from '@/models/reward';
 import SearchIcon from '@mui/icons-material/Search';
-import { ModeEditOutlineOutlined } from '@mui/icons-material';
-import { makeStyles } from '@mui/styles';
-
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
+import RewardsDialog from './RewardsDialog';
 interface RecentOrdersTableProps {
   className?: string;
   rewards: Reward[];
@@ -53,16 +46,19 @@ const CustomTableCell = styled(TableCell)(() => ({
   textTransform: 'none',
 }));
 
+const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    color: 'rgba(0, 0, 0, 0.87)',
+    background: '#FFFFFF',
+    boxShadow: '0px 0px 11px rgba(0, 0, 0, 0.25)',
+  },
+}));
+
 interface Filters {
   status?: RewardStatus;
 }
-
-const AvatarWrapper = styled(Avatar)(
-  ({ theme }) => `
-    width: ${theme.spacing(2.345)};
-    height: ${theme.spacing(2)};
-`
-);
 
 const getStatusLabel = (RewardStatus: RewardStatus): JSX.Element => {
   const map = {
@@ -94,99 +90,6 @@ const applyPagination = (
   limit: number
 ): Reward[] => {
   return Rewards.slice(page * limit, page * limit + limit);
-};
-
-const useStyles = makeStyles((theme) => ({
-  cell_short: {
-    // width: '100%',
-    borderRight: '2px solid rgba(196, 196, 196, 0.4)',
-  },
-  // row_border: {
-  //   borderBottom: '2px dashed rgba(151, 151, 151, 0.24)',
-  // },
-}));
-const Input = styled('input')({
-  display: 'none',
-});
-
-const InputBoxes = styled(TextField)(({ theme }) => ({
-  background: '#FFFFFF',
-  borderRadius: '4px',
-}));
-
-export function SimpleDialog(props) {
-  const { onClose, open } = props;
-
-  const handleClose = () => {
-    onClose();
-  };
-
-  return (
-    <Dialog fullWidth onClose={handleClose} open={open}>
-      <DialogTitle
-        sx={{
-          fontWeight: 600,
-          fontSize: '18px',
-          lineHeight: '24px',
-          textAlign: 'left',
-          background: '#FFF',
-        }}
-      >
-        Invite
-      </DialogTitle>
-      <DialogContent sx={{ background: '#FFF' }}>
-        <Box
-          component='form'
-          sx={{
-            '& > :not(style)': { m: 1, width: '25ch' },
-          }}
-          noValidate
-          autoComplete='off'
-        >
-          <TextField id='email' label='Email' defaultValue='Email' />
-          <TextField id='name' label='Name' defaultValue='Name' />
-          <TextField
-            id='manager'
-            label='Relationship Manager'
-            defaultValue='Relationship Manager'
-          />
-          <TextField id='mobile' label='Mobile No.' defaultValue='Mobile No.' />
-        </Box>
-      </DialogContent>
-
-      <DialogActions sx={{ background: '#FFF' }}>
-        <Button
-          sx={{
-            background:
-              'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
-            borderRadius: '5px',
-
-            color: '#FFF',
-          }}
-        >
-          Invite
-        </Button>
-        <Button
-          onClick={handleClose}
-          sx={{
-            background:
-              'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
-            borderRadius: '5px',
-
-            color: '#FFF',
-          }}
-        >
-          Close
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-}
-
-SimpleDialog.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  //   selectedValue: PropTypes.string.isRequired,
 };
 
 const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
@@ -255,15 +158,37 @@ const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openEditMenu, setOpenEditMenu] = useState(null);
 
-  const [selectedValue, setSelectedValue] = useState();
+  const dummyMenuItems = [
+    {
+      title: 'View Reward',
+    },
+  ];
+
+  const menuItems = [
+    {
+      title: 'View menu',
+    },
+  ];
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = (value) => {
+  const handleClickMenu = (e) => {
+    setOpenEditMenu(e.currentTarget);
+  };
+
+  const handleClose = () => {
     setOpen(false);
+    setAnchorEl(null);
+    setOpenEditMenu(null);
+  };
+
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
   };
 
   return (
@@ -274,15 +199,9 @@ const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
         boxShadow: 'none',
       }}
     >
-      <Grid container>
-        <Grid item xs={9}>
-          <Grid
-            spacing={2}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
+      <Grid container xs={12}>
+        <Grid container item xs={8} alignItems='end'>
+          <Grid item>
             <Typography
               sx={{
                 fontStyle: 'normal',
@@ -290,40 +209,41 @@ const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
                 fontSize: '14px',
                 lineHeight: '175%',
                 color: '#263238',
-                marginX: 1,
               }}
             >
               Date Range
             </Typography>
-          </Grid>
-          <Grid sx={{ display: 'flex', alignItems: 'center', marginY: 1 }}>
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '12px',
-                lineHeight: '19px',
-                textTransform: 'capitalize',
-                color: '#2C2937',
-                background: '#FFFFFF',
-                border: '1px solid #4B65B2',
-                borderRadius: '20px',
-                padding: '5px 15px',
-                margin: 0.5,
-              }}
-            >
-              Created One
-            </Typography>
+            <Grid sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '12px',
+                  lineHeight: '19px',
+                  textTransform: 'capitalize',
+                  color: '#2C2937',
+                  background: '#FFFFFF',
+                  border: '1px solid #4B65B2',
+                  borderRadius: '20px',
+                  padding: '7px 16px',
+                  margin: 0.5,
+                }}
+              >
+                Created Date
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
 
-        <Grid item xs={3}>
-          <Grid
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-evenly',
-            }}
-          >
+        <Grid
+          container
+          item
+          xs={4}
+          display='flex'
+          justifyContent='end'
+          alignItems='end'
+          spacing={1}
+        >
+          <Grid item>
             <TextField
               id='standard-basic'
               variant='standard'
@@ -337,30 +257,27 @@ const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
                 ),
               }}
             />
-
             <Button
-              size='medium'
               onClick={handleClickOpen}
               sx={{
                 background:
                   'linear-gradient(275.52deg, #13BBE6 17.29%, #4B65B2 82.37%)',
                 borderRadius: '4px',
-                marginTop: 1,
-                color: '#FFF',
-                paddingX: 4,
+                marginX: 2,
+                fontWeight: 500,
+                fontSize: '14px',
+                lineHeight: '20px',
+                color: '#FFFFFF',
+                width: '143px',
+                height: '36px',
               }}
             >
               Invite
             </Button>
-            <SimpleDialog
-              //   selectedValue={selectedValue}
-              open={open}
-              onClose={handleClose}
-            />
+            <RewardsDialog open={open} onClose={handleClose} />
           </Grid>
         </Grid>
       </Grid>
-
       <TableContainer
         sx={{
           marginY: 2,
@@ -369,16 +286,16 @@ const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
         }}
       >
         <Table>
-          <TableHead>
+          <TableHead sx={{ border: '1px solid #D7D7D7' }}>
             <TableRow>
-              <TableCell padding='checkbox'>
+              {/* <TableCell padding='checkbox'>
                 <Checkbox
                   color='primary'
                   checked={selectedAllRewards}
                   indeterminate={selectedSomeRewards}
                   onChange={handleSelectAllRewards}
                 />
-              </TableCell>
+              </TableCell> */}
               <CustomTableCell>Date</CustomTableCell>
               <CustomTableCell>Relationship Manager</CustomTableCell>
               <CustomTableCell>Originator Name</CustomTableCell>
@@ -388,7 +305,7 @@ const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
               <CustomTableCell>Email ID</CustomTableCell>
               <CustomTableCell>Case ID</CustomTableCell>
               <CustomTableCell>Status</CustomTableCell>
-              <CustomTableCell align='right'>Actions</CustomTableCell>
+              <CustomTableCell>Actions</CustomTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -401,8 +318,12 @@ const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
                   hover
                   key={singleReward.id}
                   selected={isRewardSelected}
+                  sx={{
+                    background: '#FFFFFF',
+                    border: '1px solid #D7D7D7',
+                  }}
                 >
-                  <TableCell padding='checkbox'>
+                  {/* <TableCell padding='checkbox'>
                     <Checkbox
                       color='primary'
                       checked={isRewardSelected}
@@ -411,7 +332,7 @@ const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
                       }
                       value={isRewardSelected}
                     />
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     onClick={() => {
                       router?.push(`/quotations/${singleReward?.id}`);
@@ -519,9 +440,10 @@ const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
                     </Typography>
                   </TableCell>
                   <TableCell
-                    onClick={() => {
-                      router?.push(`/quotations/${singleReward?.id}`);
-                    }}
+                    // onClick={() => {
+                    //   router?.push(`/quotations/${singleReward?.id}`);
+                    // }}
+                    sx={{ display: 'flex', alignItems: 'center' }}
                   >
                     <Typography
                       variant='body1'
@@ -532,6 +454,85 @@ const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
                     >
                       {singleReward.caseId}
                     </Typography>
+                    {/* <LightTooltip
+                      title={
+                        <Box>
+                          <Grid
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                            }}
+                          >
+                            <Typography
+                              sx={{
+                                fontWeight: 600,
+                                fontSize: '14px',
+                                lineHeight: '26px',
+                                color: '#292D32',
+                              }}
+                            >
+                              Case ID
+                            </Typography>
+                            <IconButton color='secondary' sx={{ p: 0.5 }}>
+                              <Close
+                                sx={{
+                                  background: '#DDD',
+                                  borderRadius: '50%',
+                                  padding: 0.5,
+                                }}
+                              />
+                            </IconButton>
+                          </Grid>
+
+                          <TextField size='small' placeholder='-'></TextField>
+
+                          <Grid
+                            display='flex'
+                            alignItems='center'
+                            justifyContent='flex-end'
+                          >
+                            <Button
+                              size='small'
+                              sx={{
+                                background:
+                                  'linear-gradient(275.52deg, #13BBE6 17.29%, #4B65B2 82.37%)',
+                                borderRadius: '4px',
+                                color: '#FFF',
+                                my: 1,
+                              }}
+                            >
+                              Update
+                            </Button>
+                          </Grid>
+                        </Box>
+                      }
+                    >
+                      <IconButton color='primary' sx={{ p: 0.5 }}>
+                        <EditTwoToneIcon />
+                      </IconButton>
+                    </LightTooltip> */}
+                    <IconButton color='primary' sx={{ p: 0.5 }}>
+                      <EditTwoToneIcon onClick={handleClickMenu} />
+                    </IconButton>
+                    <Menu
+                      id='simple-menu'
+                      // openEditMenu={openEditMenu}
+                      keepMounted
+                      open={Boolean(openEditMenu)}
+                      onClose={handleClose}
+                      sx={{ borderRadius: 1 }}
+                    >
+                      {menuItems.map((item) => (
+                        <MenuItem
+                          onClick={handleClose}
+                          key={item.title}
+                          value={item.title}
+                        >
+                          {item.title}
+                        </MenuItem>
+                      ))}
+                    </Menu>
                   </TableCell>
 
                   <TableCell
@@ -541,49 +542,28 @@ const RewardsTable: FC<RecentOrdersTableProps> = ({ rewards }) => {
                   >
                     {getStatusLabel(singleReward.status)}
                   </TableCell>
-                  <TableCell
-                    align='right'
-                    sx={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      display: 'flex',
-                    }}
-                  >
+                  <TableCell>
                     <IconButton color='primary' sx={{ p: 0.5 }}>
-                      <MoreHorizTwoToneIcon />
+                      <MoreHorizTwoToneIcon onClick={handleClick} />
                     </IconButton>
-                    <IconButton color='primary' sx={{ p: 1 }}>
-                      <AvatarWrapper
-                        src='/assets/svg/eye.svg'
-                        variant='square'
-                      />
-                    </IconButton>
-                    {/* <Tooltip title='Edit Order' arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': {
-                            background: theme.colors.primary,
-                          },
-                          color: theme.palette.primary.main,
-                        }}
-                        color='inherit'
-                        size='small'
-                      >
-                        <EditTwoTone fontSize='small' />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title='Delete Order' arrow>
-                      <IconButton
-                        sx={{
-                          '&:hover': { background: theme.colors.error.lighter },
-                          color: theme.palette.error.main,
-                        }}
-                        color='inherit'
-                        size='small'
-                      >
-                        <DeleteTwoTone fontSize='small' />
-                      </IconButton>
-                    </Tooltip> */}
+                    <Menu
+                      id='simple-menu'
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                      sx={{ borderRadius: 1 }}
+                    >
+                      {dummyMenuItems.map((item) => (
+                        <MenuItem
+                          onClick={handleClose}
+                          key={item.title}
+                          value={item.title}
+                        >
+                          {item.title}
+                        </MenuItem>
+                      ))}
+                    </Menu>
                   </TableCell>
                 </TableRow>
               );

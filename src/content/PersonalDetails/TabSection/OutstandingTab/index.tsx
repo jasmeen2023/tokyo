@@ -99,7 +99,7 @@ function OutstandingTab() {
           aria-label='basic tabs example'
         >
           <Tab
-            sx={{ background: '#4B65B2', borderRadius: 2 }}
+            sx={{ background: 'transparent', borderRadius: 2 }}
             label='Credit Card'
             {...a11yProps(1)}
           />

@@ -433,7 +433,7 @@ const OccupationTab = () => {
         ))}
 
         <TableRow>
-          <TableCell
+          <Button
             sx={{
               border: '1.5px solid #4B65B2',
               borderRadius: '2px',
@@ -458,7 +458,7 @@ const OccupationTab = () => {
             >
               Additional Income
             </Typography>
-          </TableCell>
+          </Button>
           <TableCell></TableCell>
           <TableCell></TableCell>
           <TableCell></TableCell>

@@ -373,7 +373,7 @@ const AddressHistoryTab = () => {
         ))}
 
         <TableRow>
-          <TableCell
+          <Button
             sx={{
               border: '1.5px solid #4B65B2',
               borderRadius: '2px',
@@ -398,7 +398,7 @@ const AddressHistoryTab = () => {
             >
               Add Address
             </Typography>
-          </TableCell>
+          </Button>
           <TableCell></TableCell>
           <TableCell></TableCell>
           <TableCell></TableCell>

@@ -2,8 +2,9 @@ import { Container, Grid } from '@mui/material';
 import Head from 'next/head';
 
 import AllCases from '@/content/Cases/AllCases';
-import SidebarLayout from '@/layouts/SidebarLayout/index';
+
 import MessagesWindow from '@/content/MessageWindow';
+import SidebarLayout2 from '@/layouts/SidebarLayout2';
 
 function BoxChat() {
   return (
@@ -26,6 +27,6 @@ function BoxChat() {
   );
 }
 
-BoxChat.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>;
+BoxChat.getLayout = (page) => <SidebarLayout2>{page}</SidebarLayout2>;
 
 export default BoxChat;

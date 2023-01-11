@@ -82,7 +82,16 @@ function Forms() {
               </Typography>
             </Grid>
 
-            <Typography component='h1' variant='h5' textAlign='center'>
+            <Typography
+              sx={{
+                fontStyle: 'normal',
+                fontWeight: 400,
+                fontSize: '32px',
+                lineHeight: '130%',
+                color: '#000000',
+                textAlign: 'center',
+              }}
+            >
               Sign In
             </Typography>
             <Box component='form' noValidate onSubmit={handleSubmit}>
@@ -160,9 +169,10 @@ function Forms() {
                       fontSize: '16px',
                       lineHeight: '24px',
                       color: '#4B65B2',
+                      textDecoration: 'none',
                     }}
                   >
-                    Forgot password?
+                    Forgot Password?
                   </Link>
                 </Grid>
               </Grid>

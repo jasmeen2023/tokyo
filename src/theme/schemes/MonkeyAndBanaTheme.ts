@@ -482,6 +482,7 @@ export const MonkeyAndBanaTheme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiInputAdornment-positionEnd.MuiInputAdornment-outlined': {
+            // paddingLeft: 0,
             paddingRight: 6,
           },
           '.MuiOutlinedInput-notchedOutline': {
@@ -858,10 +859,11 @@ export const MonkeyAndBanaTheme = createTheme({
         indicator: {
           height: 38,
           minHeight: 38,
-          borderRadius: 6,
-          border: '1px solid ' + colors.primary.dark,
-          boxShadow: '0px 2px 10px ' + colors.primary.light,
-          background: colors.primary.main,
+          borderRadius: 2,
+          // border: '1px solid ' + '#4B65B2',
+          // boxShadow: '0px 2px 10px ' + '#4B65B2',
+          // background: colors.primary.main,
+          background: 'transparent',
         },
         scrollableX: {
           overflow: 'visible !important',
@@ -885,12 +887,14 @@ export const MonkeyAndBanaTheme = createTheme({
             marginRight: 4,
           },
           '&.Mui-selected, &.Mui-selected:hover': {
-            color: colors.alpha.trueWhite[100],
+            // color: colors.alpha.trueWhite[100],
+            color: '#4B65B2',
 
             zIndex: 5,
           },
           '&:hover': {
-            color: colors.alpha.trueWhite[70],
+            color: '#4B65B2',
+            // color: colors.alpha.trueWhite[70],
           },
         },
       },
@@ -1020,9 +1024,9 @@ export const MonkeyAndBanaTheme = createTheme({
         },
         root: {
           transition: 'background-color .2s',
-          backgroundColor: 'white',
+          backgroundColor: themeColors.bgcolor,
           zIndex: 1,
-          boxShadow: '0 0 0.5px #000',
+          //boxShadow: '0 0 1px #000',
           '&.MuiTableRow-hover:hover': {
             backgroundColor: alpha(colors.alpha.black[5], 0.05),
           },
@@ -1223,7 +1227,7 @@ export const MonkeyAndBanaTheme = createTheme({
   },
   typography: {
     fontFamily:
-      '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
+      '"Segoe UI", -apple-system, BlinkMacSystemFont, "Inter", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
     h1: {
       fontWeight: 700,
       fontSize: 35,

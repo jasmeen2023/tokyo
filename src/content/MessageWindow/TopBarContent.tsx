@@ -54,6 +54,8 @@ import { makeStyles } from '@mui/styles';
 import { classes } from 'http-status';
 import { Container } from '@mui/material';
 import { CalendarMonth } from '@mui/icons-material';
+import SimpleCommDialog from './CommDialog';
+import SimpleGDPRDialog from './SimpleGDPRDialog';
 
 const RootWrapper = styled(Box)(
   ({ theme }) => `
@@ -106,7 +108,7 @@ const AccordionSummaryWrapper = styled(AccordionSummary)(
 `
 );
 
-const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles((theme) => ({
   cell_short: {
     width: '60%',
     height: '0px',
@@ -116,381 +118,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InputBoxes = styled(TextField)(({ theme }) => ({
-  background: '#FFFFFF',
-  borderRadius: '4px',
-}));
-
-export function SimpleDialog(props) {
-  const classes = useStyles();
-
-  const { onClose, open } = props;
-
-  const handleClose = () => {
-    onClose();
-  };
-
-  //   const handleListItemClick = (value) => {
-  //     onClose(value);
-  //   };
-
-  return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle
-        sx={{
-          fontWeight: 600,
-          fontSize: '18px',
-          lineHeight: '24px',
-          textAlign: 'left',
-        }}
-      >
-        Communication Choices{' '}
-      </DialogTitle>
-      <DialogContent sx={{ background: '#FFF' }}>
-        <Table>
-          <TableBody>
-            <TableRow
-              sx={{
-                background: '#FFF',
-              }}
-            >
-              <TableCell
-                className={classes.cell_short1}
-                sx={{
-                  borderBottom: '2px dashed rgba(151, 151, 151, 0.5)',
-                  paddingY: 0.5,
-                }}
-              >
-                Type
-              </TableCell>
-              <TableCell
-                sx={{
-                  borderBottom: '2px dashed rgba(151, 151, 151, 0.5)',
-                  paddingY: 0.5,
-                }}
-              >
-                Choose
-              </TableCell>
-              <TableCell
-                sx={{
-                  borderBottom: '2px dashed rgba(151, 151, 151, 0.5)',
-                  paddingY: 0.5,
-                }}
-              ></TableCell>
-            </TableRow>
-            <TableRow sx={{ background: '#FFF' }}>
-              <TableCell
-                sx={{
-                  borderBottom: '2px dashed rgba(151, 151, 151, 0.5)',
-                  paddingY: 0.5,
-                }}
-              >
-                Text
-              </TableCell>
-              <TableCell
-                sx={{
-                  borderBottom: '2px dashed rgba(151, 151, 151, 0.5)',
-                  paddingY: 0.5,
-                }}
-              >
-                <RadioGroup>
-                  <FormControlLabel value='' control={<Radio />} label='' />
-                </RadioGroup>
-              </TableCell>
-              <TableCell
-                className={classes.cell_short}
-                sx={{
-                  borderBottom: '2px dashed rgba(151, 151, 151, 0.5)',
-                  paddingY: 0.5,
-                }}
-              >
-                <InputBoxes></InputBoxes>
-              </TableCell>
-            </TableRow>
-            <TableRow sx={{ background: '#FFF' }}>
-              <TableCell
-                sx={{
-                  borderBottom: '2px dashed rgba(151, 151, 151, 0.5)',
-                  paddingY: 0.5,
-                }}
-              >
-                Call
-              </TableCell>
-              <TableCell
-                sx={{
-                  borderBottom: '2px dashed rgba(151, 151, 151, 0.5)',
-                  paddingY: 0.5,
-                }}
-              >
-                <RadioGroup>
-                  <FormControlLabel value='' control={<Radio />} label='' />
-                </RadioGroup>
-              </TableCell>
-              <TableCell
-                className={classes.cell_short}
-                sx={{
-                  borderBottom: '2px dashed rgba(151, 151, 151, 0.5)',
-                  paddingY: 0.5,
-                }}
-              >
-                <InputBoxes></InputBoxes>
-              </TableCell>
-            </TableRow>
-            <TableRow sx={{ background: '#FFF' }}>
-              <TableCell
-                sx={{
-                  borderBottom: '2px dashed rgba(151, 151, 151, 0.5)',
-                  paddingY: 0.5,
-                }}
-              >
-                Email
-              </TableCell>
-              <TableCell
-                sx={{
-                  borderBottom: '2px dashed rgba(151, 151, 151, 0.5)',
-                  paddingY: 0.5,
-                }}
-              >
-                <RadioGroup>
-                  <FormControlLabel value='' control={<Radio />} label='' />
-                </RadioGroup>
-              </TableCell>
-              <TableCell
-                className={classes.cell_short}
-                sx={{
-                  borderBottom: '2px dashed rgba(151, 151, 151, 0.5)',
-                  paddingY: 0.5,
-                }}
-              >
-                <InputBoxes></InputBoxes>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </DialogContent>
-
-      <DialogActions>
-        <Button
-          sx={{
-            background:
-              'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
-            borderRadius: '5px',
-            padding: '10px 50px',
-            color: '#FFF',
-          }}
-        >
-          Save
-        </Button>
-        <Button
-          onClick={handleClose}
-          sx={{
-            background:
-              'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
-            borderRadius: '5px',
-            padding: '10px 50px',
-            color: '#FFF',
-          }}
-        >
-          Close
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-}
-
-export function SimpleGDPRDialog(props) {
-  const classes = useStyles();
-
-  const { onClose, open } = props;
-
-  const handleClose = () => {
-    onClose();
-  };
-
-  //   const handleListItemClick = (value) => {
-  //     onClose(value);
-  //   };
-
-  return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle
-        sx={{
-          fontWeight: 600,
-          fontSize: '18px',
-          lineHeight: '24px',
-          textAlign: 'left',
-          background: '#FFF',
-        }}
-      >
-        GDPR Policy
-      </DialogTitle>
-      <DialogContent sx={{ background: '#FFF' }}>
-        <Typography
-          sx={{
-            fontWeight: 400,
-            fontSize: '14px',
-            lineHeight: '24px',
-            textTransform: 'capitalize',
-            color: '#4B473E',
-          }}
-        >
-          This Regulation applies to the processing of personal data wholly or
-          partly by automated means and to the processing other than by
-          automated means of personal data which form part of a filing system or
-          are intended to form part of a filing system. This Regulation does not
-          apply to the processing of personal data: in the course of an activity
-          which falls outside the scope of Union law; by the Member States when
-          carrying out activities which fall within the scope of Chapter 2 of
-          Title V of the TEU; by a natural person in the course of a purely
-          personal or household activity; by competent authorities for the
-          purposes of the prevention, investigation, detection or prosecution of
-          criminal offences or the execution of criminal penalties, including
-          the safeguarding against and the prevention of threats to public
-          security. 1For the processing of personal data by the Union
-          institutions, bodies, offices and agencies, Regulation (EC) No 45/2001
-          applies. 2Regulation (EC) No 45/2001 and other Union legal acts
-          applicable to such processing of personal data shall be adapted to the
-          principles and rules of this Regulation in accordance with Article 98.
-          This Regulation shall be without prejudice to the application of
-          Directive 2000/31/EC, in particular of the liability rules of
-          intermediary service providers in Articles 12 to 15 of that Directive.
-        </Typography>
-
-        <Typography
-          sx={{
-            marginY: 2,
-            fontStyle: 'normal',
-            fontWeight: 600,
-            fontSize: '18px',
-            lineHeight: '26px',
-            color: '#292D32',
-          }}
-        >
-          Mention the date & time, and how you recieved the consent
-        </Typography>
-
-        <Grid
-          container
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Grid item>
-            <FormControl>
-              <FormLabel
-                sx={{
-                  fontWeight: 400,
-                  fontSize: '14px',
-                  lineHeight: '19px',
-                  textTransform: 'capitalize',
-                  color: '#000000',
-                }}
-              >
-                Consent given date
-              </FormLabel>
-              <TextField
-                sx={{ paddingLeft: 0 }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position='start' sx={{ padding: 0 }}>
-                      <IconButton>
-                        <CalendarMonth
-                          sx={{
-                            paddingLeft: 0,
-                            paddingRight: 0,
-                            color: '#4B65B2',
-                            background: '#EEF7FE',
-                          }}
-                        />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              ></TextField>
-            </FormControl>
-          </Grid>
-          <Grid item>
-            <FormControl>
-              <FormLabel
-                sx={{
-                  fontWeight: 400,
-                  fontSize: '14px',
-                  lineHeight: '19px',
-                  textTransform: 'capitalize',
-                  color: '#000000',
-                }}
-              >
-                Description
-              </FormLabel>
-              <TextField></TextField>
-            </FormControl>
-          </Grid>
-        </Grid>
-      </DialogContent>
-
-      <DialogActions sx={{ background: '#FFF' }}>
-        <Button
-          sx={{
-            background:
-              'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
-            borderRadius: '5px',
-            padding: '10px 50px',
-            color: '#FFF',
-          }}
-        >
-          Save
-        </Button>
-        <Button
-          onClick={handleClose}
-          sx={{
-            background:
-              'linear-gradient(91.88deg, #4B65B2 2.83%, #13BBE6 100%)',
-            borderRadius: '5px',
-            padding: '10px 50px',
-            color: '#FFF',
-          }}
-        >
-          Close
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
-}
-
-SimpleDialog.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  //   selectedValue: PropTypes.string.isRequired,
-};
-
-SimpleGDPRDialog.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-  //   selectedValue: PropTypes.string.isRequired,
-};
-
 function TopBarContent() {
   const theme = useTheme();
 
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState();
 
   const [openGDPR, setOpenGDPR] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
+  };
+
+  const handleClickOpenGDPR = () => {
     setOpenGDPR(true);
   };
 
   const handleClose = (value) => {
     setOpen(false);
-    setSelectedValue(value);
-    setOpenGDPR(false);
   };
 
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const handleCloseGDPR = (value) => {
+    setOpenGDPR(false);
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -544,7 +195,7 @@ function TopBarContent() {
           >
             Communication Choices
           </Button>
-          <SimpleDialog
+          <SimpleCommDialog
             //   selectedValue={selectedValue}
             open={open}
             onClose={handleClose}
@@ -565,14 +216,14 @@ function TopBarContent() {
               color: '#4B65B2',
               padding: 1,
             }}
-            onClick={handleClickOpen}
+            onClick={handleClickOpenGDPR}
           >
             GDPR Policy
           </Button>
           <SimpleGDPRDialog
             //   selectedValue={selectedValue}
-            open={open}
-            onClose={handleClose}
+            open={openGDPR}
+            onClose={handleCloseGDPR}
           />
           {/* <Tooltip placement='bottom' title='Start a voice call'>
             <IconButton color='primary'>
