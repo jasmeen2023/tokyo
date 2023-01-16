@@ -860,7 +860,7 @@ export const MonkeyAndBanaTheme = createTheme({
           height: 38,
           minHeight: 38,
           borderRadius: 2,
-          // border: '1px solid ' + '#4B65B2',
+          borderBottom: '1px solid ' + '#4B65B2',
           // boxShadow: '0px 2px 10px ' + '#4B65B2',
           // background: colors.primary.main,
           background: 'transparent',
